@@ -3,7 +3,6 @@ package fr.univtln.ancyen.doodle;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 public class Evenement {
     private static Collection<Evenement> evenements = new ArrayList<>();
@@ -12,10 +11,58 @@ public class Evenement {
     private String description;
     private String dateCreation;
     private Utilisateur createur;
-    private Collection<Date>
+    private Collection<Date> dates = new ArrayList<>();
 
     public Evenement() {
         evenements.add(this);
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getLieu() {
+        return lieu;
+    }
+
+    public void setLieu(String lieu) {
+        this.lieu = lieu;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public Utilisateur getCreateur() {
+        return createur;
+    }
+
+    public void setCreateur(Utilisateur createur) {
+        this.createur = createur;
+    }
+
+    public Collection<Date> getDates() {
+        return dates;
+    }
+
+    public void addDate(Date date){
+        dates.add(date);
     }
 
     public static void save() throws IOException {
