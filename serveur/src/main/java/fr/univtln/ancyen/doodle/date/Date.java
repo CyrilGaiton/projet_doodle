@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle;
+package fr.univtln.ancyen.doodle.date;
 
 public class Date {
     private int jour;

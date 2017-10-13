@@ -1,5 +1,7 @@
 package fr.univtln.ancyen.doodle;
 
+import fr.univtln.ancyen.doodle.date.Date;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
