@@ -4,6 +4,7 @@ public class Participant {
     private String nom;
     private String prenom;
 
+
     public Participant(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;

@@ -1,6 +1,7 @@
 package fr.univtln.ancyen.doodle;
 
 import fr.univtln.ancyen.doodle.date.Date;
+import fr.univtln.ancyen.doodle.utilisateur.Createur;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,12 +13,20 @@ public class Evenement {
     private String lieu;
     private String description;
     private String dateCreation;
-    private Utilisateur createur;
-    private Collection<Date> dates = new ArrayList<>();
+    private String dateFinalisation;
+    private final Createur createur;
 
-    public Evenement() {
-        evenements.add(this);
+
+    public Evenement(String nom, String lieu, String description, String dateCreation, String dateFinalisation, Createur createur) {
+        this.nom = nom;
+        this.lieu = lieu;
+        this.description = description;
+        this.dateCreation = dateCreation;
+        this.dateFinalisation = dateFinalisation;
+        this.createur = createur;
     }
+
+    
 
     public String getNom() {
         return nom;
@@ -51,21 +60,12 @@ public class Evenement {
         this.dateCreation = dateCreation;
     }
 
-    public Utilisateur getCreateur() {
+    public Createur getCreateur() {
         return createur;
     }
 
-    public void setCreateur(Utilisateur createur) {
-        this.createur = createur;
-    }
 
-    public Collection<Date> getDates() {
-        return dates;
-    }
 
-    public void addDate(Date date){
-        dates.add(date);
-    }
 
     public static void save() throws IOException {
         FileOutputStream fos = new FileOutputStream("evenements.save");
