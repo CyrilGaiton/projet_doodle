@@ -20,7 +20,7 @@ public class Evenement {
 
 
     public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, Createur createur) {
-        this.id = cpt++
+        this.id = cpt++;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
@@ -55,12 +55,20 @@ public class Evenement {
         this.description = description;
     }
 
-    public String getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(String dateCreation) {
+    public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public Date getDateFinalisation() {
+        return dateFinalisation;
+    }
+
+    public void setDateFinalisation(Date dateFinalisation) {
+        this.dateFinalisation = dateFinalisation;
     }
 
     public Createur getCreateur() {
