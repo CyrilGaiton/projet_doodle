@@ -9,15 +9,18 @@ import java.util.Collection;
 
 public class Evenement {
     private static Collection<Evenement> evenements = new ArrayList<>();
+    private static int cpt = 0;
+    private final int id;
     private String nom;
     private String lieu;
     private String description;
-    private String dateCreation;
-    private String dateFinalisation;
+    private Date dateCreation;
+    private Date dateFinalisation;
     private final Createur createur;
 
 
-    public Evenement(String nom, String lieu, String description, String dateCreation, String dateFinalisation, Createur createur) {
+    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, Createur createur) {
+        this.id = cpt++;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
@@ -52,12 +55,20 @@ public class Evenement {
         this.description = description;
     }
 
-    public String getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(String dateCreation) {
+    public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
+    }
+
+    public Date getDateFinalisation() {
+        return dateFinalisation;
+    }
+
+    public void setDateFinalisation(Date dateFinalisation) {
+        this.dateFinalisation = dateFinalisation;
     }
 
     public Createur getCreateur() {
