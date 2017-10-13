@@ -26,7 +26,7 @@ public class Evenement {
         this.createur = createur;
     }
 
-    
+
 
     public String getNom() {
         return nom;
