@@ -4,7 +4,6 @@ package fr.univtln.ancyen.doodle.date;
 import fr.univtln.ancyen.doodle.Database;
 
 public class Date {
-    private static Database database = Database.getInstance();
     private static int cpt;
     private final int id;
     private int jour;
@@ -18,7 +17,25 @@ public class Date {
         this.mois = mois;
         this.annee = annee;
         this.dureeHeure = dureeHeure;
-        database.insert("Date", id, jour, mois, annee, dureeHeure);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getJour() {
+        return jour;
+    }
+
+    public int getMois() {
+        return mois;
+    }
+
+    public int getAnnee() {
+        return annee;
+    }
+
+    public int getDureeHeure() {
+        return dureeHeure;
+    }
 }

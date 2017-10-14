@@ -6,14 +6,15 @@ public class Database{
 
     public Database() {
 
+        Connection conn;
+
         try {
 
-            Class.forName("org.h2.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");*
+            conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
 
-        } catch (SQLException e) 
-        conn.close();
-        
+        } catch (SQLException e) {
+            conn.close();
+        }
 
     }
 }

@@ -6,9 +6,8 @@ import fr.univtln.ancyen.doodle.utilisateur.Createur;
 import java.io.*;
 
 public class Evenement {
-    private static Database database = Database.getInstance();
-    private static int cpt = 0;
-    private final int id;
+    private static long cpt = 0;
+    private final long id;
     private String nom;
     private String lieu;
     private String description;
@@ -25,7 +24,6 @@ public class Evenement {
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
         this.idCreateur = idCreateur;
-        database.insert("Evenement", id, nom, lieu, description, dateCreation, dateFinalisation, createur)
     }
 
 
