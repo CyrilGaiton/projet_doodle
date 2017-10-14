@@ -5,10 +5,10 @@ import fr.univtln.ancyen.doodle.utilisateur.Createur;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class Evenement {
-    private static Collection<Evenement> evenements = new ArrayList<>();
+    private static List<Evenement> evenements = new ArrayList<>();
     private static int cpt = 0;
     private final int id;
     private String nom;
@@ -27,6 +27,7 @@ public class Evenement {
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
         this.createur = createur;
+        evenements.add(this);
     }
 
 
@@ -83,15 +84,16 @@ public class Evenement {
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(evenements);
+        //rajouer les cpt; ou faire en fonctionde la liste recupérée
 
         oos.close();
     }
 
-    public static Collection<Evenement> load() throws IOException, ClassNotFoundException {
+    public static List<Evenement> load() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("evenements.save");
         ObjectInputStream ois = new ObjectInputStream(fis);
 
-        Collection<Evenement> evenements = (ArrayList<Evenement>) ois.readObject();
+        List<Evenement> evenements = (ArrayList<Evenement>) ois.readObject();
 
         ois.close();
         return evenements;

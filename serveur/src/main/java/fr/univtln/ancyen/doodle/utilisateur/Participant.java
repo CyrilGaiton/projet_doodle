@@ -1,6 +1,10 @@
 package fr.univtln.ancyen.doodle.utilisateur;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Participant {
+    private static List<Participant> participants = new ArrayList<>();
     private static int cpt = 0;
     private final int id;
     private String nom;
@@ -11,6 +15,7 @@ public class Participant {
         this.id = cpt++;
         this.nom = nom;
         this.prenom = prenom;
+        participants.add(this);
     }
 
     public String getNom() {
