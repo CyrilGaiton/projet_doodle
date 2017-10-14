@@ -9,24 +9,17 @@ import java.util.List;
 
 public class Vote {
 
-    private Evenement evenement;
-    private Participant participant;
-    private static List<Date> Votes = new ArrayList<>();
+    private int idEvenement;
+    private int idParticipant;
+    private  List <Date> votes = new ArrayList<Date>();
+
+    public Vote(int idParticipant, int idEvenement, List<Date> votes) {
 
 
-
-
-
-    public Vote(Evenement evenement, Participant participant List Votes ) {
-
-
-
-
-
+        this.idEvenement = idEvenement;
+        this.idParticipant  = idParticipant;
+        this.votes = votes;
     }
-
-
-
 
 
 }
