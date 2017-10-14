@@ -1,21 +1,32 @@
 package fr.univtln.ancyen.doodle;
 
+import fr.univtln.ancyen.doodle.date.Date;
+import fr.univtln.ancyen.doodle.utilisateur.Createur;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class Evenement {
-    private static Collection<Evenement> evenements = new ArrayList<>();
+    private static long cpt = 0;
+    private final long id;
     private String nom;
     private String lieu;
     private String description;
-    private String dateCreation;
-    private Utilisateur createur;
-    private Collection<Date> dates = new ArrayList<>();
+    private Date dateCreation;
+    private Date dateFinalisation;
+    private final int idCreateur;
 
-    public Evenement() {
-        evenements.add(this);
+
+    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int idCreateur) {
+        id = cpt++;
+        this.nom = nom;
+        this.lieu = lieu;
+        this.description = description;
+        this.dateCreation = dateCreation;
+        this.dateFinalisation = dateFinalisation;
+        this.idCreateur = idCreateur;
     }
+
+
 
     public String getNom() {
         return nom;
@@ -41,44 +52,44 @@ public class Evenement {
         this.description = description;
     }
 
-    public String getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(String dateCreation) {
+    public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
     }
 
-    public Utilisateur getCreateur() {
+    public Date getDateFinalisation() {
+        return dateFinalisation;
+    }
+
+    public void setDateFinalisation(Date dateFinalisation) {
+        this.dateFinalisation = dateFinalisation;
+    }
+
+    public Createur getCreateur() {
         return createur;
     }
 
-    public void setCreateur(Utilisateur createur) {
-        this.createur = createur;
-    }
 
-    public Collection<Date> getDates() {
-        return dates;
-    }
 
-    public void addDate(Date date){
-        dates.add(date);
-    }
 
     public static void save() throws IOException {
         FileOutputStream fos = new FileOutputStream("evenements.save");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(evenements);
+        //rajouer les cpt; ou faire en fonctionde la liste recupérée
 
         oos.close();
     }
 
-    public static Collection<Evenement> load() throws IOException, ClassNotFoundException {
+    public static List<Evenement> load() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("evenements.save");
         ObjectInputStream ois = new ObjectInputStream(fis);
 
-        Collection<Evenement> evenements = (ArrayList<Evenement>) ois.readObject();
+        List<Evenement> evenements = (ArrayList<Evenement>) ois.readObject();
 
         ois.close();
         return evenements;

@@ -14,6 +14,9 @@ import java.util.Set;
 public class App
 {
     public static void main( String[] args ) throws IOException {
+        // creation bdd h2
+
+
         // creation sélecteur
         Selector selector = Selector.open();
 
@@ -58,6 +61,8 @@ public class App
 
                 else if (key.isReadable()){
                     SocketChannel clientSockect = (SocketChannel) key.channel();
+
+                    // on crée un buffer puis on recupere dans un String
                     ByteBuffer byteBuffer = ByteBuffer.allocate(256);
                     clientSockect.read(byteBuffer);
                     String result = new String(byteBuffer.array()).trim();
