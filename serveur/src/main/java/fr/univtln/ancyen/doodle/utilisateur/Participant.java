@@ -1,10 +1,10 @@
 package fr.univtln.ancyen.doodle.utilisateur;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.univtln.ancyen.doodle.Database;
+
 
 public class Participant {
-    private static List<Participant> participants = new ArrayList<>();
+    private static Database database = Database.getInstance();
     private static int cpt = 0;
     private final int id;
     private String nom;
@@ -12,10 +12,10 @@ public class Participant {
 
 
     public Participant(String nom, String prenom) {
-        this.id = cpt++;
+        id = cpt++;
         this.nom = nom;
         this.prenom = prenom;
-        participants.add(this);
+        database.insert("Participant", id, nom, prenom);
     }
 
     public String getNom() {

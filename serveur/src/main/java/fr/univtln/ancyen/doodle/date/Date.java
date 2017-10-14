@@ -1,10 +1,10 @@
 package fr.univtln.ancyen.doodle.date;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import fr.univtln.ancyen.doodle.Database;
 
 public class Date {
-    private static List<Date> dates = new ArrayList<>();
+    private static Database database = Database.getInstance();
     private static int cpt;
     private final int id;
     private int jour;
@@ -13,20 +13,12 @@ public class Date {
     private int dureeHeure;
 
     public Date(int jour, int mois, int annee, int dureeHeure) {
-        this.id = cpt++;
+        id = cpt++;
         this.jour = jour;
         this.mois = mois;
         this.annee = annee;
         this.dureeHeure = dureeHeure;
-        dates.add(this);
+        database.insert("Date", id, jour, mois, annee, dureeHeure);
     }
 
-    public int getDureeHeure() {
-        return dureeHeure;
-    }
-
-    @Override
-    public String toString() {
-        return jour+"/"+mois+"/"+"/"+annee;
-    }
 }
