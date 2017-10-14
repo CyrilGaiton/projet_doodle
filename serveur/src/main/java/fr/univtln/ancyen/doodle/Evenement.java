@@ -4,30 +4,26 @@ import fr.univtln.ancyen.doodle.date.Date;
 import fr.univtln.ancyen.doodle.utilisateur.Createur;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Evenement {
-    private static List<Evenement> evenements = new ArrayList<>();
-    private static int cpt = 0;
-    private final int id;
+    private static long cpt = 0;
+    private final long id;
     private String nom;
     private String lieu;
     private String description;
     private Date dateCreation;
     private Date dateFinalisation;
-    private final Createur createur;
+    private final int idCreateur;
 
 
-    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, Createur createur) {
-        this.id = cpt++;
+    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int idCreateur) {
+        id = cpt++;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
-        this.createur = createur;
-        evenements.add(this);
+        this.idCreateur = idCreateur;
     }
 
 
