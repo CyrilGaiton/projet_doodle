@@ -7,7 +7,7 @@ import java.io.*;
 
 public class Evenement {
     private static long cpt = 0;
-    private final long id;
+    private final int id;
     private String nom;
     private String lieu;
     private String description;
@@ -66,10 +66,6 @@ public class Evenement {
 
     public void setDateFinalisation(Date dateFinalisation) {
         this.dateFinalisation = dateFinalisation;
-    }
-
-    public Createur getCreateur() {
-        return createur;
     }
 
 
