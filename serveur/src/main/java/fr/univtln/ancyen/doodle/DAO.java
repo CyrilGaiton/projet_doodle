@@ -3,7 +3,6 @@ package fr.univtln.ancyen.doodle;
 import java.sql.Connection;
 import java.sql.*;
 import fr.univtln.ancyen.doodle.ConnectionDatabase;
-import java.sql.SQLException
 
 
 public abstract class DAO<T>  {
