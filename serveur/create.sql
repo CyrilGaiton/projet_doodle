@@ -7,6 +7,7 @@ CREATE TABLE participant(
 
 DROP TABLE IF EXISTS evenement;
 CREATE TABLE evenement(
+
   idEvenement INTEGER,
   nomEvenement VARCHAR(100) ,
   lieuEvenement VARCHAR(100),
@@ -17,8 +18,10 @@ CREATE TABLE evenement(
   PRIMARY KEY (idEvenement, idParticipant)
 );
 
+
 DROP TABLE IF EXISTS vote;
 CREATE TABLE vote(
+
   idEvenement FOREIGN KEY REFERENCES evenement(idEvenement),
   idParticipant FOREIGN KEY REFERENCES participant(idParticipant),
   votes OTHER,
@@ -32,3 +35,4 @@ CREATE TABLE dateEvenement (
 idDate PRIMARY KEY INTEGER,
 dateHeure TIMESTAMP,
 dureeMinutesEvenement INT );
+
