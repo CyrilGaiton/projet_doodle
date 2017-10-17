@@ -14,9 +14,9 @@ public class Test extends Application {
     @Override
     public void start(Stage primaryStage) {
         Fenetre fen = new Fenetre();
-        Accueil accueil = new Accueil();
+        Accueil accueil = new Accueil(fen.getRoot());
+        Evenement even = new Evenement(fen.getRoot(), accueil);
         primaryStage.setTitle("Doodle");
-        fen.getRoot().getChildren().addAll(fen.getMb(), accueil.getText(), accueil.getLien_event(), accueil.getCreer_event());
         primaryStage.setScene(fen.getScene());
         primaryStage.show();
     }
