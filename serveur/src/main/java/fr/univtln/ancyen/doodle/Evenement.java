@@ -6,7 +6,7 @@ import fr.univtln.ancyen.doodle.utilisateur.Createur;
 import java.io.*;
 
 public class Evenement {
-    private static long cpt = 0;
+    private static int cpt = 0;
     private final int id;
     private String nom;
     private String lieu;
@@ -71,23 +71,23 @@ public class Evenement {
 
 
 
-    public static void save() throws IOException {
-        FileOutputStream fos = new FileOutputStream("evenements.save");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-        oos.writeObject(evenements);
-        //rajouer les cpt; ou faire en fonctionde la liste recupérée
-
-        oos.close();
-    }
-
-    public static List<Evenement> load() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream("evenements.save");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-
-        List<Evenement> evenements = (ArrayList<Evenement>) ois.readObject();
-
-        ois.close();
-        return evenements;
-    }
+//    public static void save() throws IOException {
+//        FileOutputStream fos = new FileOutputStream("evenements.save");
+//        ObjectOutputStream oos = new ObjectOutputStream(fos);
+//
+//        oos.writeObject(evenements);
+//        //rajouer les cpt; ou faire en fonctionde la liste recupérée
+//
+//        oos.close();
+//    }
+//
+//    public static List<Evenement> load() throws IOException, ClassNotFoundException {
+//        FileInputStream fis = new FileInputStream("evenements.save");
+//        ObjectInputStream ois = new ObjectInputStream(fis);
+//
+//        List<Evenement> evenements = (ArrayList<Evenement>) ois.readObject();
+//
+//        ois.close();
+//        return evenements;
+//    }
 }

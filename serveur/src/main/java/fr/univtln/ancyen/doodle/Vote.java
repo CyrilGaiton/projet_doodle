@@ -5,7 +5,7 @@ import fr.univtln.ancyen.doodle.date.Date;
 
 
 import java.util.ArrayList;
-import java.util.List
+import java.util.List;
 
 public class Vote {
     private final int idEvenement;
@@ -31,6 +31,9 @@ public class Vote {
     }
 
     public static void main(String[] args) {
-        VoteDAO voteDAO = new VoteDAO();
+        VoteDAO voteDAO =  new VoteDAO();
+        Vote vote = new Vote(1,1, null);
+        Vote v = voteDAO.find(vote);
+        System.out.println(v.getIdEvenement() + v.getIdParticipant());
     }
 }

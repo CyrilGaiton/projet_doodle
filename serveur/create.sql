@@ -36,3 +36,6 @@ idDate PRIMARY KEY INTEGER,
 dateHeure TIMESTAMP,
 dureeMinutesEvenement INT );
 
+INSERT INTO participant VALUES (1, 'jean', 'dupont');
+INSERT INTO evenement(id, nom, lieu, DESCRIPTION) VALUES (1, 'eve1', 'toulon', 'blabla a toulon');
+

@@ -10,9 +10,7 @@ public class Createur extends Participant{
     }
 
     public void creerEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation){
-        new Evenement(nom, lieu, description, dateCreation, dateFinalisation, this);
+        new Evenement(nom, lieu, description, dateCreation, dateFinalisation, getId());
     }
-
-    public
 
 }
