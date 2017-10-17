@@ -1,5 +1,6 @@
 package fr.univtln.ancyen.doodle;
 
+import fr.univtln.ancyen.doodle.PackageDAO.VoteDAO;
 import fr.univtln.ancyen.doodle.date.Date;
 
 
@@ -7,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List
 
 public class Vote {
-    private final long idEvenement;
-    private final long idParticipant;
+    private final int idEvenement;
+    private final int idParticipant;
     private List <Date> votes = new ArrayList<>();
 
-    public Vote(long idEvenement, long idParticipant, List<Date> votes) {
+    public Vote(int idEvenement, int idParticipant, List<Date> votes) {
         this.idEvenement = idEvenement;
         this.idParticipant = idParticipant;
         this.votes = votes;
@@ -27,5 +28,9 @@ public class Vote {
 
     public List<Date> getVotes() {
         return votes;
+    }
+
+    public static void main(String[] args) {
+        VoteDAO voteDAO = new VoteDAO();
     }
 }

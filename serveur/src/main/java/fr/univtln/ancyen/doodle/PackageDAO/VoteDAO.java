@@ -32,26 +32,26 @@ public class VoteDAO extends DAO<Vote> {
         return vote;
     }
 
-    public Vote find(long idEvenement, long idParticipant) {
-        Vote vote = new Vote();
+    public Vote find(Vote vote) {
+        Vote retour = null;
         try {
             ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT * FROM vote WHERE idEvenement = " + idEvenement
-                            + " AND idParticipant = " + idParticipant
+                            "SELECT * FROM vote WHERE idEvenement = " + vote.getIdEvenement()
+                            + " AND idParticipant = " + vote.getIdParticipant()
                     );
             if(result.first())
-                vote = new Vote(
-                        idEvenement,
-                        idParticipant,
+                retour = new Vote(
+                        vote.getIdEvenement(),
+                        vote.getIdParticipant(),
                         (ArrayList<Date>) result.getObject("votes")
                 );
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return vote;
+        return retour;
 
     }
 
