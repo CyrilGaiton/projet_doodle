@@ -11,6 +11,7 @@ public class Accueil {
     private TextField lien_event = new TextField();
     private Button creer_event = new Button("Creer un nouvel événement");
     private Evenement even;
+    private Creation_evenement new_event;
 
     public Accueil(Group grp) {
 
@@ -23,6 +24,7 @@ public class Accueil {
         creer_event.setOnAction(event -> {
             System.out.println("Event créé.");
             Accueil_cache(grp);
+            new_event.Creation_evenement_affiche(grp);
         });
         text.setFont(new Font(20));
         lien_event.setLayoutX(100); lien_event.setLayoutY(215);
@@ -44,6 +46,10 @@ public class Accueil {
 
     public void setEven(Evenement even) {
         this.even = even;
+    }
+
+    public void setNew_event(Creation_evenement new_event) {
+        this.new_event = new_event;
     }
 
     public void Accueil_affiche (Group grp){
