@@ -13,10 +13,9 @@ public class ConnectionDatabase {
     private static Connection connect;
 
 
-    public static Connection getInstance() throws Exception {
+    public static Connection getInstance(){
         if (connect == null) {
             try {
-                Class.forName("org.h2.Driver");
                 connect = DriverManager.getConnection(url, user, password);
 
             } catch (SQLException e) {
