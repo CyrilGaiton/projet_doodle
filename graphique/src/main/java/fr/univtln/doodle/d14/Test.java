@@ -16,6 +16,7 @@ public class Test extends Application {
         Fenetre fen = new Fenetre();
         Accueil accueil = new Accueil(fen.getRoot());
         Evenement even = new Evenement(fen.getRoot(), accueil);
+        Creation_evenement new_event = new Creation_evenement(fen.getRoot(), accueil);
         primaryStage.setTitle("Doodle");
         primaryStage.setScene(fen.getScene());
         primaryStage.show();
