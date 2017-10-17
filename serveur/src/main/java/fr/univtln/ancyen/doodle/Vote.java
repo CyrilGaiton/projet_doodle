@@ -7,16 +7,13 @@ import java.util.ArrayList;
 import java.util.List
 
 public class Vote {
-    private static long cpt = 0;
-    private final long id;
-    private int idEvenement;
-    private int idParticipant;
-    private  List <Date> votes = new ArrayList<>();
+    private final long idEvenement;
+    private final long idParticipant;
+    private List <Date> votes = new ArrayList<>();
 
-    public Vote(int idParticipant, int idEvenement, List<Date> votes) {
-        id = cpt++;
+    public Vote(long idEvenement, long idParticipant, List<Date> votes) {
         this.idEvenement = idEvenement;
-        this.idParticipant  = idParticipant;
+        this.idParticipant = idParticipant;
         this.votes = votes;
     }
 

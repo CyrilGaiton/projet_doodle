@@ -1,23 +1,26 @@
 package fr.univtln.ancyen.doodle.DAO;
 
+import fr.univtln.ancyen.doodle.DAO;
 import fr.univtln.ancyen.doodle.Vote;
+import fr.univtln.ancyen.doodle.date.Date;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
-public class VoteDAO extends DAO<Vote>{
+public class VoteDAO extends DAO<Vote> {
 
-    public Vote create(Vote obj) {
+    public Vote create(Vote vote) {
         try {
             PreparedStatement prepare = this.connect
                     .prepareStatement(
                             "INSERT INTO vote VALUES(?, ?, ?)"
                     );
-            prepare.setLong(1, obj.getIdEvenement());
-            prepare.setInt(2, obj.getIdParticipant());
-            prepare.setObject(3, obj.getVotes());
+            prepare.setLong(1, vote.getIdEvenement());
+            prepare.setInt(2, vote.getIdParticipant());
+            prepare.setObject(3, vote.getVotes());
 
             prepare.executeUpdate();
 
@@ -26,61 +29,60 @@ public class VoteDAO extends DAO<Vote>{
             e.printStackTrace();
         }
 
-        return obj;
+        return vote;
     }
 
-    public Vote find(long id) {
-        Vote lang = new Vote();
+    public Vote find(long idEvenement, long idParticipant) {
+        Vote vote = new Vote();
         try {
             ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT * FROM langage WHERE lan_id = " + id
+                            "SELECT * FROM vote WHERE idEvenement = " + idEvenement
+                            + " AND idParticipant = " + idParticipant
                     );
             if(result.first())
-                lang = new Vote(
-                        id,
-                        result.getString("lan_nom")
+                vote = new Vote(
+                        idEvenement,
+                        idParticipant,
+                        (ArrayList<Date>) result.getObject("votes")
                 );
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return lang;
+        return vote;
 
     }
 
 
-    public Langage update(Langage obj) {
+    public Vote update(Vote vote) {
         try {
 
-            this .connect
-                    .createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE
-                    ).executeUpdate(
-                    "UPDATE langage SET lan_nom = '" + obj.getNom() + "'"+
-                            " WHERE lan_id = " + obj.getId()
+            this.connect
+                    .createStatement()
+                    .executeUpdate(
+                    "UPDATE vote SET votes = " + vote.getVotes()
+                            + " WHERE idEvenement = " + vote.getIdEvenement()
+                            + " AND idParticipant = " + vote.getIdParticipant()
             );
-
-            obj = this.find(obj.getId());
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return obj;
+        return vote;
     }
 
 
-    public void delete(Langage obj) {
+    public void delete(Vote vote) {
         try {
 
-            this    .connect
-                    .createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE
-                    ).executeUpdate(
-                    "DELETE FROM langage WHERE lan_id = " + obj.getId()
+            this.connect
+                    .createStatement()
+                    .executeUpdate(
+                    "DELETE FROM vote WHERE idEvenement = " + vote.getIdEvenement()
+                            + " AND idParticipant = " + vote.getIdParticipant()
             );
 
         } catch (SQLException e) {
