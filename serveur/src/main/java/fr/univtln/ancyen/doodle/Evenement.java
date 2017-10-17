@@ -1,9 +1,6 @@
 package fr.univtln.ancyen.doodle;
 
 import fr.univtln.ancyen.doodle.date.Date;
-import fr.univtln.ancyen.doodle.utilisateur.Createur;
-
-import java.io.*;
 
 public class Evenement {
     private static int cpt = 0;
@@ -68,8 +65,9 @@ public class Evenement {
         this.dateFinalisation = dateFinalisation;
     }
 
-
-
+    public int getIdCreateur() {
+        return idCreateur;
+    }
 
 //    public static void save() throws IOException {
 //        FileOutputStream fos = new FileOutputStream("evenements.save");

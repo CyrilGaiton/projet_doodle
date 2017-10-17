@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class ConnectionDatabase {
 
-    private static String url = "jdbc:h2:file:~/Documents/D12/projet_doodle/serveur";
-    private static String user = "";
+    private static String url = "jdbc:h2:tcp://localhost/~/test";
+    private static String user = "sa";
     private static String password = "";
 
     private static Connection connect;

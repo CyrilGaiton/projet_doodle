@@ -1,36 +1,36 @@
 package fr.univtln.ancyen.doodle.date;
 
 
+import fr.univtln.ancyen.doodle.PackageDAO.DateDAO;
+
 public class Date {
-    private static int cpt;
-    private final int id;
-    private int jour;
-    private int mois;
-    private int annee;
+    private static int cpt = new DateDAO().count();
+    private final int idDate;
+    private String date;
     private int dureeHeure;
 
-    public Date(int jour, int mois, int annee, int dureeHeure) {
-        id = cpt++;
-        this.jour = jour;
-        this.mois = mois;
-        this.annee = annee;
+    public Date(String date, int dureeHeure) {
+        idDate = cpt++;
+        this.date = date;
         this.dureeHeure = dureeHeure;
     }
 
-    public int getId() {
-        return id;
+    public Date(int idDate, String date, int dureeHeure) {
+        this.idDate = idDate;
+        this.date = date;
+        this.dureeHeure = dureeHeure;
     }
 
-    public int getJour() {
-        return jour;
+    public int getIdDate() {
+        return idDate;
     }
 
-    public int getMois() {
-        return mois;
+    public String getDate() {
+        return date;
     }
 
-    public int getAnnee() {
-        return annee;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getDureeHeure() {

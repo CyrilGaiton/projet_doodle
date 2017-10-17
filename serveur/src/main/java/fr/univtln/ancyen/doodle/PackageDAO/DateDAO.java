@@ -1,7 +1,7 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
 import fr.univtln.ancyen.doodle.DAO;
-import fr.univtln.ancyen.doodle.Vote;
+import fr.univtln.ancyen.doodle.Date;
 import fr.univtln.ancyen.doodle.date.Date;
 
 import java.sql.PreparedStatement;
@@ -10,17 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class VoteDAO extends DAO<Vote> {
+public class DateDAO extends DAO<Date> {
 
-    public Vote create(Vote vote) {
+    public Date create(Date date) {
         try {
             PreparedStatement prepare = this.connect
                     .prepareStatement(
-                            "INSERT INTO vote VALUES(?, ?, ?)"
+                            "INSERT INTO date VALUES(?, ?, ?)"
                     );
-            prepare.setLong(1, vote.getIdEvenement());
-            prepare.setInt(2, vote.getIdParticipant());
-            prepare.setObject(3, vote.getVotes());
+            prepare.setLong(1, date.getIdDate());
+            prepare.setInt(2, date.getDate());
+            prepare.setObject(3, date.getDureeHeure());
 
             prepare.executeUpdate();
 
@@ -29,22 +29,21 @@ public class VoteDAO extends DAO<Vote> {
             e.printStackTrace();
         }
 
-        return vote;
+        return date;
     }
 
-    public Vote find(Vote vote) {
-        Vote retour = null;
+    public Date find(Date date) {
+        Date retour = null;
         try {
             ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT * FROM vote WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
+                            "SELECT * FROM vote WHERE idEvenement = " + date.getIdDate()
                     );
             if(result.first())
-                retour = new Vote(
-                        vote.getIdEvenement(),
-                        vote.getIdParticipant(),
+                retour = new Date(
+                        date.getIdDate(),
+                        result.getTimestamp("date").toString(),
                         (ArrayList<Date>) result.getObject("votes")
                 );
 
@@ -56,34 +55,33 @@ public class VoteDAO extends DAO<Vote> {
     }
 
 
-    public Vote update(Vote vote) {
+    public Date update(Date date) {
         try {
 
             this.connect
                     .createStatement()
                     .executeUpdate(
-                    "UPDATE vote SET votes = " + vote.getVotes()
-                            + " WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-            );
-            
+                            "UPDATE vote SET date = " + date.getDate()
+                                    + " dureeHeure = " + date.getDureeHeure()
+                                    + " WHERE idEvenement = " + date.getIdDate()
+                    );
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return vote;
+        return date;
     }
 
 
-    public void delete(Vote vote) {
+    public void delete(Date date) {
         try {
 
             this.connect
                     .createStatement()
                     .executeUpdate(
-                    "DELETE FROM vote WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-            );
+                            "DELETE FROM vote WHERE idEvenement = " + date.getIdDate()
+                    );
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,11 +93,12 @@ public class VoteDAO extends DAO<Vote> {
             this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT count(*) FROM vote"
+                            "SELECT count(*) FROM date"
                     )
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
 }

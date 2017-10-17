@@ -10,13 +10,11 @@ public abstract class DAO<T>  {
     public Connection connect = ConnectionDatabase.getInstance();
 
 
-
-    //Permet de creer un objet dans la base de donnees.
+    // Permet de creer un objet dans la base de donnees.
     
     public abstract T create (T obj);
-    
-    
-    //Permet de trouver un objet
+
+    // Permet de trouver un objet
     
     public abstract T find (T obj);
 
@@ -28,7 +26,9 @@ public abstract class DAO<T>  {
 
     public abstract void delete(T obj);
 
+    // Retourne le nombre de colonnes
 
+    public abstract int count();
 
 
 

@@ -33,7 +33,8 @@ public class Vote {
     public static void main(String[] args) {
         VoteDAO voteDAO =  new VoteDAO();
         Vote vote = new Vote(1,1, null);
+        voteDAO.create(vote);
         Vote v = voteDAO.find(vote);
-        System.out.println(v.getIdEvenement() + v.getIdParticipant());
+        System.out.println(v.getIdEvenement() + " " + v.getIdParticipant());
     }
 }
