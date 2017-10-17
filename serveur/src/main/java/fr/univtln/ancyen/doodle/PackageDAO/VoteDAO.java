@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle.DAO;
+package fr.univtln.ancyen.doodle.PackageDAO;
 
 import fr.univtln.ancyen.doodle.DAO;
 import fr.univtln.ancyen.doodle.Vote;

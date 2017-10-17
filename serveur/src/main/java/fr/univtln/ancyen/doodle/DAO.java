@@ -9,8 +9,7 @@ import java.sql.SQLException
 public abstract class DAO<T>  {
 
     public Connection connect = ConnectionDatabase.getInstance();
-
-
+    
 
 
     //Permet de creer un objet dans la base de donnees.
