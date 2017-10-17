@@ -1,10 +1,11 @@
 package fr.univtln.ancyen.doodle;
 
 import java.sql.Connection;
+import java.sql.*;
 import fr.univtln.ancyen.doodle.ConnectionDatabase;
 
 
-public abstract class DAO<T> {
+public abstract class DAO<T>  {
 
     public Connection connect = ConnectionDatabase.getInstance();
 
