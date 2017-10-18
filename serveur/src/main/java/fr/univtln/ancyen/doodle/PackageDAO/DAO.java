@@ -1,8 +1,8 @@
-package fr.univtln.ancyen.doodle;
+package fr.univtln.ancyen.doodle.PackageDAO;
 
 import java.sql.Connection;
-import java.sql.*;
-import fr.univtln.ancyen.doodle.ConnectionDatabase;
+
+import fr.univtln.ancyen.doodle.PackageDAO.PackageConnectionDatabase.ConnectionDatabase;
 
 
 public abstract class DAO<T>  {

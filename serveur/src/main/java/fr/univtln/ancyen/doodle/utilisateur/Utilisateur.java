@@ -2,23 +2,30 @@ package fr.univtln.ancyen.doodle.utilisateur;
 
 
 import fr.univtln.ancyen.doodle.Evenement;
+import fr.univtln.ancyen.doodle.PackageDAO.UtilisateurDAO;
 import fr.univtln.ancyen.doodle.date.Date;
 
 public class Utilisateur {
-    private static int cpt = 0;
-    private final int id;
+    private static int cpt = new UtilisateurDAO().count();
+    private final int idUtilisateur;
     private String nom;
     private String prenom;
 
 
     public Utilisateur(String nom, String prenom) {
-        id = cpt++;
+        idUtilisateur = cpt++;
         this.nom = nom;
         this.prenom = prenom;
     }
 
-    public int getId() {
-        return id;
+    public Utilisateur(int idUtilisateur, String nom, String prenom) {
+        this.idUtilisateur = idUtilisateur;
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
+    public int getIdUtilisateur() {
+        return idUtilisateur;
     }
 
     public String getNom() {
@@ -30,7 +37,7 @@ public class Utilisateur {
     }
 
     public void creerEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation){
-        new Evenement(nom, lieu, description, dateCreation, dateFinalisation, getId());
+        new Evenement(nom, lieu, description, dateCreation, dateFinalisation, getIdUtilisateur());
     }
 
 }

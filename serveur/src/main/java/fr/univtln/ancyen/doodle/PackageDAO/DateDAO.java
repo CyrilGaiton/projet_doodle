@@ -1,13 +1,10 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
-import fr.univtln.ancyen.doodle.DAO;
-import fr.univtln.ancyen.doodle.Date;
 import fr.univtln.ancyen.doodle.date.Date;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 public class DateDAO extends DAO<Date> {
@@ -19,8 +16,8 @@ public class DateDAO extends DAO<Date> {
                             "INSERT INTO date VALUES(?, ?, ?)"
                     );
             prepare.setLong(1, date.getIdDate());
-            prepare.setInt(2, date.getDate());
-            prepare.setObject(3, date.getDureeHeure());
+            prepare.setString(2, date.getDate());
+            prepare.setInt(3, date.getDureeMinute());
 
             prepare.executeUpdate();
 
@@ -38,13 +35,13 @@ public class DateDAO extends DAO<Date> {
             ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT * FROM vote WHERE idEvenement = " + date.getIdDate()
+                            "SELECT * FROM date WHERE idDate = " + date.getIdDate()
                     );
             if(result.first())
                 retour = new Date(
                         date.getIdDate(),
-                        result.getTimestamp("date").toString(),
-                        (ArrayList<Date>) result.getObject("votes")
+                        result.getString("date"),
+                        result.getInt("dureeHeure")
                 );
 
         } catch (SQLException e) {
@@ -61,9 +58,9 @@ public class DateDAO extends DAO<Date> {
             this.connect
                     .createStatement()
                     .executeUpdate(
-                            "UPDATE vote SET date = " + date.getDate()
-                                    + " dureeHeure = " + date.getDureeHeure()
-                                    + " WHERE idEvenement = " + date.getIdDate()
+                            "UPDATE date SET date = " + date.getDate()
+                                    + ", DUREEMINUTESEVENEMENT = " + date.getDureeMinute()
+                                    + " WHERE idDate = " + date.getIdDate()
                     );
 
         } catch (SQLException e) {
@@ -80,7 +77,7 @@ public class DateDAO extends DAO<Date> {
             this.connect
                     .createStatement()
                     .executeUpdate(
-                            "DELETE FROM vote WHERE idEvenement = " + date.getIdDate()
+                            "DELETE FROM date WHERE idDate = " + date.getIdDate()
                     );
 
         } catch (SQLException e) {
@@ -89,15 +86,20 @@ public class DateDAO extends DAO<Date> {
     }
 
     public int count(){
+        int c = -1;
         try {
-            this.connect
+            ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT count(*) FROM date"
-                    )
+                            "SELECT count(*) as count FROM date"
+                    );
+            if(result.first()){
+                c = result.getInt("count");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return c;
     }
 
 

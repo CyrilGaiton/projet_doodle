@@ -4,7 +4,7 @@ import fr.univtln.ancyen.doodle.date.Date;
 
 public class Evenement {
     private static int cpt = 0;
-    private final int id;
+    private final int idEvenement;
     private String nom;
     private String lieu;
     private String description;
@@ -14,7 +14,7 @@ public class Evenement {
 
 
     public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int idCreateur) {
-        id = cpt++;
+        idEvenement = cpt++;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
@@ -23,7 +23,19 @@ public class Evenement {
         this.idCreateur = idCreateur;
     }
 
+    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int idCreateur) {
+        this.idEvenement = idEvenement;
+        this.nom = nom;
+        this.lieu = lieu;
+        this.description = description;
+        this.dateCreation = dateCreation;
+        this.dateFinalisation = dateFinalisation;
+        this.idCreateur = idCreateur;
+    }
 
+    public int getIdEvenement() {
+        return idEvenement;
+    }
 
     public String getNom() {
         return nom;

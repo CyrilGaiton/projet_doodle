@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle;
+package fr.univtln.ancyen.doodle.PackageDAO.PackageConnectionDatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

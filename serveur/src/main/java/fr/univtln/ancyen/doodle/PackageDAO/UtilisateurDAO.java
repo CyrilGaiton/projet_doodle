@@ -1,25 +1,24 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
-import fr.univtln.ancyen.doodle.utilisateur.Vote;
-import fr.univtln.ancyen.doodle.date.Date;
+
+import fr.univtln.ancyen.doodle.utilisateur.Utilisateur;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
-public class VoteDAO extends DAO<Vote> {
+public class UtilisateurDAO extends DAO<Utilisateur> {
 
-    public Vote create(Vote vote) {
+    public Utilisateur create(Utilisateur utilisateur) {
         try {
             PreparedStatement prepare = this.connect
                     .prepareStatement(
-                            "INSERT INTO vote VALUES(?, ?, ?)"
+                            "INSERT INTO UTILISATEUR VALUES(?, ?, ?)"
                     );
-            prepare.setLong(1, vote.getIdEvenement());
-            prepare.setInt(2, vote.getIdParticipant());
-            prepare.setObject(3, vote.getVotes());
+            prepare.setLong(1, utilisateur.getIdUtilisateur());
+            prepare.setString(2, utilisateur.getNom());
+            prepare.setString(3, utilisateur.getPrenom());
 
             prepare.executeUpdate();
 
@@ -28,23 +27,22 @@ public class VoteDAO extends DAO<Vote> {
             e.printStackTrace();
         }
 
-        return vote;
+        return utilisateur;
     }
 
-    public Vote find(Vote vote) {
-        Vote retour = null;
+    public Utilisateur find(Utilisateur utilisateur) {
+        Utilisateur retour = null;
         try {
             ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT * FROM vote WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
+                            "SELECT * FROM UTILISATEUR WHERE IDUTILISATEUR = " + utilisateur.getIdUtilisateur()
                     );
             if(result.first())
-                retour = new Vote(
-                        vote.getIdEvenement(),
-                        vote.getIdParticipant(),
-                        (ArrayList<Date>) result.getObject("votes")
+                retour = new Utilisateur(
+                        utilisateur.getIdUtilisateur(),
+                        result.getString("nom"),
+                        result.getString("prenom")
                 );
 
         } catch (SQLException e) {
@@ -55,34 +53,33 @@ public class VoteDAO extends DAO<Vote> {
     }
 
 
-    public Vote update(Vote vote) {
+    public Utilisateur update(Utilisateur utilisateur) {
         try {
 
             this.connect
                     .createStatement()
                     .executeUpdate(
-                    "UPDATE vote SET votes = " + vote.getVotes()
-                            + " WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-            );
-            
+                            "UPDATE UTILISATEUR SET NOM = " + utilisateur.getIdUtilisateur()
+                                    + ", PRENOM = " + utilisateur.getPrenom()
+                                    + " WHERE IDUTILISATEUR = " + utilisateur.getIdUtilisateur()
+                    );
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return vote;
+        return utilisateur;
     }
 
 
-    public void delete(Vote vote) {
+    public void delete(Utilisateur utilisateur) {
         try {
 
             this.connect
                     .createStatement()
                     .executeUpdate(
-                    "DELETE FROM vote WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-            );
+                            "DELETE FROM date WHERE idDate = " + utilisateur.getIdUtilisateur()
+                    );
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,7 +92,7 @@ public class VoteDAO extends DAO<Vote> {
             ResultSet result = this.connect
                     .createStatement()
                     .executeQuery(
-                            "SELECT count(*) as count FROM vote"
+                            "SELECT count(*) as count FROM UTILISATEUR"
                     );
             if(result.first()){
                 c = result.getInt("count");
@@ -105,5 +102,6 @@ public class VoteDAO extends DAO<Vote> {
         }
         return c;
     }
+
 
 }

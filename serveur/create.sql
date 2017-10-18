@@ -9,11 +9,11 @@ CREATE TABLE utilisateur(
 DROP TABLE IF EXISTS evenement;
 CREATE TABLE evenement(
   idEvenement INT,
-  nomEvenement VARCHAR(100) ,
-  lieuEvenement VARCHAR(100),
+  nom VARCHAR(100) ,
+  lieu VARCHAR(100),
   description VARCHAR(100),
-  dateCreation TIMESTAMP,
-  dateFinalisation TIMESTAMP,
+  dateCreation OTHER,
+  dateFinalisation OTHER,
   idCreateur INT,
   PRIMARY KEY (idEvenement, idCreateur),
   FOREIGN KEY (idCreateur) REFERENCES utilisateur(idUtilisateur)
@@ -31,12 +31,21 @@ CREATE TABLE vote(
 );
 
 
-DROP TABLE IF EXISTS dateEvenement;
-CREATE TABLE dateEvenement (
+DROP TABLE IF EXISTS date;
+CREATE TABLE date (
   idDate INT,
-  dateHeure TIMESTAMP,
+  date VARCHAR(14),
   dureeMinutesEvenement INT,
   PRIMARY KEY (idDate)
+);
+
+DROP TABLE IF EXISTS dateEvenement;
+CREATE TABLE dateEvenement(
+  idEvenement INT,
+  idDate INT,
+  PRIMARY KEY (idEvenement, idDate),
+  FOREIGN KEY (idEvenement) REFERENCES evenement(idEvenement),
+  FOREIGN KEY (idDate) REFERENCES date(idDate)
 );
 
 INSERT INTO utilisateur VALUES (1, 'jean', 'dupont');

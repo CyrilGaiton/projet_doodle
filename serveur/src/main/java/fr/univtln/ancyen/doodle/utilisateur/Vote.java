@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle;
+package fr.univtln.ancyen.doodle.utilisateur;
 
 import fr.univtln.ancyen.doodle.PackageDAO.VoteDAO;
 import fr.univtln.ancyen.doodle.date.Date;

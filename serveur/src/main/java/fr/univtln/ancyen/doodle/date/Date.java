@@ -7,18 +7,18 @@ public class Date {
     private static int cpt = new DateDAO().count();
     private final int idDate;
     private String date;
-    private int dureeHeure;
+    private int dureeMinute;
 
-    public Date(String date, int dureeHeure) {
+    public Date(String date, int dureeMinute) {
         idDate = cpt++;
         this.date = date;
-        this.dureeHeure = dureeHeure;
+        this.dureeMinute = dureeMinute;
     }
 
     public Date(int idDate, String date, int dureeHeure) {
         this.idDate = idDate;
         this.date = date;
-        this.dureeHeure = dureeHeure;
+        this.dureeMinute = dureeHeure;
     }
 
     public int getIdDate() {
@@ -33,7 +33,7 @@ public class Date {
         this.date = date;
     }
 
-    public int getDureeHeure() {
-        return dureeHeure;
+    public int getDureeMinute() {
+        return dureeMinute;
     }
 }
