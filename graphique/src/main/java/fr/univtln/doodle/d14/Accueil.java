@@ -10,8 +10,8 @@ public class Accueil {
     private Text text = new Text(100,200, "Participer à un événement:");
     private TextField lien_event = new TextField();
     private Button creer_event = new Button("Creer un nouvel événement");
-    private Evenement even;
-    private Creation_evenement new_event;
+    private FenetreEvenement even;
+    private CreationEvenement new_event;
 
     public Accueil(Group grp) {
 
@@ -44,11 +44,11 @@ public class Accueil {
         return creer_event;
     }
 
-    public void setEven(Evenement even) {
+    public void setEven(FenetreEvenement even) {
         this.even = even;
     }
 
-    public void setNew_event(Creation_evenement new_event) {
+    public void setNew_event(CreationEvenement new_event) {
         this.new_event = new_event;
     }
 

@@ -3,10 +3,10 @@ package fr.univtln.doodle.d14;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 
-public class Evenement {
+public class FenetreEvenement {
     private Button btn_retour = new Button("Retour");
 
-    public Evenement(Group grp, Accueil accueil) {
+    public FenetreEvenement(Group grp, Accueil accueil) {
         accueil.setEven(this);
         btn_retour.setLayoutY(31); btn_retour.setLayoutX(939);
         btn_retour.setOnAction(event -> {
