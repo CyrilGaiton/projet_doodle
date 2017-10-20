@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 import java.util.Optional;
 
-public class Fenetre {
+public class  Fenetre {
     private String langue = "Français";
     private Group root = new Group();
     private Scene scene = new Scene(root, 1000, 562, Color.LIGHTBLUE);
