@@ -12,6 +12,7 @@ import java.util.List;
 
 public class CreationEvenement {
     private final int MAX_DATES = 15;
+    private int nb_null;
 
     private Button btn_suivant = new Button("Suivant");
     private Button btn_retour = new Button("Retour");
@@ -30,6 +31,7 @@ public class CreationEvenement {
     private DatePicker new_date;
 
     private ComboBox heures;
+    private List <ComboBox> choix_heures = new ArrayList<>();
     private ObservableList<String> liste_heures = FXCollections.observableArrayList(
                     "00h00", "00h15", "00h30","00h45","01h00","01h15","01h30","01h45","02h00","02h15",
                     "02h30","02h45","03h00","03h15","03h30","03h45","04h00","04h15","04h30","04h45","05h00",
@@ -43,7 +45,7 @@ public class CreationEvenement {
 
 
 
-    public CreationEvenement(Group grp, Accueil accueil) {
+    public CreationEvenement(Group grp, Accueil accueil, FenetreEvenement fen_event) {
         accueil.setNew_event(this);
 
         btn_retour.setOnAction(event -> {
@@ -53,18 +55,46 @@ public class CreationEvenement {
 
         btn_suivant.setOnAction(event -> {
             if (!(field_nom.getText().equals(""))) {
+                nb_null = 0;
                 String nom = field_nom.getText();
                 for (DatePicker date:calendar) {
-                    System.out.println(date.getEditor().getText());
+                    String dt = date.getEditor().getText();
+                    System.out.println(dt);
+                    if (dt.equals("")) nb_null ++;
                 }
-                Creation_evenement_cache(grp);
-                // affiche suite
+
+                for (ComboBox cb:choix_heures) {
+                    String text_cb = (String) cb.getValue();
+                    System.out.println(text_cb);
+                }
+
+                if (nb_null != calendar.size()){
+                    Creation_evenement_cache(grp);
+                    fen_event.Evenement_affiche(grp);
+                    // affiche suite
+                }
+
+                else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Erreur");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Veuillez choisir au moins une date.");
+                    alert.showAndWait();
+                }
+            }
+            else {
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Erreur");
+                alert2.setHeaderText(null);
+                alert2.setContentText("Veuillez choisir un nom d'événement.");
+                alert2.showAndWait();
             }
         });
 
         btn_add_date.setOnAction(event -> {
             Ajout_Date();
             grp.getChildren().add(new_date);
+            grp.getChildren().add(heures);
         });
 
         btn_suivant.setLayoutX(450); btn_suivant.setLayoutY(500);
@@ -95,7 +125,11 @@ public class CreationEvenement {
         for (DatePicker date:calendar) {
             grp.getChildren().remove(date);
         }
+        for (ComboBox cb:choix_heures) {
+            grp.getChildren().remove(cb);
+        }
         calendar.clear();
+        choix_heures.clear();
         btn_add_date.setLayoutY(70);
     }
 
@@ -103,9 +137,10 @@ public class CreationEvenement {
         new_date = new DatePicker();
         new_date.setLayoutX(600); new_date.setLayoutY(btn_add_date.getLayoutY());
         heures = new ComboBox();
+        new_date.setPromptText("dd/MM/yyyy");
         heures.setItems(liste_heures);
         heures.setLayoutX(800); heures.setLayoutY(btn_add_date.getLayoutY());
-        new_date.setPromptText("dd/MM/yyyy");
+        choix_heures.add(heures);
         calendar.add(new_date);
         btn_add_date.setLayoutY(btn_add_date.getLayoutY()+30);
         btn_add_date.setDisable(true);

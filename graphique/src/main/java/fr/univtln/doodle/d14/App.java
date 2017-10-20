@@ -4,10 +4,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-public class Test extends Application {
+public class App extends Application {
 
     public static void main(String[] args) {
-        Application.launch(Test.class, args);
+        Application.launch(App.class, args);
     }
 
 
@@ -15,8 +15,8 @@ public class Test extends Application {
     public void start(Stage primaryStage) {
         Fenetre fen = new Fenetre();
         Accueil accueil = new Accueil(fen.getRoot());
-        Evenement even = new Evenement(fen.getRoot(), accueil);
-        Creation_evenement new_event = new Creation_evenement(fen.getRoot(), accueil);
+        FenetreEvenement even = new FenetreEvenement(fen.getRoot(), accueil);
+        CreationEvenement new_event = new CreationEvenement(fen.getRoot(), accueil, even);
         primaryStage.setTitle("Doodle");
         primaryStage.setScene(fen.getScene());
         primaryStage.show();
