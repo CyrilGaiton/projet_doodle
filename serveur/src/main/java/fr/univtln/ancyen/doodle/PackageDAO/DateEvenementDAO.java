@@ -5,6 +5,8 @@ import fr.univtln.ancyen.doodle.Modele.DateEvenement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DateEvenementDAO extends DAO<DateEvenement> {
@@ -89,6 +91,20 @@ public class DateEvenementDAO extends DAO<DateEvenement> {
             e.printStackTrace();
         }
         return c;
+    }
+
+    public ArrayList<Integer> getByIdEvenement(int idEvenement) throws SQLException {
+        ArrayList<Integer> integers = new ArrayList<>();
+        ResultSet result = this.connect
+                .createStatement()
+                .executeQuery(
+                        "SELECT IDDATE from DATEEVENEMENT" +
+                                " WHERE IDEVENEMENT = " + idEvenement
+                );
+        while(result.next()){
+            integers.add(result.getInt("idDate"));
+        }
+        return integers;
     }
 
 }

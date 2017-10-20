@@ -1,34 +1,37 @@
 package fr.univtln.ancyen.doodle.Modele;
 
+import fr.univtln.ancyen.doodle.PackageDAO.EvenementDAO;
+
 public class Evenement {
-    private static int cpt = 0;
+    private static int cpt = new EvenementDAO().count() + 1;
     private final int idEvenement;
     private String nom;
     private String lieu;
     private String description;
     private Date dateCreation;
     private Date dateFinalisation;
-    private final int idCreateur;
 
 
-    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int idCreateur) {
+    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation) {
         idEvenement = cpt++;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
-        this.idCreateur = idCreateur;
     }
 
-    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int idCreateur) {
+    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation) {
         this.idEvenement = idEvenement;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
-        this.idCreateur = idCreateur;
+    }
+
+    public Evenement(int idEvenement) {
+        this.idEvenement = idEvenement;
     }
 
     public int getIdEvenement() {
@@ -75,9 +78,6 @@ public class Evenement {
         this.dateFinalisation = dateFinalisation;
     }
 
-    public int getIdCreateur() {
-        return idCreateur;
-    }
 
 //    public static void save() throws IOException {
 //        FileOutputStream fos = new FileOutputStream("evenements.save");

@@ -106,4 +106,22 @@ public class VoteDAO extends DAO<Vote> {
         return c;
     }
 
+    public ArrayList<ArrayList<Integer>> getByIdEvenement(int idEvenement) throws SQLException {
+        ArrayList<ArrayList<Integer>> outer = new ArrayList<>();
+        ArrayList<Integer> inner = new ArrayList<>();
+        ResultSet result = this.connect
+                .createStatement()
+                .executeQuery(
+                        "SELECT IDPARTICIPANT, IDDATE from VOTE" +
+                                " WHERE IDEVENEMENT = " + idEvenement
+                );
+        while(result.next()){
+            inner.add(result.getInt("idParticipant"));
+            inner.add(result.getInt("idDate"));
+            outer.add(inner);
+            inner.clear();
+        }
+        return outer;
+    }
+
 }

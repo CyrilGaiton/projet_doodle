@@ -9,12 +9,12 @@ import java.util.List;
 public class Vote {
     private final int idEvenement;
     private final int idParticipant;
-    private List <Date> votes = new ArrayList<>();
+    private final int idDate;
 
-    public Vote(int idEvenement, int idParticipant, List<Date> votes) {
+    public Vote(int idEvenement, int idParticipant, int idDate) {
         this.idEvenement = idEvenement;
         this.idParticipant = idParticipant;
-        this.votes = votes;
+        this.idDate= idDate;
     }
 
     public int getIdEvenement() {
@@ -25,15 +25,7 @@ public class Vote {
         return idParticipant;
     }
 
-    public List<Date> getVotes() {
-        return votes;
-    }
-
-    public static void main(String[] args) {
-        VoteDAO voteDAO =  new VoteDAO();
-        Vote vote = new Vote(1,1, null);
-        voteDAO.create(vote);
-        Vote v = voteDAO.find(vote);
-        System.out.println(v.getIdEvenement() + " " + v.getIdParticipant());
+    public int getIdDate() {
+        return idDate;
     }
 }
