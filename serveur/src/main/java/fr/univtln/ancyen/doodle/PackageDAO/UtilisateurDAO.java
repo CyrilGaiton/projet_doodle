@@ -1,7 +1,7 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
 
-import fr.univtln.ancyen.doodle.utilisateur.Utilisateur;
+import fr.univtln.ancyen.doodle.Modele.Utilisateur;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

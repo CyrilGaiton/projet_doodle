@@ -1,6 +1,6 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
-import fr.univtln.ancyen.doodle.date.DateEvenement;
+import fr.univtln.ancyen.doodle.Modele.DateEvenement;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

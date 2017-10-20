@@ -1,9 +1,7 @@
-package fr.univtln.ancyen.doodle.utilisateur;
+package fr.univtln.ancyen.doodle.Modele;
 
 
-import fr.univtln.ancyen.doodle.Evenement;
 import fr.univtln.ancyen.doodle.PackageDAO.UtilisateurDAO;
-import fr.univtln.ancyen.doodle.date.Date;
 
 public class Utilisateur {
     private static int cpt = new UtilisateurDAO().count();

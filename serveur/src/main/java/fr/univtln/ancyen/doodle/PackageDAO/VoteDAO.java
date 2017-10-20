@@ -1,7 +1,7 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
-import fr.univtln.ancyen.doodle.utilisateur.Vote;
-import fr.univtln.ancyen.doodle.date.Date;
+import fr.univtln.ancyen.doodle.Modele.Vote;
+import fr.univtln.ancyen.doodle.Modele.Date;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

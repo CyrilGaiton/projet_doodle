@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle.date;
+package fr.univtln.ancyen.doodle.Modele;
 
 
 import fr.univtln.ancyen.doodle.PackageDAO.DateDAO;

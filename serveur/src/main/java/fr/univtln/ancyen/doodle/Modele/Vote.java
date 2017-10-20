@@ -1,7 +1,6 @@
-package fr.univtln.ancyen.doodle.utilisateur;
+package fr.univtln.ancyen.doodle.Modele;
 
 import fr.univtln.ancyen.doodle.PackageDAO.VoteDAO;
-import fr.univtln.ancyen.doodle.date.Date;
 
 
 import java.util.ArrayList;

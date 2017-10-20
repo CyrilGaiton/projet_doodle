@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle.date;
+package fr.univtln.ancyen.doodle.Modele;
 
 public class DateEvenement {
     private final int idEvenement;

@@ -1,6 +1,4 @@
-package fr.univtln.ancyen.doodle;
-
-import fr.univtln.ancyen.doodle.date.Date;
+package fr.univtln.ancyen.doodle.Modele;
 
 public class Evenement {
     private static int cpt = 0;
