@@ -1,7 +1,6 @@
 package fr.univtln.ancyen.doodle;
 
-import fr.univtln.ancyen.doodle.Modele.Evenement;
-import fr.univtln.ancyen.doodle.Modele.Vote;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
