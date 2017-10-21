@@ -1,8 +1,6 @@
 package fr.univtln.ancyen.doodle.Modele;
 
 
-import fr.univtln.ancyen.doodle.PackageDAO.UtilisateurDAO;
-
 public class Utilisateur {
     private final int idUtilisateur;
     private String nom;

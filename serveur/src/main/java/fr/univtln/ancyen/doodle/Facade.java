@@ -4,19 +4,21 @@ import fr.univtln.ancyen.doodle.Modele.*;
 import fr.univtln.ancyen.doodle.PackageDAO.*;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnvoyeurEvenement {
+public class Facade {
     private EvenementDAO evenementDAO = new EvenementDAO();
     private VoteDAO voteDAO = new VoteDAO();
     private DateDAO dateDAO = new DateDAO();
     private DateEvenementDAO dateEvenementDAO = new DateEvenementDAO();
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
-    public void send(ObjectOutputStream oos, int idEvenement) throws IOException, SQLException {
+    public void sendEvenement(ObjectOutputStream oos, int idEvenement) throws IOException, SQLException {
+        oos.writeObject("evenement");
         oos.writeObject(new Evenement(idEvenement));
         List<Integer> idDateList = dateEvenementDAO.getByIdEvenement(idEvenement);
         for (int idDate:idDateList
@@ -34,5 +36,25 @@ public class EnvoyeurEvenement {
             oos.writeObject("vote");
             oos.writeObject(new Vote(idEvenement, ids.get(0), ids.get(1)));
         }
+    }
+
+    public void addEvenement(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        evenementDAO.create((Evenement) ois.readObject());
+    }
+
+    public void addVote(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        voteDAO.create((Vote) ois.readObject());
+    }
+
+    public void addUtilisateur(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        utilisateurDAO.create((Utilisateur) ois.readObject());
+    }
+
+    public void addDate(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        dateDAO.create((Date) ois.readObject());
+    }
+
+    public void addDateEvenement(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        dateEvenementDAO.create((DateEvenement) ois.readObject());
     }
 }

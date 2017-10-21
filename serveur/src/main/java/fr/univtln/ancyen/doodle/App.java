@@ -10,15 +10,16 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 
 
 public class App
 {
-    private static EnvoyeurEvenement envoyeurEvenement = new EnvoyeurEvenement();
+    private static Facade facade = new Facade();
 
-    public static void main( String[] args ) throws IOException, ClassNotFoundException {
+    public static void main( String[] args ) throws IOException, ClassNotFoundException, SQLException {
         // creation bdd h2
 
         // creation sélecteur
@@ -69,20 +70,25 @@ public class App
                     // on switch en fonction du premier string
                     String s = (String) ois.readObject();
 
-                    if (s.equals("getEvenement") {
-                            envoyeurEvenement.send(oos, ois.readInt());
-                            }
-                    else if (s.equals("addEvenement") {
-                            evenementDAO.create((Evenement) ois.readObject());
-                        }
-                    else if (s.equals("addVote") {
-                            voteDAO.create((Vote) ois.readObject());
-                        }
+                    if (s.equals("getEvenement")) {
+                        facade.sendEvenement(oos, ois.readInt());
+                    } else if (s.equals("addEvenement")) {
+                        facade.addEvenement(ois);
+                    } else if (s.equals("addVote")) {
+                        facade.addVote(ois);
+                    } else if (s.equals("addUtilisateur")) {
+                        facade.addUtilisateur(ois);
+                    } else if (s.equals("addDate")) {
+                        facade.addDate(ois);
+                    } else if (s.equals("addDateEvenement")) {
+                        facade.addDateEvenement(ois);
+                    } else if (s.equals("close")) {
+                        clientSockect.close();
+                        System.out.println("Connexion fermée: " + clientSockect.getLocalAddress());
                     }
-                    clientSockect.close();
-                    System.out.println("Connexion fermée: " + clientSockect.getLocalAddress());
                 }
             }
         }
+        serverSockect.close();
     }
 }

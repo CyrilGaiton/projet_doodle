@@ -1,11 +1,5 @@
 package fr.univtln.ancyen.doodle.Modele;
 
-import fr.univtln.ancyen.doodle.PackageDAO.VoteDAO;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Vote {
     private final int idEvenement;
     private final int idParticipant;

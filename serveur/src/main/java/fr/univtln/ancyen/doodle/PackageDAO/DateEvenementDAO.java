@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class DateEvenementDAO extends DAO<DateEvenement> {
@@ -31,24 +30,9 @@ public class DateEvenementDAO extends DAO<DateEvenement> {
     }
 
     public DateEvenement find(DateEvenement dateEvenement) {
-        DateEvenement retour = null;
-        try {
-            ResultSet result = this.connect
-                    .createStatement()
-                    .executeQuery(
-                            "SELECT * FROM DATEEVENEMENT WHERE idEvenement = " + dateEvenement.getIdEvenement()
-                                    + " AND IDDATE = " + dateEvenement.getIdDate()
-                    );
-            if(result.first())
-                retour = new DateEvenement(
-                        dateEvenement.getIdEvenement(),
-                        dateEvenement.getIdDate()
-                );
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return retour;
+        System.out.println("pas de find pour la table vote");
+        return null;
 
     }
 

@@ -19,7 +19,7 @@ public class VoteDAO extends DAO<Vote> {
                     );
             prepare.setLong(1, vote.getIdEvenement());
             prepare.setInt(2, vote.getIdParticipant());
-            prepare.setObject(3, vote.getVotes());
+            prepare.setInt(3, vote.getIdDate());
 
             prepare.executeUpdate();
 
@@ -32,45 +32,17 @@ public class VoteDAO extends DAO<Vote> {
     }
 
     public Vote find(Vote vote) {
-        Vote retour = null;
-        try {
-            ResultSet result = this.connect
-                    .createStatement()
-                    .executeQuery(
-                            "SELECT * FROM vote WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-                    );
-            if(result.first())
-                retour = new Vote(
-                        vote.getIdEvenement(),
-                        vote.getIdParticipant(),
-                        (ArrayList<Date>) result.getObject("votes")
-                );
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return retour;
+        System.out.println("pas de find pour la table vote");
+        return null;
 
     }
 
 
     public Vote update(Vote vote) {
-        try {
 
-            this.connect
-                    .createStatement()
-                    .executeUpdate(
-                    "UPDATE vote SET votes = " + vote.getVotes()
-                            + " WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-            );
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return vote;
+        System.out.println("pas d'update sur cette table");
+        return null;
     }
 
 
@@ -82,6 +54,7 @@ public class VoteDAO extends DAO<Vote> {
                     .executeUpdate(
                     "DELETE FROM vote WHERE idEvenement = " + vote.getIdEvenement()
                             + " AND idParticipant = " + vote.getIdParticipant()
+                            + " AND  IDDATE = " + vote.getIdDate()
             );
 
         } catch (SQLException e) {
