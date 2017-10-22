@@ -18,15 +18,6 @@ public class Controleur {
 
         this.facade = facade;
 
-
-    }
-
-
-    public Evenement getEvenement(String id) throws IOException, ClassNotFoundException {
-
-        int idEvenement = Integer.parseInt(id);
-        Evenement evenement = facade.getEvenement(idEvenement);
-        return evenement;
     }
 
 
@@ -39,6 +30,20 @@ public class Controleur {
     }
 
 
+
+
+    public Evenement getEvenement(String id) throws IOException, ClassNotFoundException {
+
+
+        int idEvenement = Integer.parseInt(id);
+        Evenement event= facade.getEvenement(idEvenement);
+        return event;
+    }
+
     public void updatevote() {}
 
+
+
 }
+
+

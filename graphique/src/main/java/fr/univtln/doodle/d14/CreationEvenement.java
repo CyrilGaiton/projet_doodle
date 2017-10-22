@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CreationEvenement {
     private final int MAX_DATES = 15;
-    private int nb_null;
 
     private Button btn_suivant = new Button("Suivant");
     private Button btn_retour = new Button("Retour");
@@ -28,10 +27,12 @@ public class CreationEvenement {
     private TextField field_localisation = new TextField();
 
     private List <DatePicker> calendar = new ArrayList<>();
+    private List <String> calendar_str = new ArrayList<>();
     private DatePicker new_date;
 
     private ComboBox heures;
     private List <ComboBox> choix_heures = new ArrayList<>();
+    private List <String> choix_heures_str = new ArrayList<>();
     private ObservableList<String> liste_heures = FXCollections.observableArrayList(
                     "00h00", "00h15", "00h30","00h45","01h00","01h15","01h30","01h45","02h00","02h15",
                     "02h30","02h45","03h00","03h15","03h30","03h45","04h00","04h15","04h30","04h45","05h00",
@@ -54,41 +55,7 @@ public class CreationEvenement {
         });
 
         btn_suivant.setOnAction(event -> {
-            if (!(field_nom.getText().equals(""))) {
-                nb_null = 0;
-                String nom = field_nom.getText();
-                for (DatePicker date:calendar) {
-                    String dt = date.getEditor().getText();
-                    System.out.println(dt);
-                    if (dt.equals("")) nb_null ++;
-                }
-
-                for (ComboBox cb:choix_heures) {
-                    String text_cb = (String) cb.getValue();
-                    System.out.println(text_cb);
-                }
-
-                if (nb_null != calendar.size()){
-                    Creation_evenement_cache(grp);
-                    fen_event.Evenement_affiche(grp);
-                    // affiche suite
-                }
-
-                else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Erreur");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Veuillez choisir au moins une date.");
-                    alert.showAndWait();
-                }
-            }
-            else {
-                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                alert2.setTitle("Erreur");
-                alert2.setHeaderText(null);
-                alert2.setContentText("Veuillez choisir un nom d'événement.");
-                alert2.showAndWait();
-            }
+            VerificationCreation(grp, fen_event);
         });
 
         btn_add_date.setOnAction(event -> {
@@ -128,8 +95,8 @@ public class CreationEvenement {
         for (ComboBox cb:choix_heures) {
             grp.getChildren().remove(cb);
         }
-        calendar.clear();
-        choix_heures.clear();
+        calendar.clear(); calendar_str.clear();
+        choix_heures.clear(); choix_heures_str.clear();
         btn_add_date.setLayoutY(70);
     }
 
@@ -145,8 +112,61 @@ public class CreationEvenement {
         btn_add_date.setLayoutY(btn_add_date.getLayoutY()+30);
         btn_add_date.setDisable(true);
         new_date.setOnAction(event -> {
-            if (MAX_DATES > calendar.size())
+            if (MAX_DATES > calendar.size() && !new_date.getEditor().getText().equals(""))
                 btn_add_date.setDisable(false);
+            else btn_add_date.setDisable(true);
         });
+    }
+
+    public void VerificationCreation(Group grp, FenetreEvenement fen_event){
+        if (!(field_nom.getText().equals(""))) {
+            int nb_null = 0;
+            int i = 0;
+            while (i < calendar.size()) {
+                String text_date = calendar.get(i).getEditor().getText();
+                String text_heures = (String) choix_heures.get(i).getValue();
+                if (text_date.equals("")) nb_null ++;
+//              System.out.println(dt);
+//              System.out.println(text_heures);
+                calendar_str.add(text_date);
+                choix_heures_str.add(text_heures);
+                i++;
+            }
+
+            if (nb_null != calendar.size()){
+                Creation_evenement_cache(grp);
+                fen_event.Evenement_affiche(grp);
+                VerificationListes();
+//                    appel_controlleur(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
+            }
+
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Erreur");
+                alert.setHeaderText(null);
+                alert.setContentText("Veuillez choisir au moins une date.");
+                alert.showAndWait();
+                choix_heures_str.clear();
+                calendar_str.clear();
+            }
+        }
+        else {
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Erreur");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Veuillez choisir un nom d'événement.");
+            alert2.showAndWait();
+        }
+    }
+
+    public void VerificationListes(){
+        int i = 0;
+        while (i < calendar_str.size()){
+            if (calendar_str.get(i).equals("")){
+                calendar_str.remove(calendar_str.get(i));
+                choix_heures_str.remove(choix_heures_str.get(i));
+            }
+            i ++;
+        }
     }
 }
