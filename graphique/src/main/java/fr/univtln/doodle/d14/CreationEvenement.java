@@ -121,8 +121,7 @@ public class CreationEvenement {
     public void VerificationCreation(Group grp, FenetreEvenement fen_event){
         if (!(field_nom.getText().equals(""))) {
             int nb_null = 0;
-            int i = 0;
-            while (i < calendar.size()) {
+            for (int i = 0; i < calendar.size(); i++) {
                 String text_date = calendar.get(i).getEditor().getText();
                 String text_heures = (String) choix_heures.get(i).getValue();
                 if (text_date.equals("")) nb_null ++;
@@ -130,14 +129,13 @@ public class CreationEvenement {
 //              System.out.println(text_heures);
                 calendar_str.add(text_date);
                 choix_heures_str.add(text_heures);
-                i++;
             }
 
             if (nb_null != calendar.size()){
                 Creation_evenement_cache(grp);
                 fen_event.Evenement_affiche(grp);
                 VerificationListes();
-//                    appel_controlleur(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
+//                appel_controlleur(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
             }
 
             else {
@@ -160,13 +158,11 @@ public class CreationEvenement {
     }
 
     public void VerificationListes(){
-        int i = 0;
-        while (i < calendar_str.size()){
+        for (int i = 0; i < calendar.size(); i++) {
             if (calendar_str.get(i).equals("")){
                 calendar_str.remove(calendar_str.get(i));
                 choix_heures_str.remove(choix_heures_str.get(i));
             }
-            i ++;
         }
     }
 }
