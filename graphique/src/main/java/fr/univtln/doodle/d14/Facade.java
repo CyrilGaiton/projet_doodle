@@ -28,7 +28,7 @@ public class Facade {
 
         try {
 
-            clientSocket = SocketChannel.open(new InetSocketAddress("localhost", 4242));
+            clientSocket = SocketChannel.open(new InetSocketAddress("localhost", 5625));
 
 
         } catch (IOException e) {

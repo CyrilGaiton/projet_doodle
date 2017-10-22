@@ -14,23 +14,31 @@ public class Controleur {
 
     private Facade facade;
 
-public Controleur(Facade facade) {
+    public Controleur(Facade facade) {
 
- this.facade = facade;
-
-
-}
+        this.facade = facade;
 
 
-
-public Evenement getEvenement(String id) throws IOException, ClassNotFoundException {
-
-    int idEvenement = Integer.parseInt(id);
-    facade.getEvenement(idEvenement);
-}
+    }
 
 
+    public Evenement getEvenement(String id) throws IOException, ClassNotFoundException {
+
+        int idEvenement = Integer.parseInt(id);
+        Evenement evenement = facade.getEvenement(idEvenement);
+        return evenement;
+    }
 
 
-public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation)
+    public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation) throws IOException, ClassNotFoundException {
+
+
+        Evenement evenement = new Evenement(nom, lieu, description, dateCreation, dateFinalisation);
+        facade.addEvenement(evenement);
+
+    }
+
+
+    public void updatevote() {}
+
 }
