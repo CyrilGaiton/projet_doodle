@@ -1,15 +1,10 @@
 package fr.univtln.doodle.d14;
 
-import com.sun.java.swing.plaf.windows.TMSchema;
 import fr.univtln.doodle.d14.Modele.Date;
 import fr.univtln.doodle.d14.Modele.Evenement;
 import fr.univtln.doodle.d14.Modele.Utilisateur;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 
 public class Controleur {
@@ -35,10 +30,10 @@ public class Controleur {
     public ArrayList<Participant> getParticipants(String id) throws IOException, ClassNotFoundException {
         int idEvenement = Integer.parseInt(id);
         ArrayList<Participant> participants = new ArrayList<>();
-        ArrayList<Utilisateur> utilisateurs = facade.getUtilisateurs();
+        ArrayList<Utilisateur> utilisateurs = facade.getUtilisateurs(idEvenement);
         for (Utilisateur utilisateur:utilisateurs
              ) {
-            participants.add(facade.getParticipant(idEvenement, utilisateur.getIdUtilisateur()))
+            participants.add(facade.getParticipant(idEvenement, utilisateur.getIdUtilisateur()));
         }
         return participants;
     }

@@ -97,6 +97,8 @@ public class Facade {
         ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
         oos.writeObject("addEvenement");
         oos.writeObject(evenement);
+
+
         oos.close();
     }
 
