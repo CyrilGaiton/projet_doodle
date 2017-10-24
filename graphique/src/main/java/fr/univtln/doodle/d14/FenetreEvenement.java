@@ -1,5 +1,6 @@
 package fr.univtln.doodle.d14;
 
+import fr.univtln.doodle.d14.Modele.Evenement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -29,11 +30,12 @@ public class FenetreEvenement {
     private Text description_event = new Text();
     private Text localisation_event = new Text();
     private Text duree_event = new Text();
+    private Evenement id_event;
 
     // /!\      Test fonction Creer_Tableau()     /!\
-    private List<Participant> testuti = new ArrayList<>();
-    private List<String> testdat = new ArrayList<>();
-    private List<String> testheu = new ArrayList<>();
+    private List<Participant> liste_participants;
+    private List<String> liste_dates = new ArrayList<>();
+    private List<String> liste_heure = new ArrayList<>();
     // /!\      Test fonction Creer_Tableau()     /!\
 
     public FenetreEvenement(Group grp, Accueil accueil) {
@@ -63,12 +65,12 @@ public class FenetreEvenement {
             // controlleur_save_modif()
         });
 
-        // /!\      Test fonction Creer_Tableau()     /!\
-        testuti.add(new Participant("gerrard", 2)); testuti.add(new Participant("marc", 2));
-        testdat.add("10/10/2010"); testdat.add("02/02/2002");
-        testheu.add("05h30"); testheu.add("");
-        Creer_Tableau(testuti, testdat, testheu);
-        // /!\      Test fonction Creer_Tableau()     /!\
+//        // /!\      Test fonction Creer_Tableau()     /!\
+//        liste_participants.add(new Participant("gerrard", 2)); liste_participants.add(new Participant("marc", 2));
+//        liste_dates.add("10/10/2010"); liste_dates.add("02/02/2002");
+//        liste_heure.add("05h30"); liste_heure.add("");
+//        Creer_Tableau(liste_participants, liste_dates, liste_heure);
+//        // /!\      Test fonction Creer_Tableau()     /!\
 
         btn_add_participant.setLayoutX(350); btn_add_participant.setLayoutY(520);
         btn_retour.setLayoutY(31); btn_retour.setLayoutX(938);
@@ -79,11 +81,11 @@ public class FenetreEvenement {
         titre_event.setTextAlignment(TextAlignment.CENTER); titre_event.setWrappingWidth(1000);
         titre_event.setLayoutY(50); titre_event.setFont(new Font(20));
         description_event.setLayoutX(350); description_event.setLayoutY(80); description_event.setWrappingWidth(300);
-        description_event.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        titre_event.setText("Denis");
-        localisation_event.setText("Lieu: Riley's asshole");
         duree_event.setLayoutX(100); duree_event.setLayoutY(110);
-        duree_event.setText("Duree: 2h");
+//        description_event.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//        titre_event.setText("Denis");
+//        localisation_event.setText("Lieu: Riley's asshole");
+//        duree_event.setText("Duree: 2h");
 
         tableau.setItems(users);
         tableau.setEditable(true);
@@ -92,8 +94,11 @@ public class FenetreEvenement {
         tableau.setLayoutX(100); tableau.setLayoutY(150);
     }
 
-    public void Evenement_affiche(Group grp){
+    public void Evenement_affiche(Group grp, Evenement evenement, List<Participant> participants){
         grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
+        id_event = evenement;
+        liste_participants = participants;
+        setInfos(id_event.getNom(), id_event.getDescription(), id_event.getLieu(), "2");
     }
 
     public void Evenement_cache(Group grp){
@@ -118,8 +123,8 @@ public class FenetreEvenement {
     public void Ajout_Participant(String nom){
         tableau.getColumns().clear();
         users.clear();
-        testuti.add(new Participant(nom, size));
-        Creer_Tableau(testuti, testdat, testheu);
+        liste_participants.add(new Participant(nom, size));
+        Creer_Tableau(liste_participants, liste_dates, liste_heure);
     }
 
     public void setInfos(String titre, String description, String localisation, String duree){

@@ -13,8 +13,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Fenetre fen = new Fenetre();
-        Accueil accueil = new Accueil(fen.getRoot());
+        Facade facade = new Facade();
+        Fenetre fen = new Fenetre(facade);
+        Accueil accueil = new Accueil(fen.getRoot(), fen.getControleur());
         FenetreEvenement even = new FenetreEvenement(fen.getRoot(), accueil);
         CreationEvenement new_event = new CreationEvenement(fen.getRoot(), accueil, even);
         primaryStage.setTitle("Doodle");

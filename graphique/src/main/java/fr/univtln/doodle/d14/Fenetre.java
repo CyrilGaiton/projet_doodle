@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import java.util.Optional;
 
 public class  Fenetre {
+    private Controleur controleur;
+
     private String langue = "Français";
     private Group root = new Group();
     private Scene scene = new Scene(root, 1000, 562, Color.LIGHTBLUE);
@@ -20,7 +22,9 @@ public class  Fenetre {
     private MenuItem pseudo_item = new MenuItem("Changement pseudo");
     private MenuBar mb = new MenuBar();
 
-    public Fenetre() {
+    public Fenetre(Facade facade) {
+        controleur = new Controleur(facade);
+
         exporter_item.setOnAction(event -> System.out.println("Exportation ..."));
 
         imprimer_item.setOnAction(event -> System.out.println("Impression ..."));
@@ -70,5 +74,9 @@ public class  Fenetre {
 
     public MenuBar getMb() {
         return mb;
+    }
+
+    public Controleur getControleur() {
+        return controleur;
     }
 }
