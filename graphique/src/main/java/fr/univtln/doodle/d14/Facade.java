@@ -65,53 +65,53 @@ public class Facade {
 
 //Pas sur du type de retour de cette fonction. Une arraylist des 5 arraylists utilisees ici ou simplement une instance de la classe Evenement ?
     
-    public Evenement getEvenement(int id) throws IOException, ClassNotFoundException {
-        int var = findEvenement(id);
-        if(var != -1)
-            return listEvenement.get(var);
-        else {
-            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
-            oos.writeObject("getEvenement : ");
-            oos.writeInt(var);
-
-            ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
-            ObjectInputStream ois2 = new ObjectInputStream((clientSocket.socket().getInputStream()));
-
-            String s = " ";
-            while(!s.equals("close")) {
-                s = (String) ois.readObject();
-
-                if (s.equals("evenement")) {
-                    Evenement event = (Evenement) ois2.readObject();
-                    listEvenement.add(event);
-                }
-                else if (s.equals("date")) {
-
-                    Date date = (Date) ois2.readObject();
-                    listDate.add(date);
-                }
-
-                else if (s.equals("dateEvenement")) {
-
-                    DateEvenement dateevenement = (DateEvenement) ois2.readObject();
-                    listDateEvenement.add(dateevenement);
-                }
-
-                else if (s.equals("utilisateur")) {
-
-                    Utilisateur user = (Utilisateur) ois2.readObject();
-                    listUtilisateur.add(user);
-                }
-
-            }
-
-
-
-            return event;
-
-        }
-
-    }
+//    public Evenement getEvenement(int id) throws IOException, ClassNotFoundException {
+//        int var = findEvenement(id);
+//        if(var != -1)
+//            return listEvenement.get(var);
+//        else {
+//            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+//            oos.writeObject("getEvenement : ");
+//            oos.writeInt(var);
+//
+//            ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+//            ObjectInputStream ois2 = new ObjectInputStream((clientSocket.socket().getInputStream()));
+//
+//            String s = " ";
+//            while(!s.equals("close")) {
+//                s = (String) ois.readObject();
+//
+//                if (s.equals("evenement")) {
+//                    Evenement event = (Evenement) ois2.readObject();
+//                    listEvenement.add(event);
+//                }
+//                else if (s.equals("date")) {
+//
+//                    Date date = (Date) ois2.readObject();
+//                    listDate.add(date);
+//                }
+//
+//                else if (s.equals("dateEvenement")) {
+//
+//                    DateEvenement dateevenement = (DateEvenement) ois2.readObject();
+//                    listDateEvenement.add(dateevenement);
+//                }
+//
+//                else if (s.equals("utilisateur")) {
+//
+//                    Utilisateur user = (Utilisateur) ois2.readObject();
+//                    listUtilisateur.add(user);
+//                }
+//
+//            }
+//
+//
+//
+//            return event;
+//
+//        }
+//
+//    }
 
 
 
