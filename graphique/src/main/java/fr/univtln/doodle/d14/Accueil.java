@@ -1,10 +1,14 @@
 package fr.univtln.doodle.d14;
 
+import fr.univtln.doodle.d14.Modele.Evenement;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Accueil {
     private Text text = new Text(100,200, "Participer à un événement:");
@@ -13,13 +17,18 @@ public class Accueil {
     private FenetreEvenement even;
     private CreationEvenement new_event;
 
-    public Accueil(Group grp) {
+    public Accueil(Group grp, Controleur controleur) {
 
         lien_event.setOnAction(event -> {
             System.out.println(lien_event.getText());
-            //controlleur.getevent(lien_event.getText())
-            Accueil_cache(grp);
-            even.Evenement_affiche(grp);
+            try {
+                Evenement evenement = controleur.getEvenement(lien_event.getText());
+                List<Participant> participants = controleur.getParticipants(Integer.toString(evenement.getIdEvenement()));
+                Accueil_cache(grp);
+                even.Evenement_affiche(grp, evenement, participants);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         creer_event.setOnAction(event -> {
@@ -31,18 +40,6 @@ public class Accueil {
         lien_event.setLayoutX(100); lien_event.setLayoutY(215);
         creer_event.setLayoutX(600); creer_event.setLayoutY(200); creer_event.setFont(new Font(20));
         Accueil_affiche(grp);
-    }
-
-    public Text getText() {
-        return text;
-    }
-
-    public TextField getLien_event() {
-        return lien_event;
-    }
-
-    public Button getCreer_event() {
-        return creer_event;
     }
 
     public void setEven(FenetreEvenement even) {

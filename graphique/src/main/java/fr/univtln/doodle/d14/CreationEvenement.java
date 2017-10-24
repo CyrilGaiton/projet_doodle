@@ -1,5 +1,6 @@
 package fr.univtln.doodle.d14;
 
+import fr.univtln.doodle.d14.Modele.Evenement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -134,7 +135,7 @@ public class CreationEvenement {
 
             if (nb_null != calendar.size()){
                 Creation_evenement_cache(grp);
-                fen_event.Evenement_affiche(grp);
+//                fen_event.Evenement_affiche(grp);
                 VerificationListes();
 //                controlleur_creer_event(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
             }

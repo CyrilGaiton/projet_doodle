@@ -36,7 +36,7 @@ public class Participant {
     }
 
     public BooleanProperty voteProperty(int i){
-        return getVotes().get(i);
+        return votes.get(i);
     }
 
     public void setVote(boolean vote, int i){
