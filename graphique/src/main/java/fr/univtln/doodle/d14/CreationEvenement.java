@@ -98,6 +98,9 @@ public class CreationEvenement {
         calendar.clear(); calendar_str.clear();
         choix_heures.clear(); choix_heures_str.clear();
         btn_add_date.setLayoutY(70);
+        field_nom.clear();
+        field_description.clear();
+        field_localisation.clear();
     }
 
     public void Ajout_Date(){
@@ -125,8 +128,6 @@ public class CreationEvenement {
                 String text_date = calendar.get(i).getEditor().getText();
                 String text_heures = (String) choix_heures.get(i).getValue();
                 if (text_date.equals("")) nb_null ++;
-//              System.out.println(dt);
-//              System.out.println(text_heures);
                 calendar_str.add(text_date);
                 choix_heures_str.add(text_heures);
             }
@@ -135,7 +136,7 @@ public class CreationEvenement {
                 Creation_evenement_cache(grp);
                 fen_event.Evenement_affiche(grp);
                 VerificationListes();
-//                appel_controlleur(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
+//                controlleur_creer_event(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
             }
 
             else {
@@ -162,6 +163,9 @@ public class CreationEvenement {
             if (calendar_str.get(i).equals("")){
                 calendar_str.remove(calendar_str.get(i));
                 choix_heures_str.remove(choix_heures_str.get(i));
+            }
+            else {
+                if (choix_heures_str.get(i).equals(null)) choix_heures_str.set(i, "");
             }
         }
     }

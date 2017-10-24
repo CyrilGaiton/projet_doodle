@@ -9,6 +9,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +23,18 @@ public class FenetreEvenement {
     private TableView <Participant> tableau = new TableView<>();
     private ObservableList<Participant> users = FXCollections.observableArrayList();
     private Button btn_add_participant = new Button("Ajouter un participant");
+    private Button btn_refresh = new Button("Refresh");
+    private Button btn_modif = new Button ("Enregistrer");
+    private Text titre_event = new Text();
+    private Text description_event = new Text();
+    private Text localisation_event = new Text();
+    private Text duree_event = new Text();
 
     // /!\      Test fonction Creer_Tableau()     /!\
     private List<Participant> testuti = new ArrayList<>();
     private List<String> testdat = new ArrayList<>();
     private List<String> testheu = new ArrayList<>();
+    // /!\      Test fonction Creer_Tableau()     /!\
 
     public FenetreEvenement(Group grp, Accueil accueil) {
         accueil.setEven(this);
@@ -41,39 +51,59 @@ public class FenetreEvenement {
             TextInputDialog dialog = new TextInputDialog("nom");
             dialog.setTitle("Ajout d'un participant");
             dialog.setHeaderText(null);
-            dialog.setContentText("Nom:");
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(this::Ajout_Participant);
+        });
+
+        btn_refresh.setOnAction(event -> {
+            // controleur_refresh()
+        });
+
+        btn_modif.setOnAction(event -> {
+            // controlleur_save_modif()
         });
 
         // /!\      Test fonction Creer_Tableau()     /!\
         testuti.add(new Participant("gerrard", 2)); testuti.add(new Participant("marc", 2));
         testdat.add("10/10/2010"); testdat.add("02/02/2002");
-        testheu.add("05h30"); testheu.add(null);
+        testheu.add("05h30"); testheu.add("");
         Creer_Tableau(testuti, testdat, testheu);
+        // /!\      Test fonction Creer_Tableau()     /!\
 
-        btn_add_participant.setLayoutX(450); btn_add_participant.setLayoutY(500);
-        btn_retour.setLayoutY(31); btn_retour.setLayoutX(939);
+        btn_add_participant.setLayoutX(350); btn_add_participant.setLayoutY(520);
+        btn_retour.setLayoutY(31); btn_retour.setLayoutX(938);
+        btn_refresh.setLayoutX(932); btn_refresh.setLayoutY(61);
+        btn_modif.setLayoutX(520); btn_modif.setLayoutY(520);
+
+        localisation_event.setLayoutX(100); localisation_event.setLayoutY(80);
+        titre_event.setTextAlignment(TextAlignment.CENTER); titre_event.setWrappingWidth(1000);
+        titre_event.setLayoutY(50); titre_event.setFont(new Font(20));
+        description_event.setLayoutX(350); description_event.setLayoutY(80); description_event.setWrappingWidth(300);
+        description_event.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        titre_event.setText("Denis");
+        localisation_event.setText("Lieu: Riley's asshole");
+        duree_event.setLayoutX(100); duree_event.setLayoutY(110);
+        duree_event.setText("Duree: 2h");
 
         tableau.setItems(users);
         tableau.setEditable(true);
-//        tableau.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableau.setLayoutX(100); tableau.setLayoutY(100);
+        tableau.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableau.setMinWidth(800); tableau.setMaxHeight(350);
+        tableau.setLayoutX(100); tableau.setLayoutY(150);
     }
 
     public void Evenement_affiche(Group grp){
-        grp.getChildren().addAll(btn_retour, btn_add_participant, tableau);
+        grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
     }
 
     public void Evenement_cache(Group grp){
-        grp.getChildren().removeAll(btn_retour, btn_add_participant, tableau);
+        grp.getChildren().removeAll(btn_retour, btn_add_participant, tableau, titre_event, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
     }
 
     public void Creer_Tableau(List<Participant> utilisateurs, List<String> calendar_str, List<String> heures_str){
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
         tableau.getColumns().add(colonne1);
-//        colonne1.setStyle("-fx-background-color: blue");
 
         size = calendar_str.size();
         for (int i = 0; i < size; i++) {
@@ -90,5 +120,13 @@ public class FenetreEvenement {
         users.clear();
         testuti.add(new Participant(nom, size));
         Creer_Tableau(testuti, testdat, testheu);
+    }
+
+    public void setInfos(String titre, String description, String localisation, String duree){
+        titre_event.setText(titre);
+        description_event.setText(description);
+        if (!localisation.equals("")) localisation = "Lieu: "+localisation;
+        localisation_event.setText(localisation);
+        duree_event.setText("Duree: "+duree);
     }
 }

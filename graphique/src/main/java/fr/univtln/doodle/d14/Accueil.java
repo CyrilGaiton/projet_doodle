@@ -17,8 +17,8 @@ public class Accueil {
 
         lien_event.setOnAction(event -> {
             System.out.println(lien_event.getText());
+            //controlleur.getevent(lien_event.getText())
             Accueil_cache(grp);
-            // demander controleur
             even.Evenement_affiche(grp);
         });
 
@@ -59,5 +59,6 @@ public class Accueil {
 
     public void Accueil_cache(Group grp){
         grp.getChildren().removeAll(text, lien_event, creer_event);
+        lien_event.clear();
     }
 }
