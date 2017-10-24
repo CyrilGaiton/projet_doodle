@@ -22,8 +22,10 @@ public class Accueil {
         lien_event.setOnAction(event -> {
             System.out.println(lien_event.getText());
             try {
+                System.out.println("recup evenement");
                 Evenement evenement = controleur.getEvenement(lien_event.getText());
-                List<Participant> participants = controleur.getParticipants(Integer.toString(evenement.getIdEvenement()));
+                System.out.println("recup participants");
+                List<Participant> participants = controleur.getParticipants(evenement.getIdEvenement());
                 Accueil_cache(grp);
                 even.Evenement_affiche(grp, evenement, participants);
             } catch (IOException | ClassNotFoundException e) {

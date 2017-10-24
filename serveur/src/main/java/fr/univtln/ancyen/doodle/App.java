@@ -19,7 +19,6 @@ public class App
     private static Facade facade = new Facade();
 
     public static void main( String[] args ) throws IOException, ClassNotFoundException, SQLException {
-        // creation bdd h2
 
         // creation sélecteur
         Selector selector = Selector.open();
@@ -27,7 +26,7 @@ public class App
         // creation socket et binding avec addresse
         ServerSocketChannel serverSockect = ServerSocketChannel.open();
         String hostname = "localhost";
-        int port = 5625;
+        int port = 5700;
         InetSocketAddress address = new InetSocketAddress(hostname, port);
         serverSockect.bind(address);
         System.out.println("Serveur lancé sur le port " + port);
@@ -39,10 +38,12 @@ public class App
         // donc l'autorisation des nouvelles connexions (OP_ACCEPT)
         int validops = serverSockect.validOps();
 
-        SelectionKey selectionKey = serverSockect.register(selector, validops);
+        SelectionKey selectionKey = serverSockect.register(selector, validops, null);
 
         boolean server_running = true;
         while (server_running) {
+            //on prends les socket prets pour des opération d'IO
+            selector.select();
 
             // on crée l'ensemble des opérations en attente
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
@@ -51,17 +52,18 @@ public class App
             // on fait une boucle pour traiter toutes les ops en attente
             while (selectionKeyIterator.hasNext()) {
                 SelectionKey key = selectionKeyIterator.next();
-
                 if (key.isAcceptable()) {
                     SocketChannel clientSocket = serverSockect.accept();
-
+                    System.out.println("-----------");
                     // non bloquant
                     clientSocket.configureBlocking(false);
+                    System.out.println("---");
 
                     // on l'enregistre avec une action valide de lecture
                     clientSocket.register(selector, SelectionKey.OP_READ);
                     System.out.println("Connexion aceptée: " + clientSocket.getLocalAddress());
                 } else if (key.isReadable()) {
+                    System.out.println("Serveur en train de lire ...");
                     SocketChannel clientSockect = (SocketChannel) key.channel();
                     ObjectInputStream ois = new ObjectInputStream(clientSockect.socket().getInputStream());
                     ObjectOutputStream oos = new ObjectOutputStream(clientSockect.socket().getOutputStream());
@@ -91,6 +93,8 @@ public class App
                         clientSockect.close();
                         System.out.println("Connexion fermée: " + clientSockect.getLocalAddress());
                     }
+                    oos.close();
+                    ois.close();
                 }
             }
         }

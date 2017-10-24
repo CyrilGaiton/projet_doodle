@@ -1,8 +1,6 @@
 package fr.univtln.doodle.d14;
 
 import fr.univtln.doodle.d14.Modele.*;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,10 +25,12 @@ public class Facade {
     public void seConnecter() {
 
         try {
-            clientSocket = SocketChannel.open(new InetSocketAddress("localhost", 5625));
+            System.out.println("En attente connexion");
+            clientSocket = SocketChannel.open(new InetSocketAddress("localhost", 5700));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("connexion réussie");
     }
 
 
@@ -39,7 +39,9 @@ public class Facade {
         if(evenement != null)
             return evenement;
         else {
+            System.out.println("load evenement");
             loadEvenement(idEvenement);
+            System.out.println("find evenement");
             evenement = findEvenement(idEvenement);
             return evenement;
         }
@@ -148,14 +150,21 @@ public class Facade {
 //Pas sur du type de retour de cette fonction. Une arraylist des 5 arraylists utilisees ici ou simplement une instance de la classe Evenement ?
     
     public void loadEvenement(int idEvenement) throws IOException, ClassNotFoundException {
+        System.out.println("creation oos");
         ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+
+        System.out.println("ecriture get evenement et l'id");
         oos.writeObject("getEvenement");
         oos.writeInt(idEvenement);
 
+        System.out.println("creation ois");
+        oos.close();
         ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        System.out.println("ALLO");
 
         listGroupEvenements.put(idEvenement, new GroupEvenement());
 
+        System.out.println("on lit l'objet evenement renvoyé");
         String s = (String) ois.readObject();
         while(!s.equals("close")) {
 
