@@ -16,7 +16,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                     .prepareStatement(
                             "INSERT INTO UTILISATEUR VALUES(?, ?, ?)"
                     );
-            prepare.setLong(1, utilisateur.getIdUtilisateur());
+            prepare.setLong(1, count() + 1);
             prepare.setString(2, utilisateur.getNom());
             prepare.setString(3, utilisateur.getPrenom());
 

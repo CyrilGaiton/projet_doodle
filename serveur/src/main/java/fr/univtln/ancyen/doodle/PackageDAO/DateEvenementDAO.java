@@ -16,7 +16,7 @@ public class DateEvenementDAO extends DAO<DateEvenement> {
                     .prepareStatement(
                             "INSERT INTO DATEEVENEMENT VALUES(?, ?)"
                     );
-            prepare.setLong(1, dateEvenement.getIdEvenement());
+            prepare.setInt(1, dateEvenement.getIdEvenement());
             prepare.setInt(2, dateEvenement.getIdDate());
 
             prepare.executeUpdate();

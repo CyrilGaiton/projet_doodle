@@ -14,6 +14,7 @@ CREATE TABLE evenement(
   description VARCHAR(100),
   dateCreation OTHER,
   dateFinalisation OTHER,
+  duree int,
   PRIMARY KEY (idEvenement)
 );
 
@@ -21,7 +22,6 @@ DROP TABLE IF EXISTS date;
 CREATE TABLE date (
   idDate INT,
   date VARCHAR(14),
-  dureeMinutesEvenement INT,
   PRIMARY KEY (idDate)
 );
 

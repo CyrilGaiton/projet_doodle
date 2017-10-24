@@ -1,24 +1,19 @@
 package fr.univtln.ancyen.doodle.Modele;
 
 
-import fr.univtln.ancyen.doodle.PackageDAO.DateDAO;
-
 public class Date {
-    private static int cpt = new DateDAO().count() + 1;
+    private static int cpt = 0;
     private final int idDate;
     private String date;
-    private int dureeMinute;
 
-    public Date(String date, int dureeMinute) {
+    public Date(String date) {
         idDate = cpt++;
         this.date = date;
-        this.dureeMinute = dureeMinute;
     }
 
-    public Date(int idDate, String date, int dureeHeure) {
+    public Date(int idDate, String date) {
         this.idDate = idDate;
         this.date = date;
-        this.dureeMinute = dureeHeure;
     }
 
     public Date(int idDate) {
@@ -35,9 +30,5 @@ public class Date {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public int getDureeMinute() {
-        return dureeMinute;
     }
 }

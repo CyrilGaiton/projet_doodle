@@ -1,63 +1,103 @@
 package fr.univtln.doodle.d14;
 
 import fr.univtln.doodle.d14.Modele.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
-import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Facade {
 
-
-    private List<Evenement> listEvenement = new ArrayList<>();
-    private List<Vote> listVote = new ArrayList<>();
-    private List<DateEvenement> listDateEvenement = new ArrayList<>();
-    private List<Utilisateur> listUtilisateur = new ArrayList<>();
-    private List<Date> listDate = new ArrayList<>();
+    private Map<Integer, GroupEvenement> listGroupEvenements = new HashMap<>();
     private SocketChannel clientSocket;
 
 
     public Facade () {
-
         this.seConnecter();
     }
-
 
 
     public void seConnecter() {
 
         try {
-
             clientSocket = SocketChannel.open(new InetSocketAddress("localhost", 5625));
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
+    public Evenement getEvenement(int idEvenement) throws IOException, ClassNotFoundException {
+        Evenement evenement = findEvenement(idEvenement);
+        if(evenement != null)
+            return evenement;
+        else {
+            loadEvenement(idEvenement);
+            evenement = findEvenement(idEvenement);
+            return evenement;
+        }
+    }
+
+    public ArrayList<Date> getDates(int idEvenement){
+        ArrayList<Date> dates = new ArrayList<>();
+        for (DateEvenement dateEvenement:listGroupEvenements.get(idEvenement).getListDateEvenement()
+             ) {
+            if (dateEvenement.getIdEvenement() == idEvenement){
+                dates.add(findDate(idEvenement, dateEvenement.getIdDate()));
+            }
+        }
+        return dates;
+    }
+
+    public ArrayList<Utilisateur> getUtilisateurs(int idEvenement){
+        ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+        ArrayList<Integer> integers = new ArrayList<>();
+        for (Vote vote:listGroupEvenements.get(idEvenement).getListVote()
+                ) {
+            if (vote.getIdEvenement() == idEvenement){
+                if (integers.contains(vote.getIdParticipant())) {
+                    integers.add(vote.getIdParticipant());
+                    utilisateurs.add(findUtilisateur(idEvenement, vote.getIdParticipant()));
+                }
+            }
+        }
+        return utilisateurs;
+    }
+
+    public Participant getParticipant(int idEvenement, int idUtilisateur){
+        ArrayList<Integer> idsDates = new ArrayList<>();
+        ArrayList<Date> dates = getDates(idEvenement);
+        for (Date date:dates
+             ) {
+            idsDates.add(date.getIdDate());
+        }
+
+        Participant participant = new Participant(listGroupEvenements.get(idEvenement).findUtilisateur(idUtilisateur).getNom(), idsDates.size());
+
+        for (Vote vote:listGroupEvenements.get(idEvenement).getListVote()
+                ) {
+            if (vote.getIdEvenement() == idEvenement) {
+                if (vote.getIdParticipant() == idUtilisateur) {
+                    participant.setVote(true, idsDates.indexOf(vote.getIdDate()));
+                }
+            }
+        }
+        return participant;
+    }
+
 
     public void addEvenement(Evenement evenement) throws IOException, ClassNotFoundException {
-
-
-        boolean confirmAddEvenement;
-
         ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
-        oos.writeObject("addEvenement : ");
+        oos.writeObject("addEvenement");
         oos.writeObject(evenement);
-
-        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
-
-        confirmAddEvenement = (boolean)ois.readObject();
-
+        oos.close();
     }
 
 
@@ -65,69 +105,70 @@ public class Facade {
 
 //Pas sur du type de retour de cette fonction. Une arraylist des 5 arraylists utilisees ici ou simplement une instance de la classe Evenement ?
     
-//    public Evenement getEvenement(int id) throws IOException, ClassNotFoundException {
-//        int var = findEvenement(id);
-//        if(var != -1)
-//            return listEvenement.get(var);
-//        else {
-//            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
-//            oos.writeObject("getEvenement : ");
-//            oos.writeInt(var);
-//
-//            ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
-//            ObjectInputStream ois2 = new ObjectInputStream((clientSocket.socket().getInputStream()));
-//
-//            String s = " ";
-//            while(!s.equals("close")) {
-//                s = (String) ois.readObject();
-//
-//                if (s.equals("evenement")) {
-//                    Evenement event = (Evenement) ois2.readObject();
-//                    listEvenement.add(event);
-//                }
-//                else if (s.equals("date")) {
-//
-//                    Date date = (Date) ois2.readObject();
-//                    listDate.add(date);
-//                }
-//
-//                else if (s.equals("dateEvenement")) {
-//
-//                    DateEvenement dateevenement = (DateEvenement) ois2.readObject();
-//                    listDateEvenement.add(dateevenement);
-//                }
-//
-//                else if (s.equals("utilisateur")) {
-//
-//                    Utilisateur user = (Utilisateur) ois2.readObject();
-//                    listUtilisateur.add(user);
-//                }
-//
-//            }
-//
-//
-//
-//            return event;
-//
-//        }
-//
-//    }
+    public void loadEvenement(int idEvenement) throws IOException, ClassNotFoundException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("getEvenement");
+        oos.writeInt(idEvenement);
 
+        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
 
+        listGroupEvenements.put(idEvenement, new GroupEvenement());
 
-    public int findEvenement(int id){
+        String s = (String) ois.readObject();
+        while(!s.equals("close")) {
 
-        for (int i = 0; i<listEvenement.size(); i++) {
+            if (s.equals("evenement")) {
+                Evenement evenement = (Evenement) ois.readObject();
+                listGroupEvenements.get(idEvenement).setEvenement(evenement);
+            }
+            else if (s.equals("date")) {
+                Date date = (Date) ois.readObject();
+                listGroupEvenements.get(idEvenement).addDate(date);
+            }
 
-            if(listEvenement.get(i).getIdEvenement() == id)
-                return i;
+            else if (s.equals("dateEvenement")) {
+                DateEvenement dateEvenement = (DateEvenement) ois.readObject();
+                listGroupEvenements.get(idEvenement).addDateEvenement(dateEvenement);
+            }
+
+            else if (s.equals("utilisateur")) {
+                Utilisateur utilisateur = (Utilisateur) ois.readObject();
+                listGroupEvenements.get(idEvenement).addUtilisateur(utilisateur);
+            }
+
+            else if (s.equals("vote")){
+                Vote vote = (Vote) ois.readObject();
+                listGroupEvenements.get(idEvenement).addVote(vote);
+            }
+
+            s = (String) ois.readObject();
         }
-
-
-    return -1;
-
+        oos.close();
+        ois.close();
     }
 
 
+
+
+    public Evenement findEvenement(int idEvenement){
+        if (listGroupEvenements.containsKey(idEvenement)){
+            return listGroupEvenements.get(idEvenement).getEvenement();
+        }
+    return null;
+    }
+
+    public Date findDate(int idEvenement, int idDate){
+        if (listGroupEvenements.containsKey(idEvenement)){
+            return listGroupEvenements.get(idEvenement).findDate(idDate);
+        }
+        return null;
+    }
+
+    public Utilisateur findUtilisateur(int idEvenement, int idUtilisateur){
+        if (listGroupEvenements.containsKey(idEvenement)){
+            return listGroupEvenements.get(idEvenement).findUtilisateur(idUtilisateur);
+        }
+        return null;
+    }
 
 }

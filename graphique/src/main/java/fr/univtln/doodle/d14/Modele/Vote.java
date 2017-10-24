@@ -2,18 +2,15 @@ package fr.univtln.doodle.d14.Modele;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Vote {
     private final int idEvenement;
     private final int idParticipant;
-    private List <Date> votes = new ArrayList<>();
+    private int idDate;
 
-    public Vote(int idEvenement, int idParticipant, List<Date> votes) {
+    public Vote(int idEvenement, int idParticipant, int idDate) {
         this.idEvenement = idEvenement;
         this.idParticipant = idParticipant;
-        this.votes = votes;
+        this.idDate = idDate;
     }
 
     public int getIdEvenement() {
@@ -24,8 +21,8 @@ public class Vote {
         return idParticipant;
     }
 
-    public List<Date> getVotes() {
-        return votes;
+    public int getIdDate() {
+        return idDate;
     }
 
 

@@ -13,11 +13,10 @@ public class DateDAO extends DAO<Date> {
         try {
             PreparedStatement prepare = this.connect
                     .prepareStatement(
-                            "INSERT INTO date VALUES(?, ?, ?)"
+                            "INSERT INTO date VALUES(?, ?)"
                     );
-            prepare.setLong(1, date.getIdDate());
+            prepare.setLong(1, count() + 1);
             prepare.setString(2, date.getDate());
-            prepare.setInt(3, date.getDureeMinute());
 
             prepare.executeUpdate();
 
@@ -40,8 +39,7 @@ public class DateDAO extends DAO<Date> {
             if(result.first())
                 retour = new Date(
                         date.getIdDate(),
-                        result.getString("date"),
-                        result.getInt("dureeHeure")
+                        result.getString("date")
                 );
 
         } catch (SQLException e) {
@@ -59,7 +57,6 @@ public class DateDAO extends DAO<Date> {
                     .createStatement()
                     .executeUpdate(
                             "UPDATE date SET date = " + date.getDate()
-                                    + ", DUREEMINUTESEVENEMENT = " + date.getDureeMinute()
                                     + " WHERE idDate = " + date.getIdDate()
                     );
 
