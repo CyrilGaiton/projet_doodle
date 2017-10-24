@@ -18,7 +18,7 @@ public class EvenementDAO extends DAO<Evenement> {
                     .prepareStatement(
                             "INSERT INTO EVENEMENT VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
                     );
-            prepare.setLong(1, count() + 1);
+            prepare.setLong(1, evenement.getIdEvenement());
             prepare.setString(2, evenement.getNom());
             prepare.setString(3, evenement.getLieu());
             prepare.setString(4, evenement.getDescription());
@@ -117,5 +117,8 @@ public class EvenementDAO extends DAO<Evenement> {
         return c;
     }
 
+    public int getNextId(){
+        return count();
+    }
 
 }

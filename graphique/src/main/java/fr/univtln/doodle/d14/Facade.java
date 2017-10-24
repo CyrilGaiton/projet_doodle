@@ -92,17 +92,57 @@ public class Facade {
         return participant;
     }
 
+    public ArrayList<Integer> getIdDates(int idEvenement){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (DateEvenement dateEvenement:listGroupEvenements.get(idEvenement).getListDateEvenement()
+                ) {
+            if (dateEvenement.getIdEvenement() == idEvenement){
+                ids.add(dateEvenement.getIdDate());
+            }
+        }
+        return ids;
+    }
+
 
     public void addEvenement(Evenement evenement) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
         oos.writeObject("addEvenement");
         oos.writeObject(evenement);
 
+        oos.close();
+    }
+
+    public void addDate(Date date) throws IOException, ClassNotFoundException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("adDate");
+        oos.writeObject(date);
 
         oos.close();
     }
 
+    public void addUtilisateur(Utilisateur utilisateur) throws IOException, ClassNotFoundException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("addUtilisateur");
+        oos.writeObject(utilisateur);
 
+        oos.close();
+    }
+
+    public void addVote(Vote vote) throws IOException, ClassNotFoundException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("addVote");
+        oos.writeObject(vote);
+
+        oos.close();
+    }
+
+    public void addDateEvenement(DateEvenement dateEvenement) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("addDateEvenement");
+        oos.writeObject(dateEvenement);
+
+        oos.close();
+    }
 
 
 //Pas sur du type de retour de cette fonction. Une arraylist des 5 arraylists utilisees ici ou simplement une instance de la classe Evenement ?
@@ -150,8 +190,6 @@ public class Facade {
     }
 
 
-
-
     public Evenement findEvenement(int idEvenement){
         if (listGroupEvenements.containsKey(idEvenement)){
             return listGroupEvenements.get(idEvenement).getEvenement();
@@ -171,6 +209,39 @@ public class Facade {
             return listGroupEvenements.get(idEvenement).findUtilisateur(idUtilisateur);
         }
         return null;
+    }
+
+    public int getNextIdEvenement() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("getNextIdEvenement");
+
+        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        int idEvenement = ois.readInt();
+        oos.close();
+        ois.close();
+        return idEvenement;
+    }
+
+    public int getNextIdDate() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("getNextIdDate");
+
+        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        int idDate = ois.readInt();
+        oos.close();
+        ois.close();
+        return idDate;
+    }
+
+    public int getNextIdUtilisateur() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        oos.writeObject("getNextIdUtilisateur");
+
+        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        int idUtilisateur = ois.readInt();
+        oos.close();
+        ois.close();
+        return idUtilisateur;
     }
 
 }

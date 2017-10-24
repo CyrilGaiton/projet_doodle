@@ -57,4 +57,16 @@ public class Facade {
     public void addDateEvenement(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         dateEvenementDAO.create((DateEvenement) ois.readObject());
     }
+
+    public void sendNextIdEvenement(ObjectOutputStream oos) throws IOException {
+        oos.writeInt(evenementDAO.getNextId());
+    }
+
+    public void sendNextIdDate(ObjectOutputStream oos) throws IOException {
+        oos.writeInt(dateDAO.getNextId());
+    }
+
+    public void sendNextIdUtilisateur(ObjectOutputStream oos) throws IOException {
+        oos.writeInt(utilisateurDAO.getNextId());
+    }
 }

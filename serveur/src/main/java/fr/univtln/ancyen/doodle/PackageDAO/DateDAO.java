@@ -15,7 +15,7 @@ public class DateDAO extends DAO<Date> {
                     .prepareStatement(
                             "INSERT INTO date VALUES(?, ?)"
                     );
-            prepare.setLong(1, count() + 1);
+            prepare.setLong(1, date.getIdDate());
             prepare.setString(2, date.getDate());
 
             prepare.executeUpdate();
@@ -99,5 +99,8 @@ public class DateDAO extends DAO<Date> {
         return c;
     }
 
+    public int getNextId(){
+        return count();
+    }
 
 }

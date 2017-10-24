@@ -62,23 +62,6 @@ public class VoteDAO extends DAO<Vote> {
         }
     }
 
-    public int count(){
-        int c = -1;
-        try {
-            ResultSet result = this.connect
-                    .createStatement()
-                    .executeQuery(
-                            "SELECT count(*) as count FROM vote"
-                    );
-            if(result.first()){
-                c = result.getInt("count");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return c;
-    }
-
     public ArrayList<ArrayList<Integer>> getByIdEvenement(int idEvenement) throws SQLException {
         ArrayList<ArrayList<Integer>> outer = new ArrayList<>();
         ArrayList<Integer> inner = new ArrayList<>();

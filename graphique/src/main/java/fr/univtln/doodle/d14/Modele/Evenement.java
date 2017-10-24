@@ -8,26 +8,29 @@ public class Evenement {
     private String description;
     private Date dateCreation;
     private Date dateFinalisation;
+    private int duree;
 
 
 
-    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation) {
+    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) {
         idEvenement = cpt++;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
+        this.duree = duree;
 
     }
 
-    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation) {
+    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) {
         this.idEvenement = idEvenement;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
         this.dateCreation = dateCreation;
         this.dateFinalisation = dateFinalisation;
+        this.duree = duree;
     }
 
     public int getIdEvenement() {
@@ -74,8 +77,11 @@ public class Evenement {
         this.dateFinalisation = dateFinalisation;
     }
 
+    public int getDuree() {
+        return duree;
+    }
 
-//    public static void save() throws IOException {
+    //    public static void save() throws IOException {
 //        FileOutputStream fos = new FileOutputStream("evenements.save");
 //        ObjectOutputStream oos = new ObjectOutputStream(fos);
 //

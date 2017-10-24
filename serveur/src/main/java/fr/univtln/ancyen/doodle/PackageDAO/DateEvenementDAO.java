@@ -60,22 +60,6 @@ public class DateEvenementDAO extends DAO<DateEvenement> {
         }
     }
 
-    public int count(){
-        int c = -1;
-        try {
-            ResultSet result = this.connect
-                    .createStatement()
-                    .executeQuery(
-                            "SELECT count(*) as count FROM DATEEVENEMENT"
-                    );
-            if(result.first()){
-                c = result.getInt("count");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return c;
-    }
 
     public ArrayList<Integer> getByIdEvenement(int idEvenement) throws SQLException {
         ArrayList<Integer> integers = new ArrayList<>();

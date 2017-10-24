@@ -81,6 +81,12 @@ public class App
                         facade.addDate(ois);
                     } else if (s.equals("addDateEvenement")) {
                         facade.addDateEvenement(ois);
+                    } else if (s.equals("getNextIdEvenement")) {
+                        facade.sendNextIdEvenement(oos);
+                    } else if (s.equals("getNextIdDate")) {
+                        facade.sendNextIdDate(oos);
+                    } else if (s.equals("gerNextIdUtilisateur")) {
+                        facade.sendNextIdUtilisateur(oos);
                     } else if (s.equals("close")) {
                         clientSockect.close();
                         System.out.println("Connexion fermée: " + clientSockect.getLocalAddress());
