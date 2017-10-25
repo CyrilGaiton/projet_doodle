@@ -4,6 +4,7 @@ import fr.univtln.doodle.d14.Modele.*;
 import javafx.beans.property.BooleanProperty;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 

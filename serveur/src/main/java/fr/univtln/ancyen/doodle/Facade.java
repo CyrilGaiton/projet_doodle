@@ -18,7 +18,9 @@ public class Facade {
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
     public void sendEvenement(ObjectOutputStream oos, int idEvenement) throws IOException, SQLException {
+        System.out.println("on ecrit le string eve");
         oos.writeObject("evenement");
+        System.out.println("on ecrit linstance eve");
         oos.writeObject(new Evenement(idEvenement));
         List<Integer> idDateList = dateEvenementDAO.getByIdEvenement(idEvenement);
         for (int idDate:idDateList
