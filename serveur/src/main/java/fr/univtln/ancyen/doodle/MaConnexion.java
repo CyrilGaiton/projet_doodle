@@ -24,17 +24,16 @@ public class MaConnexion implements Runnable {
         boolean running = true;
         try {
 
-            ObjectInputStream ois;
-            ObjectOutputStream oos;
+            ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 
             while (running) {
 
-                ois = new ObjectInputStream(client.getInputStream());
-                oos = new ObjectOutputStream(client.getOutputStream());
 
                 // on switch en fonction du premier string
                 System.out.println("attente getEvenement");
                 String s = (String) ois.readObject();
+                System.out.println("ok222");
 
                 if (s.equals("getEvenement")) {
                     System.out.println("OK");
@@ -61,8 +60,6 @@ public class MaConnexion implements Runnable {
                 } else if (s.equals("close")) {
                     running= false;
                 }
-                oos.close();
-                ois.close();
             }
 
         } catch (IOException e) {

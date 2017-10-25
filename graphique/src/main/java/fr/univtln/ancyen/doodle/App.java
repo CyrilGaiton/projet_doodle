@@ -1,4 +1,4 @@
-package fr.univtln.doodle.d14;
+package fr.univtln.ancyen.doodle;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

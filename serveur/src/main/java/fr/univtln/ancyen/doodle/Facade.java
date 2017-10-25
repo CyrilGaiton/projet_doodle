@@ -27,17 +27,25 @@ public class Facade {
         List<Integer> idDateList = dateEvenementDAO.getByIdEvenement(idEvenement);
         for (int idDate:idDateList
              ) {
+            System.out.println("ecriture date");
             oos.writeObject("date");
+            System.out.println("ecriture date2");
             oos.writeObject(dateDAO.find(new Date(idDate)));
+            System.out.println("ecriture date evenement");
             oos.writeObject("dateEvenement");
+            System.out.println("ecriture date evenement 2");
             oos.writeObject(new DateEvenement(idEvenement, idDate));
         }
         List<ArrayList<Integer>> idsList = voteDAO.getByIdEvenement(idEvenement);
         for (ArrayList<Integer> ids:idsList
                 ) {
+            System.out.println("ecriture utilisateur");
             oos.writeObject("utilisateur");
+            System.out.println("ecriture utilisateur 2");
             oos.writeObject(utilisateurDAO.find(new Utilisateur(ids.get(0))));
+            System.out.println("ecriture vote");
             oos.writeObject("vote");
+            System.out.println("ecriture vote 2");
             oos.writeObject(new Vote(idEvenement, ids.get(0), ids.get(1)));
         }
     }

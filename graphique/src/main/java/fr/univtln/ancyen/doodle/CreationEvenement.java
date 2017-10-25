@@ -1,6 +1,5 @@
-package fr.univtln.doodle.d14;
+package fr.univtln.ancyen.doodle;
 
-import fr.univtln.doodle.d14.Modele.Evenement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;

@@ -1,4 +1,4 @@
-package fr.univtln.doodle.d14;
+package fr.univtln.ancyen.doodle;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

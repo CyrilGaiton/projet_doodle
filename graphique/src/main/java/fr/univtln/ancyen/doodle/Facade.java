@@ -1,6 +1,7 @@
-package fr.univtln.doodle.d14;
+package fr.univtln.ancyen.doodle;
 
-import fr.univtln.doodle.d14.Modele.*;
+import fr.univtln.ancyen.doodle.Modele.*;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -112,7 +113,7 @@ public class Facade {
 
     public void addDate(Date date) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
-        oos.writeObject("adDate");
+        oos.writeObject("addDate");
         oos.writeObject(date);
 
         oos.close();
@@ -188,9 +189,11 @@ public class Facade {
                 Vote vote = (Vote) ois.readObject();
                 listGroupEvenements.get(idEvenement).addVote(vote);
             }
-
+            System.out.println("attente prochain obj");
             s = (String) ois.readObject();
+            System.out.println("prochain obj: " + s);
         }
+        System.out.println("STOP");
         oos.close();
         ois.close();
     }

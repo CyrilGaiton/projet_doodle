@@ -1,10 +1,9 @@
-package fr.univtln.doodle.d14;
+package fr.univtln.ancyen.doodle;
 
-import fr.univtln.doodle.d14.Modele.*;
+import fr.univtln.ancyen.doodle.Modele.*;
 import javafx.beans.property.BooleanProperty;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 

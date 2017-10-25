@@ -16,7 +16,7 @@ public class EvenementDAO extends DAO<Evenement> {
         try {
             PreparedStatement prepare = this.connect
                     .prepareStatement(
-                            "INSERT INTO EVENEMENT VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+                            "INSERT INTO EVENEMENT VALUES(?, ?, ?, ?, ?, ?, ?)"
                     );
             prepare.setLong(1, evenement.getIdEvenement());
             prepare.setString(2, evenement.getNom());
@@ -24,7 +24,7 @@ public class EvenementDAO extends DAO<Evenement> {
             prepare.setString(4, evenement.getDescription());
             prepare.setObject(5, evenement.getDateCreation());
             prepare.setObject(6, evenement.getDateFinalisation());
-            prepare.setInt(7, evenement.getDuree());
+            prepare.setString(7, evenement.getDuree());
 
             prepare.executeUpdate();
 
@@ -52,7 +52,7 @@ public class EvenementDAO extends DAO<Evenement> {
                         result.getString(("description")),
                         (Date) result.getObject("dateCreation"),
                         (Date) result.getObject("dateFinalisation"),
-                        result.getInt("duree")
+                        result.getString("duree")
                 );
 
         } catch (SQLException e) {

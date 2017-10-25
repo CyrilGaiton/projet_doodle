@@ -1,6 +1,6 @@
-package fr.univtln.doodle.d14;
+package fr.univtln.ancyen.doodle;
 
-import fr.univtln.doodle.d14.Modele.Evenement;
+import fr.univtln.ancyen.doodle.Modele.Evenement;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
