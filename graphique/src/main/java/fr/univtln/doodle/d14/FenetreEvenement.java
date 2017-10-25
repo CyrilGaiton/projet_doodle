@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class FenetreEvenement {
+
+    // Items et variables associées
     private int size;
     private Button btn_retour = new Button("Retour");
     private TableView <Participant> tableau = new TableView<>();
@@ -40,6 +42,7 @@ public class FenetreEvenement {
     public FenetreEvenement(Group grp, Accueil accueil) {
         accueil.setEven(this);
 
+        // Initialisation des actions liées à certains items
         btn_retour.setOnAction(event -> {
             for (Participant usr:users) {
                 System.out.println(usr);
@@ -70,6 +73,7 @@ public class FenetreEvenement {
 //        Creer_Tableau(liste_participants, liste_dates, liste_heure);
 //        // /!\      Test fonction Creer_Tableau()     /!\
 
+        // Paramétrage des items
         btn_add_participant.setLayoutX(350); btn_add_participant.setLayoutY(520);
         btn_retour.setLayoutY(31); btn_retour.setLayoutX(938);
         btn_refresh.setLayoutX(932); btn_refresh.setLayoutY(61);
@@ -97,7 +101,7 @@ public class FenetreEvenement {
         this.evenement = evenement;
         liste_participants = participants;
         liste_dates = dates;
-        setInfos(this.evenement.getNom(), this.evenement.getDescription(), this.evenement.getLieu(), "2");
+        setInfos(this.evenement.getNom(), this.evenement.getDescription(), this.evenement.getLieu(), evenement.getDuree());
         Creer_Tableau(liste_participants, liste_dates);
     }
 

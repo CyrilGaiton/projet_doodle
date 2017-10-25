@@ -41,7 +41,7 @@ public class Controleur {
         return participants;
     }
 
-    public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) throws IOException, ClassNotFoundException {
+    public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) throws IOException, ClassNotFoundException {
         Evenement evenement = new Evenement(facade.getNextIdEvenement(), nom, lieu, description, dateCreation, dateFinalisation, duree);
         facade.addEvenement(evenement);
     }

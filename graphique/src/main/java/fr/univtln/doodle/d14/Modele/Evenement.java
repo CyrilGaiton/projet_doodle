@@ -8,11 +8,11 @@ public class Evenement {
     private String description;
     private Date dateCreation;
     private Date dateFinalisation;
-    private int duree;
+    private String duree;
 
 
 
-    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) {
+    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) {
         idEvenement = cpt++;
         this.nom = nom;
         this.lieu = lieu;
@@ -23,7 +23,7 @@ public class Evenement {
 
     }
 
-    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) {
+    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) {
         this.idEvenement = idEvenement;
         this.nom = nom;
         this.lieu = lieu;
@@ -77,7 +77,7 @@ public class Evenement {
         this.dateFinalisation = dateFinalisation;
     }
 
-    public int getDuree() {
+    public String getDuree() {
         return duree;
     }
 
