@@ -46,7 +46,7 @@ public class CreationEvenement {
 
 
 
-    public CreationEvenement(Group grp, Accueil accueil, FenetreEvenement fen_event) {
+    public CreationEvenement(Group grp, Accueil accueil, FenetreEvenement fen_event, Controleur controleur) {
         accueil.setNew_event(this);
 
         // Initialisation des actions liées à certains items
@@ -56,7 +56,7 @@ public class CreationEvenement {
         });
 
         btn_suivant.setOnAction(event -> {
-            VerificationCreation(grp, fen_event);
+            VerificationCreation(grp, fen_event, controleur);
         });
 
         btn_add_date.setOnAction(event -> {
@@ -127,7 +127,7 @@ public class CreationEvenement {
     }
 
     // Verifie les valeurs saisies pour la création de l'événement
-    public void VerificationCreation(Group grp, FenetreEvenement fen_event){
+    public void VerificationCreation(Group grp, FenetreEvenement fen_event, Controleur controleur){
         if (!(field_nom.getText().equals(""))) {
             int nb_null = 0;
             for (int i = 0; i < calendar.size(); i++) {
@@ -139,7 +139,8 @@ public class CreationEvenement {
                 VerificationListes();
                 Creation_evenement_cache(grp);
 //                fen_event.Evenement_affiche(grp);
-//                controlleur_creer_event(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar_str)
+//                int id_event = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText());
+//                controleur.addDates(id_event, calendar_str);
             }
 
             else {

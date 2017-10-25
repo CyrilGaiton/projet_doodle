@@ -33,11 +33,8 @@ public class FenetreEvenement {
     private Text localisation_event = new Text();
     private Text duree_event = new Text();
     private Evenement evenement;
-
-    // /!\      Test fonction Creer_Tableau()     /!\
     private List<Participant> liste_participants;
     private List<String> liste_dates = new ArrayList<>();
-    // /!\      Test fonction Creer_Tableau()     /!\
 
     public FenetreEvenement(Group grp, Accueil accueil) {
         accueil.setEven(this);
@@ -67,12 +64,6 @@ public class FenetreEvenement {
             // controlleur_save_modif()
         });
 
-//        // /!\      Test fonction Creer_Tableau()     /!\
-//        liste_participants.add(new Participant("gerrard", 2)); liste_participants.add(new Participant("marc", 2));
-//        liste_dates.add("10/10/2010 \n 8h30"); liste_dates.add("02/02/2002 \n ");
-//        Creer_Tableau(liste_participants, liste_dates, liste_heure);
-//        // /!\      Test fonction Creer_Tableau()     /!\
-
         // Paramétrage des items
         btn_add_participant.setLayoutX(350); btn_add_participant.setLayoutY(520);
         btn_retour.setLayoutY(31); btn_retour.setLayoutX(938);
@@ -84,10 +75,6 @@ public class FenetreEvenement {
         titre_event.setLayoutY(50); titre_event.setFont(new Font(20));
         description_event.setLayoutX(350); description_event.setLayoutY(80); description_event.setWrappingWidth(300);
         duree_event.setLayoutX(100); duree_event.setLayoutY(110);
-//        description_event.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-//        titre_event.setText("Denis");
-//        localisation_event.setText("Lieu: Riley's asshole");
-//        duree_event.setText("Duree: 2h");
 
         tableau.setItems(users);
         tableau.setEditable(true);
@@ -96,6 +83,7 @@ public class FenetreEvenement {
         tableau.setLayoutX(100); tableau.setLayoutY(150);
     }
 
+    // Affiche les items de cette classe
     public void Evenement_affiche(Group grp, Evenement evenement, List<Participant> participants, List<String> dates){
         grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
         this.evenement = evenement;
@@ -105,10 +93,13 @@ public class FenetreEvenement {
         Creer_Tableau(liste_participants, liste_dates);
     }
 
+    // Cache les items de cette classe
     public void Evenement_cache(Group grp){
         grp.getChildren().removeAll(btn_retour, btn_add_participant, tableau, titre_event, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
+        liste_participants.clear();
     }
 
+    // Cree le tableau affichant l'evenement
     public void Creer_Tableau(List<Participant> utilisateurs, List<String> calendar_str){
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -124,6 +115,7 @@ public class FenetreEvenement {
         users.addAll(utilisateurs);
     }
 
+    // Ajoute un participant dans le tableau
     public void Ajout_Participant(String nom){
         tableau.getColumns().clear();
         users.clear();
@@ -131,6 +123,7 @@ public class FenetreEvenement {
         Creer_Tableau(liste_participants, liste_dates);
     }
 
+    // Definie les informations de l'evenement qui seront affichees a l'ecran
     public void setInfos(String titre, String description, String localisation, String duree){
         titre_event.setText(titre);
         description_event.setText(description);
