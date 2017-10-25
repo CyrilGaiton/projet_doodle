@@ -1,7 +1,6 @@
 package fr.univtln.doodle.d14;
 
 import fr.univtln.doodle.d14.Modele.*;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;

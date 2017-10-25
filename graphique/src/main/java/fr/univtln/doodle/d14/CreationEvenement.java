@@ -14,6 +14,7 @@ import java.util.List;
 public class CreationEvenement {
     private final int MAX_DATES = 15;
 
+    // Items graphiques et listes associées
     private Button btn_suivant = new Button("Suivant");
     private Button btn_retour = new Button("Retour");
     private Button btn_add_date = new Button("Ajouter une date");
@@ -33,7 +34,6 @@ public class CreationEvenement {
 
     private ComboBox heures;
     private List <ComboBox> choix_heures = new ArrayList<>();
-    private List <String> choix_heures_str = new ArrayList<>();
     private ObservableList<String> liste_heures = FXCollections.observableArrayList(
                     "00h00", "00h15", "00h30","00h45","01h00","01h15","01h30","01h45","02h00","02h15",
                     "02h30","02h45","03h00","03h15","03h30","03h45","04h00","04h15","04h30","04h45","05h00",
@@ -50,6 +50,7 @@ public class CreationEvenement {
     public CreationEvenement(Group grp, Accueil accueil, FenetreEvenement fen_event) {
         accueil.setNew_event(this);
 
+        // Initialisation des actions liées à certains items
         btn_retour.setOnAction(event -> {
             Creation_evenement_cache(grp);
             accueil.Accueil_affiche(grp);
@@ -65,6 +66,7 @@ public class CreationEvenement {
             grp.getChildren().add(heures);
         });
 
+        // Paramétrage des items
         btn_suivant.setLayoutX(450); btn_suivant.setLayoutY(500);
         btn_retour.setLayoutX(939); btn_retour.setLayoutY(31);
         btn_add_date.setLayoutX(600); btn_add_date.setLayoutY(70);
@@ -83,11 +85,13 @@ public class CreationEvenement {
         text_date.setFont(new Font(20));
     }
 
+    // Affiche les items de cette classe
     public void Creation_evenement_affiche(Group grp){
         Ajout_Date();
         grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date);
     }
 
+    // Cache les items de cette classe et réinitialise les listes associées
     public void Creation_evenement_cache(Group grp){
         grp.getChildren().removeAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures);
         for (DatePicker date:calendar) {
@@ -97,13 +101,14 @@ public class CreationEvenement {
             grp.getChildren().remove(cb);
         }
         calendar.clear(); calendar_str.clear();
-        choix_heures.clear(); choix_heures_str.clear();
+        choix_heures.clear();
         btn_add_date.setLayoutY(70);
         field_nom.clear();
         field_description.clear();
         field_localisation.clear();
     }
 
+    // Ajoute un item de selection de date si le précédent à été utilisé
     public void Ajout_Date(){
         new_date = new DatePicker();
         new_date.setLayoutX(600); new_date.setLayoutY(btn_add_date.getLayoutY());
@@ -122,22 +127,20 @@ public class CreationEvenement {
         });
     }
 
+    // Verifie les valeurs saisies pour la création de l'événement
     public void VerificationCreation(Group grp, FenetreEvenement fen_event){
         if (!(field_nom.getText().equals(""))) {
             int nb_null = 0;
             for (int i = 0; i < calendar.size(); i++) {
                 String text_date = calendar.get(i).getEditor().getText();
-                String text_heures = (String) choix_heures.get(i).getValue();
                 if (text_date.equals("")) nb_null ++;
-                calendar_str.add(text_date);
-                choix_heures_str.add(text_heures);
             }
 
             if (nb_null != calendar.size()){
+                VerificationListes();
                 Creation_evenement_cache(grp);
 //                fen_event.Evenement_affiche(grp);
-                VerificationListes();
-//                controlleur_creer_event(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar, choix_heures_str)
+//                controlleur_creer_event(field_nom.getText(), field_description.getText(), field_localisation.getText(), calendar_str)
             }
 
             else {
@@ -146,8 +149,6 @@ public class CreationEvenement {
                 alert.setHeaderText(null);
                 alert.setContentText("Veuillez choisir au moins une date.");
                 alert.showAndWait();
-                choix_heures_str.clear();
-                calendar_str.clear();
             }
         }
         else {
@@ -159,14 +160,13 @@ public class CreationEvenement {
         }
     }
 
+    // Crée une nouvelle liste reliant les dates à leur heures
     public void VerificationListes(){
         for (int i = 0; i < calendar.size(); i++) {
-            if (calendar_str.get(i).equals("")){
-                calendar_str.remove(calendar_str.get(i));
-                choix_heures_str.remove(choix_heures_str.get(i));
-            }
-            else {
-                if (choix_heures_str.get(i).equals(null)) choix_heures_str.set(i, "");
+            if (!calendar.get(i).getEditor().getText().equals("")){
+                String heure = (String) choix_heures.get(i).getValue();
+                if (heure.equals(null)) heure = "";
+                calendar_str.add(calendar.get(i).getEditor().getText()+"\n"+heure);
             }
         }
     }

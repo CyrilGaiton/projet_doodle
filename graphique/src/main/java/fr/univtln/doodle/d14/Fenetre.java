@@ -8,11 +8,16 @@ import javafx.scene.paint.Color;
 import java.util.Optional;
 
 public class  Fenetre {
+    // Création du controleur
     private Controleur controleur;
 
     private String langue = "Français";
+
+    // Objets graphiques servants à l'affichage des différents items
     private Group root = new Group();
     private Scene scene = new Scene(root, 1000, 562, Color.LIGHTBLUE);
+
+    // Items graphiques
     private Menu fichier_menu = new Menu("Fichier");
     private MenuItem exporter_item = new MenuItem("Exporter");
     private MenuItem imprimer_item = new MenuItem("Imprimer");
@@ -23,8 +28,11 @@ public class  Fenetre {
     private MenuBar mb = new MenuBar();
 
     public Fenetre(Facade facade) {
+
+        // Instantiation du controleur
         controleur = new Controleur(facade);
 
+        // Initialisation des actions liées à certains items
         exporter_item.setOnAction(event -> System.out.println("Exportation ..."));
 
         imprimer_item.setOnAction(event -> System.out.println("Impression ..."));
@@ -56,6 +64,8 @@ public class  Fenetre {
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(name -> System.out.println("Nouveau pseudo: " + name));
         });
+
+        // Paramétrage des items
         fichier_menu.getItems().addAll(exporter_item, imprimer_item);
         parametre_menu.getItems().addAll(langue_item, pseudo_item);
         mb.getMenus().addAll(fichier_menu, parametre_menu);

@@ -6,6 +6,7 @@ import javafx.beans.property.BooleanProperty;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controleur {
 
@@ -21,9 +22,13 @@ public class Controleur {
         return evenement;
     }
 
-    public ArrayList<Date> getDates(int idEvenement) throws IOException, ClassNotFoundException {
-        ArrayList<Date> dates = facade.getDates(idEvenement);
-        return dates;
+    public List<String> getDates(int idEvenement) throws IOException, ClassNotFoundException {
+        List<String> dates_str = new ArrayList<>();
+        List<Date> dates = facade.getDates(idEvenement);
+        for (int i = 0; i < dates.size(); i++) {
+            dates_str.add(dates.get(i).getDate());
+        }
+        return dates_str;
     }
 
     public ArrayList<Participant> getParticipants(int idEvenement) throws IOException, ClassNotFoundException {
@@ -36,7 +41,7 @@ public class Controleur {
         return participants;
     }
 
-    public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) throws IOException, ClassNotFoundException {
+    public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) throws IOException, ClassNotFoundException {
         Evenement evenement = new Evenement(facade.getNextIdEvenement(), nom, lieu, description, dateCreation, dateFinalisation, duree);
         facade.addEvenement(evenement);
     }

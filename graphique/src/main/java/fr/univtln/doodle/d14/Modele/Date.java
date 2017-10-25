@@ -1,4 +1,4 @@
-package fr.univtln.ancyen.doodle.Modele;
+package fr.univtln.doodle.d14.Modele;
 
 
 import java.io.Serializable;
