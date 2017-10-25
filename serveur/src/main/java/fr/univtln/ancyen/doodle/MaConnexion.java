@@ -24,21 +24,24 @@ public class MaConnexion implements Runnable {
         boolean running = true;
         try {
 
+            ObjectInputStream ois;
+            ObjectOutputStream oos;
+
             while (running) {
 
-                ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-                ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
+                ois = new ObjectInputStream(client.getInputStream());
+                oos = new ObjectOutputStream(client.getOutputStream());
 
                 // on switch en fonction du premier string
-                System.out.println("on lit 1er string");
+                System.out.println("attente getEvenement");
                 String s = (String) ois.readObject();
 
-                System.out.println("else if ...");
                 if (s.equals("getEvenement")) {
-                    System.out.println("instance evenement");
-                    int idEvenement = ois.readInt();
-                    System.out.println("on a lu le int ideve");
-                    facade.sendEvenement(oos, ois.readInt());
+                    System.out.println("OK");
+                    System.out.println("attente idEvenement");
+                    Integer idEvenement = (Integer) ois.readObject();
+                    System.out.println("OK");
+                    facade.sendEvenement(oos, idEvenement);
                 } else if (s.equals("addEvenement")) {
                     facade.addEvenement(ois);
                 } else if (s.equals("addVote")) {
@@ -56,10 +59,10 @@ public class MaConnexion implements Runnable {
                 } else if (s.equals("gerNextIdUtilisateur")) {
                     facade.sendNextIdUtilisateur(oos);
                 } else if (s.equals("close")) {
-                    ois.close();
-                    oos.close();
                     running= false;
                 }
+                oos.close();
+                ois.close();
             }
 
         } catch (IOException e) {

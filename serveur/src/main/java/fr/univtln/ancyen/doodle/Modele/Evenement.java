@@ -1,7 +1,9 @@
 package fr.univtln.ancyen.doodle.Modele;
 
 
-public class Evenement {
+import java.io.Serializable;
+
+public class Evenement implements Serializable{
     private static int cpt = 0;
     private final int idEvenement;
     private String nom;
@@ -11,16 +13,6 @@ public class Evenement {
     private Date dateFinalisation;
     private int duree;
 
-
-    public Evenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) {
-        idEvenement = cpt++;
-        this.nom = nom;
-        this.lieu = lieu;
-        this.description = description;
-        this.dateCreation = dateCreation;
-        this.dateFinalisation = dateFinalisation;
-        this.duree = duree;
-    }
 
     public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, int duree) {
         this.idEvenement = idEvenement;

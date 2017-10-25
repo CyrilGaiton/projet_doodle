@@ -18,10 +18,12 @@ public class Facade {
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
     public void sendEvenement(ObjectOutputStream oos, int idEvenement) throws IOException, SQLException {
-        System.out.println("on ecrit le string eve");
+        System.out.println("ecriture evenement");
         oos.writeObject("evenement");
-        System.out.println("on ecrit linstance eve");
+        System.out.println("OK");
+        System.out.println("ecriture instance evenement");
         oos.writeObject(new Evenement(idEvenement));
+        System.out.println("OK");
         List<Integer> idDateList = dateEvenementDAO.getByIdEvenement(idEvenement);
         for (int idDate:idDateList
              ) {
@@ -61,14 +63,14 @@ public class Facade {
     }
 
     public void sendNextIdEvenement(ObjectOutputStream oos) throws IOException {
-        oos.writeInt(evenementDAO.getNextId());
+        oos.writeObject(evenementDAO.getNextId());
     }
 
     public void sendNextIdDate(ObjectOutputStream oos) throws IOException {
-        oos.writeInt(dateDAO.getNextId());
+        oos.writeObject(dateDAO.getNextId());
     }
 
     public void sendNextIdUtilisateur(ObjectOutputStream oos) throws IOException {
-        oos.writeInt(utilisateurDAO.getNextId());
+        oos.writeObject(utilisateurDAO.getNextId());
     }
 }

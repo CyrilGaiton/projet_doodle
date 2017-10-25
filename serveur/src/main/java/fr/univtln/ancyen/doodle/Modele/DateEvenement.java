@@ -1,6 +1,8 @@
 package fr.univtln.ancyen.doodle.Modele;
 
-public class DateEvenement {
+import java.io.Serializable;
+
+public class DateEvenement implements Serializable{
     private final int idEvenement;
     private final int idDate;
 

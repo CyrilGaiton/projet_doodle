@@ -1,16 +1,16 @@
-package fr.univtln.doodle.d14.Modele;
+package fr.univtln.ancyen.doodle.Modele;
 
+import java.io.Serializable;
 
-
-public class Vote {
+public class Vote implements Serializable{
     private final int idEvenement;
     private final int idParticipant;
-    private int idDate;
+    private final int idDate;
 
     public Vote(int idEvenement, int idParticipant, int idDate) {
         this.idEvenement = idEvenement;
         this.idParticipant = idParticipant;
-        this.idDate = idDate;
+        this.idDate= idDate;
     }
 
     public int getIdEvenement() {
@@ -24,6 +24,4 @@ public class Vote {
     public int getIdDate() {
         return idDate;
     }
-
-
 }

@@ -4,8 +4,6 @@ import fr.univtln.doodle.d14.Modele.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -151,20 +149,25 @@ public class Facade {
     public void loadEvenement(int idEvenement) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 
+        System.out.println("ecriture getEvenement");
         oos.writeObject("getEvenement");
-        oos.writeInt(idEvenement);
+        System.out.println("OK");
+        System.out.println("ecriture idEvenement");
+        oos.writeObject(idEvenement);
+        System.out.println("OK");
 
         ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 
         listGroupEvenements.put(idEvenement, new GroupEvenement());
 
-        System.out.println("on lit le string renvoyé");
+        System.out.println("attente evenement");
         String s = (String) ois.readObject();
-        System.out.println("on a lu le string renvoyé");
+        System.out.println("OK");
         while(!s.equals("close")) {
-            System.out.println("Instance");
             if (s.equals("evenement")) {
+                System.out.println("attente instance Evenement");
                 Evenement evenement = (Evenement) ois.readObject();
+                System.out.println("OK");
                 listGroupEvenements.get(idEvenement).setEvenement(evenement);
             }
             else if (s.equals("date")) {
@@ -215,34 +218,34 @@ public class Facade {
         return null;
     }
 
-    public int getNextIdEvenement() throws IOException {
+    public int getNextIdEvenement() throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdEvenement");
 
         ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-        int idEvenement = ois.readInt();
+        Integer idEvenement = (Integer) ois.readObject();
         oos.close();
         ois.close();
         return idEvenement;
     }
 
-    public int getNextIdDate() throws IOException {
+    public int getNextIdDate() throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdDate");
 
         ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-        int idDate = ois.readInt();
+        Integer idDate = (Integer) ois.readObject();
         oos.close();
         ois.close();
         return idDate;
     }
 
-    public int getNextIdUtilisateur() throws IOException {
+    public int getNextIdUtilisateur() throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdUtilisateur");
 
         ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-        int idUtilisateur = ois.readInt();
+        Integer idUtilisateur = (Integer) ois.readObject();
         oos.close();
         ois.close();
         return idUtilisateur;
@@ -255,6 +258,8 @@ public class Facade {
 //        oos.writeInt(1);
 //        oos.flush();
 //
+
+
 //        ByteBuffer buffer = ByteBuffer.allocate(1024);
 //        buffer.put(bout.toByteArray());
 //        int read = client.write(buffer);

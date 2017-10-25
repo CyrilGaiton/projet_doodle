@@ -1,6 +1,8 @@
 package fr.univtln.ancyen.doodle.Modele;
 
-public class Vote {
+import java.io.Serializable;
+
+public class Vote implements Serializable{
     private final int idEvenement;
     private final int idParticipant;
     private final int idDate;

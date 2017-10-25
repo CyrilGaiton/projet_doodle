@@ -1,15 +1,11 @@
 package fr.univtln.ancyen.doodle.Modele;
 
 
-public class Date {
-    private static int cpt = 0;
+import java.io.Serializable;
+
+public class Date implements Serializable {
     private final int idDate;
     private String date;
-
-    public Date(String date) {
-        idDate = cpt++;
-        this.date = date;
-    }
 
     public Date(int idDate, String date) {
         this.idDate = idDate;

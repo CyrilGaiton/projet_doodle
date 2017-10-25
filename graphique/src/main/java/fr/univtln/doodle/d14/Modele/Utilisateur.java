@@ -1,25 +1,21 @@
-package fr.univtln.doodle.d14.Modele;
+package fr.univtln.ancyen.doodle.Modele;
 
 
-import fr.univtln.doodle.d14.Modele.Date;
+import java.io.Serializable;
 
-public class Utilisateur {
-    private static int cpt = 0;
+public class Utilisateur implements Serializable{
     private final int idUtilisateur;
     private String nom;
     private String prenom;
-
-
-    public Utilisateur(String nom, String prenom) {
-        idUtilisateur = cpt++;
-        this.nom = nom;
-        this.prenom = prenom;
-    }
 
     public Utilisateur(int idUtilisateur, String nom, String prenom) {
         this.idUtilisateur = idUtilisateur;
         this.nom = nom;
         this.prenom = prenom;
+    }
+
+    public Utilisateur(int idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 
     public int getIdUtilisateur() {
@@ -33,6 +29,5 @@ public class Utilisateur {
     public String getPrenom() {
         return prenom;
     }
-
 
 }
