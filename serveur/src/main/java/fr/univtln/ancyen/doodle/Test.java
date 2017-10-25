@@ -2,6 +2,11 @@ package fr.univtln.ancyen.doodle;
 
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Test {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -20,6 +25,11 @@ public class Test {
         ObjectInputStream ois = new ObjectInputStream(binp);
         int i = ois.readInt();
         System.out.println(i);
+
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
     }
 }
 

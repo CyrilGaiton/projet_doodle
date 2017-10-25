@@ -4,6 +4,9 @@ import fr.univtln.ancyen.doodle.Modele.*;
 import javafx.beans.property.BooleanProperty;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,14 +47,16 @@ public class Controleur {
         return participants;
     }
 
-    public int addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) throws IOException, ClassNotFoundException {
+    public int addEvenement(String nom, String lieu, String description, String duree) throws IOException, ClassNotFoundException {
         int idEvenement = facade.getNextIdEvenement();
-        Evenement evenement = new Evenement(idEvenement, nom, lieu, description, dateCreation, dateFinalisation, duree);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date dateCreation = new Date(facade.getNextIdDate(), dateFormat.format(new java.util.Date()));
+        Evenement evenement = new Evenement(idEvenement, nom, lieu, description, dateCreation, null, duree);
         facade.addEvenement(evenement);
         return idEvenement;
     }
 
-    public void addDates(int idEvenement, ArrayList<String> dates) throws IOException, ClassNotFoundException {
+    public void addDates(int idEvenement, List<String> dates) throws IOException, ClassNotFoundException {
         Date date;
         for (int i=0;i<dates.size();i++){
             date = new Date(facade.getNextIdDate(), dates.get(i));
@@ -66,7 +71,7 @@ public class Controleur {
 
         ArrayList<Integer> idDates = facade.getIdDates(idEvenement);
         for (int i=0;i<boolVotes.size();i++){
-            if (boolVotes.get(i).get() == true){
+            if (boolVotes.get(i).get()){
                 addVote(idEvenement, utilisateur.getIdUtilisateur(), idDates.get(i));
             }
         }
