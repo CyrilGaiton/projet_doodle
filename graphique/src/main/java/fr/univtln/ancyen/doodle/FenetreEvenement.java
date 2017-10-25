@@ -107,7 +107,7 @@ public class FenetreEvenement {
             System.out.println(participant.getNom());
             System.out.println(participant.getVotes());
         }
-        
+
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
         tableau.getColumns().add(colonne1);

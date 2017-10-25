@@ -18,11 +18,13 @@ public class CreationEvenement {
     private Button btn_retour = new Button("Retour");
     private Button btn_add_date = new Button("Ajouter une date");
 
+    private Text text_duree = new Text(100, 400, "Duree: ");
     private Text text_nom = new Text(100,50, "Nom de l'événement:");
     private Text text_localisation = new Text(100, 150, "Localisation:");
     private Text text_description = new Text(100, 250, "Description:");
     private Text text_date = new Text(600, 50, "Choisissez une date:");
 
+    private TextField field_duree = new TextField();
     private TextField field_nom = new TextField();
     private TextArea field_description = new TextArea();
     private TextField field_localisation = new TextField();
@@ -77,22 +79,25 @@ public class CreationEvenement {
         field_description.setMaxWidth(200);
         field_description.setWrapText(true);
         field_description.setPromptText("Facultatif");
+        field_duree.setLayoutX(100); field_duree.setLayoutY(420);
+        field_duree.setPromptText("Ex: 00h00min");
 
         text_nom.setFont(new Font(20));
         text_description.setFont(new Font(20));
         text_localisation.setFont(new Font(20));
         text_date.setFont(new Font(20));
+        text_duree.setFont(new Font(20));
     }
 
     // Affiche les items de cette classe
     public void Creation_evenement_affiche(Group grp){
         Ajout_Date();
-        grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date);
+        grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date, text_duree, field_duree);
     }
 
     // Cache les items de cette classe et réinitialise les listes associées
     public void Creation_evenement_cache(Group grp){
-        grp.getChildren().removeAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures);
+        grp.getChildren().removeAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures, text_duree, field_duree);
         for (DatePicker date:calendar) {
             grp.getChildren().remove(date);
         }
@@ -138,9 +143,9 @@ public class CreationEvenement {
             if (nb_null != calendar.size()){
                 VerificationListes();
                 Creation_evenement_cache(grp);
+                int id_event = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
 //                fen_event.Evenement_affiche(grp);
-//                int id_event = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText());
-//                controleur.addDates(id_event, calendar_str);
+                controleur.addDates(id_event, calendar_str);
             }
 
             else {
