@@ -30,12 +30,11 @@ public class FenetreEvenement {
     private Text description_event = new Text();
     private Text localisation_event = new Text();
     private Text duree_event = new Text();
-    private Evenement id_event;
+    private Evenement evenement;
 
     // /!\      Test fonction Creer_Tableau()     /!\
     private List<Participant> liste_participants;
     private List<String> liste_dates = new ArrayList<>();
-    private List<String> liste_heure = new ArrayList<>();
     // /!\      Test fonction Creer_Tableau()     /!\
 
     public FenetreEvenement(Group grp, Accueil accueil) {
@@ -67,8 +66,7 @@ public class FenetreEvenement {
 
 //        // /!\      Test fonction Creer_Tableau()     /!\
 //        liste_participants.add(new Participant("gerrard", 2)); liste_participants.add(new Participant("marc", 2));
-//        liste_dates.add("10/10/2010"); liste_dates.add("02/02/2002");
-//        liste_heure.add("05h30"); liste_heure.add("");
+//        liste_dates.add("10/10/2010 \n 8h30"); liste_dates.add("02/02/2002 \n ");
 //        Creer_Tableau(liste_participants, liste_dates, liste_heure);
 //        // /!\      Test fonction Creer_Tableau()     /!\
 
@@ -94,25 +92,27 @@ public class FenetreEvenement {
         tableau.setLayoutX(100); tableau.setLayoutY(150);
     }
 
-    public void Evenement_affiche(Group grp, Evenement evenement, List<Participant> participants){
+    public void Evenement_affiche(Group grp, Evenement evenement, List<Participant> participants, List<String> dates){
         grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
-        id_event = evenement;
+        this.evenement = evenement;
         liste_participants = participants;
-        setInfos(id_event.getNom(), id_event.getDescription(), id_event.getLieu(), "2");
+        liste_dates = dates;
+        setInfos(this.evenement.getNom(), this.evenement.getDescription(), this.evenement.getLieu(), "2");
+        Creer_Tableau(liste_participants, liste_dates);
     }
 
     public void Evenement_cache(Group grp){
         grp.getChildren().removeAll(btn_retour, btn_add_participant, tableau, titre_event, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
     }
 
-    public void Creer_Tableau(List<Participant> utilisateurs, List<String> calendar_str, List<String> heures_str){
+    public void Creer_Tableau(List<Participant> utilisateurs, List<String> calendar_str){
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
         tableau.getColumns().add(colonne1);
 
         size = calendar_str.size();
         for (int i = 0; i < size; i++) {
-            TableColumn <Participant, Boolean>colonne = new TableColumn<>(calendar_str.get(i)+"\n"+heures_str.get(i));
+            TableColumn <Participant, Boolean>colonne = new TableColumn<>(calendar_str.get(i));
             int finalI = i;
             colonne.setCellFactory(CheckBoxTableCell.forTableColumn(param -> utilisateurs.get(param).voteProperty(finalI)));
             tableau.getColumns().add(colonne);
@@ -124,7 +124,7 @@ public class FenetreEvenement {
         tableau.getColumns().clear();
         users.clear();
         liste_participants.add(new Participant(nom, size));
-        Creer_Tableau(liste_participants, liste_dates, liste_heure);
+        Creer_Tableau(liste_participants, liste_dates);
     }
 
     public void setInfos(String titre, String description, String localisation, String duree){
