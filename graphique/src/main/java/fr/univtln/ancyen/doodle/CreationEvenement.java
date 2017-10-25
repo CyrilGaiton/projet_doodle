@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,7 +133,7 @@ public class CreationEvenement {
     }
 
     // Verifie les valeurs saisies pour la création de l'événement
-    public void VerificationCreation(Group grp, FenetreEvenement fen_event, Controleur controleur){
+    public void VerificationCreation(Group grp, FenetreEvenement fen_event, Controleur controleur) {
         if (!(field_nom.getText().equals(""))) {
             int nb_null = 0;
             for (int i = 0; i < calendar.size(); i++) {
@@ -141,11 +142,16 @@ public class CreationEvenement {
             }
 
             if (nb_null != calendar.size()){
-                VerificationListes();
-                Creation_evenement_cache(grp);
-                int id_event = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
-//                fen_event.Evenement_affiche(grp);
-                controleur.addDates(id_event, calendar_str);
+                try {
+                    VerificationListes();
+                    Creation_evenement_cache(grp);
+                    int id_event = 0;
+                    id_event = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
+                    // fen_event.Evenement_affiche(grp);
+                    controleur.addDates(id_event, calendar_str);
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
 
             else {
