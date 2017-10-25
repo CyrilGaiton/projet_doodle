@@ -2,11 +2,10 @@ package fr.univtln.doodle.d14;
 
 import fr.univtln.doodle.d14.Modele.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
-import java.nio.channels.SocketChannel;
+import java.io.*;
+import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Map;
 public class Facade {
 
     private Map<Integer, GroupEvenement> listGroupEvenements = new HashMap<>();
-    private SocketChannel clientSocket;
+    private Socket client;
 
 
     public Facade () {
@@ -26,7 +25,7 @@ public class Facade {
 
         try {
             System.out.println("En attente connexion");
-            clientSocket = SocketChannel.open(new InetSocketAddress("localhost", 5700));
+            client = new Socket("localhost", 5700);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,7 +106,7 @@ public class Facade {
 
 
     public void addEvenement(Evenement evenement) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addEvenement");
         oos.writeObject(evenement);
 
@@ -115,7 +114,7 @@ public class Facade {
     }
 
     public void addDate(Date date) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("adDate");
         oos.writeObject(date);
 
@@ -123,7 +122,7 @@ public class Facade {
     }
 
     public void addUtilisateur(Utilisateur utilisateur) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addUtilisateur");
         oos.writeObject(utilisateur);
 
@@ -131,7 +130,7 @@ public class Facade {
     }
 
     public void addVote(Vote vote) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addVote");
         oos.writeObject(vote);
 
@@ -139,7 +138,7 @@ public class Facade {
     }
 
     public void addDateEvenement(DateEvenement dateEvenement) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addDateEvenement");
         oos.writeObject(dateEvenement);
 
@@ -150,24 +149,20 @@ public class Facade {
 //Pas sur du type de retour de cette fonction. Une arraylist des 5 arraylists utilisees ici ou simplement une instance de la classe Evenement ?
     
     public void loadEvenement(int idEvenement) throws IOException, ClassNotFoundException {
-        System.out.println("creation oos");
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 
-        System.out.println("ecriture get evenement et l'id");
         oos.writeObject("getEvenement");
         oos.writeInt(idEvenement);
 
-        System.out.println("creation ois");
-        oos.close();
-        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
-        System.out.println("ALLO");
+        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 
         listGroupEvenements.put(idEvenement, new GroupEvenement());
 
-        System.out.println("on lit l'objet evenement renvoyé");
+        System.out.println("on lit le string renvoyé");
         String s = (String) ois.readObject();
+        System.out.println("on a lu le string renvoyé");
         while(!s.equals("close")) {
-
+            System.out.println("Instance");
             if (s.equals("evenement")) {
                 Evenement evenement = (Evenement) ois.readObject();
                 listGroupEvenements.get(idEvenement).setEvenement(evenement);
@@ -221,10 +216,10 @@ public class Facade {
     }
 
     public int getNextIdEvenement() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdEvenement");
 
-        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
         int idEvenement = ois.readInt();
         oos.close();
         ois.close();
@@ -232,10 +227,10 @@ public class Facade {
     }
 
     public int getNextIdDate() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdDate");
 
-        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
         int idDate = ois.readInt();
         oos.close();
         ois.close();
@@ -243,14 +238,35 @@ public class Facade {
     }
 
     public int getNextIdUtilisateur() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.socket().getOutputStream());
+        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdUtilisateur");
 
-        ObjectInputStream ois = new ObjectInputStream((clientSocket.socket().getInputStream()));
+        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
         int idUtilisateur = ois.readInt();
         oos.close();
         ois.close();
         return idUtilisateur;
     }
+
+//    public void test() throws IOException {
+//        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+//        ObjectOutputStream oos = new ObjectOutputStream(bout);
+//
+//        oos.writeInt(1);
+//        oos.flush();
+//
+//        ByteBuffer buffer = ByteBuffer.allocate(1024);
+//        buffer.put(bout.toByteArray());
+//        int read = client.write(buffer);
+//        System.out.println(read + "read------------------");
+//
+//        oos.close();
+//    }
+//
+//    public void test2() throws IOException {
+//        ObjectOutputStream oos = new ObjectOutputStream(Channels.newOutputStream(clientSocket));
+//        oos.writeInt(42);
+//        oos.close();
+//    }
 
 }
