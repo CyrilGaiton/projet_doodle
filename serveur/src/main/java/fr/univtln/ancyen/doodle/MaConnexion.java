@@ -31,12 +31,11 @@ public class MaConnexion implements Runnable {
 
 
                 // on switch en fonction du premier string
-                System.out.println("attente getEvenement");
+                System.out.println("msg");
                 String s = (String) ois.readObject();
-                System.out.println("ok222");
+                System.out.println("ok msg");
 
                 if (s.equals("getEvenement")) {
-                    System.out.println("OK");
                     System.out.println("attente idEvenement");
                     Integer idEvenement = (Integer) ois.readObject();
                     System.out.println("OK");

@@ -18,36 +18,42 @@ public class Facade {
     private UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
     public void sendEvenement(ObjectOutputStream oos, int idEvenement) throws IOException, SQLException {
-        System.out.println("ecriture evenement");
         oos.writeObject("evenement");
-        System.out.println("OK");
-        System.out.println("ecriture instance evenement");
-        oos.writeObject(new Evenement(idEvenement));
-        System.out.println("OK");
+        System.out.println("evenement");
+        oos.writeObject(evenementDAO.find(new Evenement(idEvenement)));
+
+
         List<Integer> idDateList = dateEvenementDAO.getByIdEvenement(idEvenement);
         for (int idDate:idDateList
              ) {
-            System.out.println("ecriture date");
+            System.out.println("date");
             oos.writeObject("date");
-            System.out.println("ecriture date2");
             oos.writeObject(dateDAO.find(new Date(idDate)));
-            System.out.println("ecriture date evenement");
+
+            System.out.println("datevenement");
             oos.writeObject("dateEvenement");
-            System.out.println("ecriture date evenement 2");
             oos.writeObject(new DateEvenement(idEvenement, idDate));
         }
+
+
+        ArrayList<Integer> idsUtilisateur = new ArrayList<>();
         List<ArrayList<Integer>> idsList = voteDAO.getByIdEvenement(idEvenement);
         for (ArrayList<Integer> ids:idsList
                 ) {
-            System.out.println("ecriture utilisateur");
-            oos.writeObject("utilisateur");
-            System.out.println("ecriture utilisateur 2");
-            oos.writeObject(utilisateurDAO.find(new Utilisateur(ids.get(0))));
-            System.out.println("ecriture vote");
+            Utilisateur utilisateur = utilisateurDAO.find(new Utilisateur(ids.get(0)));
+            if (! idsUtilisateur.contains(utilisateur.getIdUtilisateur())) {
+                System.out.println("utilisateur");
+                oos.writeObject("utilisateur");
+                oos.writeObject(utilisateurDAO.find(new Utilisateur(ids.get(0))));
+                idsUtilisateur.add(utilisateur.getIdUtilisateur());
+            }
+
+            System.out.println("vote");
             oos.writeObject("vote");
-            System.out.println("ecriture vote 2");
             oos.writeObject(new Vote(idEvenement, ids.get(0), ids.get(1)));
         }
+        System.out.println("stop");
+        oos.writeObject("stop");
     }
 
     public void addEvenement(ObjectInputStream ois) throws IOException, ClassNotFoundException {

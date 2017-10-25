@@ -21,7 +21,7 @@ CREATE TABLE evenement(
 DROP TABLE IF EXISTS date;
 CREATE TABLE date (
   idDate INT,
-  date VARCHAR(14),
+  date VARCHAR(20),
   PRIMARY KEY (idDate)
 );
 
@@ -47,5 +47,10 @@ CREATE TABLE dateEvenement(
   FOREIGN KEY (idDate) REFERENCES date(idDate)
 );
 
-INSERT INTO utilisateur VALUES (1, 'jean', 'dupont');
-INSERT INTO evenement(idEvenement, nom, lieu, DESCRIPTION) VALUES (1, 'eve1', 'toulon', 'blabla a toulon');
+INSERT INTO evenement(idEvenement, nom, lieu, DESCRIPTION, duree) VALUES (0, 'eve1', 'toulon', 'blabla a toulon', '45min');
+INSERT INTO utilisateur VALUES (0, 'jean', 'dupont');
+INSERT INTO utilisateur VALUES (1, 'pierre', 'dupond');
+INSERT INTO date(idDate, date) VALUES (0, '10/02/1999 8h30');
+INSERT INTO date(idDate, date) VALUES (1, '11/03/2000 ');
+INSERT INTO dateEvenement(idEvenement, idDate) VALUES (0, 0), (0,1);
+INSERT INTO vote(idEvenement, idParticipant, idDate) VALUES (0, 0, 0), (0, 0, 1), (0, 1, 1);

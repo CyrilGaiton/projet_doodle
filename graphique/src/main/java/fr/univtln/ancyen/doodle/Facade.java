@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Facade {
@@ -44,35 +45,17 @@ public class Facade {
         }
     }
 
-    public ArrayList<Date> getDates(int idEvenement){
-        ArrayList<Date> dates = new ArrayList<>();
-        for (DateEvenement dateEvenement:listGroupEvenements.get(idEvenement).getListDateEvenement()
-             ) {
-            if (dateEvenement.getIdEvenement() == idEvenement){
-                dates.add(findDate(idEvenement, dateEvenement.getIdDate()));
-            }
-        }
-        return dates;
+    public List<Date> getDates(int idEvenement){
+        return listGroupEvenements.get(idEvenement).getListDate();
     }
 
-    public ArrayList<Utilisateur> getUtilisateurs(int idEvenement){
-        ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
-        ArrayList<Integer> integers = new ArrayList<>();
-        for (Vote vote:listGroupEvenements.get(idEvenement).getListVote()
-                ) {
-            if (vote.getIdEvenement() == idEvenement){
-                if (integers.contains(vote.getIdParticipant())) {
-                    integers.add(vote.getIdParticipant());
-                    utilisateurs.add(findUtilisateur(idEvenement, vote.getIdParticipant()));
-                }
-            }
-        }
-        return utilisateurs;
+    public List<Utilisateur> getUtilisateurs(int idEvenement){
+        return listGroupEvenements.get(idEvenement).getListUtilisateur();
     }
 
     public Participant getParticipant(int idEvenement, int idUtilisateur){
-        ArrayList<Integer> idsDates = new ArrayList<>();
-        ArrayList<Date> dates = getDates(idEvenement);
+        List<Integer> idsDates = new ArrayList<>();
+        List<Date> dates = getDates(idEvenement);
         for (Date date:dates
              ) {
             idsDates.add(date.getIdDate());
@@ -149,51 +132,48 @@ public class Facade {
     public void loadEvenement(int idEvenement) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 
-        System.out.println("ecriture getEvenement");
         oos.writeObject("getEvenement");
-        System.out.println("OK");
-        System.out.println("ecriture idEvenement");
         oos.writeObject(idEvenement);
-        System.out.println("OK");
 
         ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 
         listGroupEvenements.put(idEvenement, new GroupEvenement());
 
-        System.out.println("attente evenement");
         String s = (String) ois.readObject();
-        System.out.println("OK");
-        while(!s.equals("close")) {
+        while(!s.equals("stop")) {
             if (s.equals("evenement")) {
-                System.out.println("attente instance Evenement");
+                System.out.println("evenement");
                 Evenement evenement = (Evenement) ois.readObject();
-                System.out.println("OK");
                 listGroupEvenements.get(idEvenement).setEvenement(evenement);
             }
             else if (s.equals("date")) {
+                System.out.println("date");
                 Date date = (Date) ois.readObject();
                 listGroupEvenements.get(idEvenement).addDate(date);
             }
 
             else if (s.equals("dateEvenement")) {
+                System.out.println("dateEvenement");
                 DateEvenement dateEvenement = (DateEvenement) ois.readObject();
                 listGroupEvenements.get(idEvenement).addDateEvenement(dateEvenement);
             }
 
             else if (s.equals("utilisateur")) {
+                System.out.println("utilisateur");
                 Utilisateur utilisateur = (Utilisateur) ois.readObject();
+                System.out.println(utilisateur.getNom());
                 listGroupEvenements.get(idEvenement).addUtilisateur(utilisateur);
             }
 
             else if (s.equals("vote")){
+                System.out.println("vote");
                 Vote vote = (Vote) ois.readObject();
                 listGroupEvenements.get(idEvenement).addVote(vote);
             }
-            System.out.println("attente prochain obj");
+
             s = (String) ois.readObject();
-            System.out.println("prochain obj: " + s);
         }
-        System.out.println("STOP");
+        System.out.println("stop");
         oos.close();
         ois.close();
     }

@@ -1,6 +1,7 @@
 package fr.univtln.ancyen.doodle;
 
 import fr.univtln.ancyen.doodle.Modele.Evenement;
+import fr.univtln.ancyen.doodle.Modele.Utilisateur;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -109,7 +110,12 @@ public class FenetreEvenement {
         grp.getChildren().removeAll(btn_retour, btn_add_participant, tableau, titre_event, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
     }
 
-    public void Creer_Tableau(List<Participant> utilisateurs, List<String> calendar_str){
+    public void Creer_Tableau(List<Participant> participants, List<String> calendar_str){
+        for (Participant participant:participants
+             ) {
+            System.out.println(participant.getNom());
+            System.out.println(participant.getVotes());
+        }
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
         tableau.getColumns().add(colonne1);
@@ -118,10 +124,10 @@ public class FenetreEvenement {
         for (int i = 0; i < size; i++) {
             TableColumn <Participant, Boolean>colonne = new TableColumn<>(calendar_str.get(i));
             int finalI = i;
-            colonne.setCellFactory(CheckBoxTableCell.forTableColumn(param -> utilisateurs.get(param).voteProperty(finalI)));
+            colonne.setCellFactory(CheckBoxTableCell.forTableColumn(param -> participants.get(param).voteProperty(finalI)));
             tableau.getColumns().add(colonne);
         }
-        users.addAll(utilisateurs);
+        users.addAll(participants);
     }
 
     public void Ajout_Participant(String nom){
