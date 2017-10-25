@@ -166,7 +166,7 @@ public class CreationEvenement {
             if (!calendar.get(i).getEditor().getText().equals("")){
                 String heure = (String) choix_heures.get(i).getValue();
                 if (heure.equals(null)) heure = "";
-                calendar_str.add(calendar.get(i).getEditor().getText()+"\n"+heure);
+                calendar_str.add(calendar.get(i).getEditor().getText()+" "+heure);
             }
         }
     }

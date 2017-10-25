@@ -26,9 +26,7 @@ public class Accueil {
         lien_event.setOnAction(event -> {
             if (!lien_event.getText().equals("")) {
                 try {
-                    System.out.println("recup evenement");
                     Evenement evenement = controleur.getEvenement(lien_event.getText());
-                    System.out.println("recup participants");
                     List<Participant> participants = controleur.getParticipants(evenement.getIdEvenement());
                     List<String> dates = controleur.getDates(evenement.getIdEvenement());
                     Accueil_cache(grp);

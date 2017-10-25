@@ -32,7 +32,11 @@ public class Controleur {
 
     public ArrayList<Participant> getParticipants(int idEvenement) throws IOException, ClassNotFoundException {
         ArrayList<Participant> participants = new ArrayList<>();
-        ArrayList<Utilisateur> utilisateurs = facade.getUtilisateurs(idEvenement);
+        List<Utilisateur> utilisateurs = facade.getUtilisateurs(idEvenement);
+        for (Utilisateur utilisateur :utilisateurs
+                ) {
+            System.out.println(utilisateur.getNom());
+        }
         for (Utilisateur utilisateur:utilisateurs
              ) {
             participants.add(facade.getParticipant(idEvenement, utilisateur.getIdUtilisateur()));
@@ -40,9 +44,11 @@ public class Controleur {
         return participants;
     }
 
-    public void addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) throws IOException, ClassNotFoundException {
-        Evenement evenement = new Evenement(facade.getNextIdEvenement(), nom, lieu, description, dateCreation, dateFinalisation, duree);
+    public int addEvenement(String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) throws IOException, ClassNotFoundException {
+        int idEvenement = facade.getNextIdEvenement();
+        Evenement evenement = new Evenement(idEvenement, nom, lieu, description, dateCreation, dateFinalisation, duree);
         facade.addEvenement(evenement);
+        return idEvenement;
     }
 
     public void addDates(int idEvenement, ArrayList<String> dates) throws IOException, ClassNotFoundException {
