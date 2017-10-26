@@ -1,15 +1,13 @@
 package fr.univtln.ancyen.doodle;
 
 import fr.univtln.ancyen.doodle.Modele.*;
+import fr.univtln.ancyen.doodle.Modele.Date;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class Facade {
+public class Facade extends Observable{
 
     private Map<Integer, GroupEvenement> listGroupEvenements = new HashMap<>();
     private Socket client;
@@ -227,6 +225,13 @@ public class Facade {
         oos.writeObject("supVotes");
         oos.writeObject(idEvenement);
         oos.writeObject(idUtilisateur);
+    }
+    
+    public void updateEvenement(int idEvenement) throws IOException, ClassNotFoundException {
+        listGroupEvenements.remove(idEvenement);
+        getEvenement(idEvenement);
+        setChanged();
+        notifyObservers();
     }
 
 //    public void test() throws IOException {
