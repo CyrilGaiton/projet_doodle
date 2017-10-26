@@ -7,11 +7,11 @@ public class Evenement implements Serializable{
     private String nom;
     private String lieu;
     private String description;
-    private Date dateCreation;
-    private Date dateFinalisation;
+    private String dateCreation;
+    private String dateFinalisation;
     private String duree;
 
-    public Evenement(int idEvenement, String nom, String lieu, String description, Date dateCreation, Date dateFinalisation, String duree) {
+    public Evenement(int idEvenement, String nom, String lieu, String description, String dateCreation, String dateFinalisation, String duree) {
         this.idEvenement = idEvenement;
         this.nom = nom;
         this.lieu = lieu;
@@ -41,15 +41,15 @@ public class Evenement implements Serializable{
         return description;
     }
 
-    public Date getDateCreation() {
+    public String getDateCreation() {
         return dateCreation;
     }
 
-    public Date getDateFinalisation() {
+    public String getDateFinalisation() {
         return dateFinalisation;
     }
 
-    public void setDateFinalisation(Date dateFinalisation) {
+    public void setDateFinalisation(String dateFinalisation) {
         this.dateFinalisation = dateFinalisation;
     }
 
