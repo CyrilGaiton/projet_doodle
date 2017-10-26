@@ -47,13 +47,13 @@ public class Controleur {
         return participants;
     }
 
-    public Evenement addEvenement(String nom, String lieu, String description, String duree) throws IOException, ClassNotFoundException {
+    public int addEvenement(String nom, String lieu, String description, String duree) throws IOException, ClassNotFoundException {
         int idEvenement = facade.getNextIdEvenement();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String dateCreation = dateFormat.format(new java.util.Date());
         Evenement evenement = new Evenement(idEvenement, nom, lieu, description, dateCreation, null, duree);
         facade.addEvenement(evenement);
-        return evenement;
+        return idEvenement;
     }
 
     public void addDates(int idEvenement, List<String> dates) throws IOException, ClassNotFoundException {

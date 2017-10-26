@@ -99,6 +99,7 @@ public class FenetreEvenement {
         liste_participants = participants;
         liste_dates = dates;
         setInfos(evenement.getNom(), evenement.getDescription(), evenement.getLieu(), evenement.getDuree());
+        System.out.println("\n Affiche !!!!!!!!!!!!!! "+ liste_dates);
         Creer_Tableau(liste_participants, liste_dates);
     }
 
@@ -112,6 +113,7 @@ public class FenetreEvenement {
     // Cree le tableau affichant l'evenement
     public void Creer_Tableau(List<Participant> participants, List<String> calendar_str){
 
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  "+calendar_str);
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
         tableau.getColumns().add(colonne1);
@@ -133,6 +135,7 @@ public class FenetreEvenement {
         tableau.getColumns().clear();
         users.clear();
         liste_participants.add(nouveau);
+        System.out.println("\n PARTICIPANTS !!!!"+liste_dates);
         Creer_Tableau(liste_participants, liste_dates);
     }
 
