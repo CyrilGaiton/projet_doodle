@@ -50,7 +50,7 @@ public class Controleur {
     public Evenement addEvenement(String nom, String lieu, String description, String duree) throws IOException, ClassNotFoundException {
         int idEvenement = facade.getNextIdEvenement();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date dateCreation = new Date(facade.getNextIdDate(), dateFormat.format(new java.util.Date()));
+        String dateCreation = dateFormat.format(new java.util.Date());
         Evenement evenement = new Evenement(idEvenement, nom, lieu, description, dateCreation, null, duree);
         facade.addEvenement(evenement);
         return evenement;
@@ -66,12 +66,15 @@ public class Controleur {
     }
 
     public void addParticipant(int idEvenement, String nom, List<BooleanProperty> boolVotes) throws IOException, ClassNotFoundException {
+        System.out.println("get next id participant");
         Utilisateur utilisateur = new Utilisateur(facade.getNextIdUtilisateur(), nom, "");
+        System.out.println("add utilisateur");
         facade.addUtilisateur(utilisateur);
 
         ArrayList<Integer> idDates = facade.getIdDates(idEvenement);
         for (int i=0;i<boolVotes.size();i++){
             if (boolVotes.get(i).get()){
+                System.out.println("add vote");
                 addVote(idEvenement, utilisateur.getIdUtilisateur(), idDates.get(i));
             }
         }

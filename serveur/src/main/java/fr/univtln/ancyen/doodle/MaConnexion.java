@@ -54,8 +54,10 @@ public class MaConnexion implements Runnable {
                     facade.sendNextIdEvenement(oos);
                 } else if (s.equals("getNextIdDate")) {
                     facade.sendNextIdDate(oos);
-                } else if (s.equals("gerNextIdUtilisateur")) {
+                } else if (s.equals("getNextIdUtilisateur")) {
                     facade.sendNextIdUtilisateur(oos);
+                } else if (s.equals("supVotes")) {
+                    facade.supVotes(ois);
                 } else if (s.equals("close")) {
                     running= false;
                 }

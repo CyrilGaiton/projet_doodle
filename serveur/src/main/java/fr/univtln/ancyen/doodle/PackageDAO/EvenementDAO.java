@@ -14,6 +14,12 @@ public class EvenementDAO extends DAO<Evenement> {
 
     public Evenement create(Evenement evenement) {
         try {
+            System.out.println(evenement);
+            System.out.println(evenement.getDuree());
+            System.out.println(evenement.getIdEvenement());
+            System.out.println(evenement.getDateFinalisation());
+            System.out.println(evenement.getDateCreation());
+
             PreparedStatement prepare = this.connect
                     .prepareStatement(
                             "INSERT INTO EVENEMENT VALUES(?, ?, ?, ?, ?, ?, ?)"
@@ -22,8 +28,8 @@ public class EvenementDAO extends DAO<Evenement> {
             prepare.setString(2, evenement.getNom());
             prepare.setString(3, evenement.getLieu());
             prepare.setString(4, evenement.getDescription());
-            prepare.setObject(5, evenement.getDateCreation());
-            prepare.setObject(6, evenement.getDateFinalisation());
+            prepare.setString(5, evenement.getDateCreation());
+            prepare.setString(6, evenement.getDateFinalisation());
             prepare.setString(7, evenement.getDuree());
 
             prepare.executeUpdate();
@@ -50,8 +56,8 @@ public class EvenementDAO extends DAO<Evenement> {
                         result.getString("nom"),
                         result.getString("lieu"),
                         result.getString(("description")),
-                        (Date) result.getObject("dateCreation"),
-                        (Date) result.getObject("dateFinalisation"),
+                        result.getString("dateCreation"),
+                        result.getString("dateFinalisation"),
                         result.getString("duree")
                 );
 

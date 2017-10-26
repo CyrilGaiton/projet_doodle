@@ -87,4 +87,10 @@ public class Facade {
     public void sendNextIdUtilisateur(ObjectOutputStream oos) throws IOException {
         oos.writeObject(utilisateurDAO.getNextId());
     }
+
+    public void supVotes(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer idEvenement = (Integer) ois.readObject();
+        Integer idUtilisateur = (Integer) ois.readObject();
+        voteDAO.supVotes(idEvenement, idUtilisateur);
+    }
 }

@@ -13,6 +13,8 @@ public class Facade {
 
     private Map<Integer, GroupEvenement> listGroupEvenements = new HashMap<>();
     private Socket client;
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
 
 
     public Facade () {
@@ -25,6 +27,8 @@ public class Facade {
         try {
             System.out.println("En attente connexion");
             client = new Socket("localhost", 5700);
+            oos = new ObjectOutputStream(client.getOutputStream());
+            ois = new ObjectInputStream(client.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,55 +91,48 @@ public class Facade {
 
 
     public void addEvenement(Evenement evenement) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addEvenement");
         oos.writeObject(evenement);
 
-        oos.close();
+        oos.flush();
     }
 
     public void addDate(Date date) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addDate");
         oos.writeObject(date);
 
-        oos.close();
+        oos.flush();
     }
 
     public void addUtilisateur(Utilisateur utilisateur) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addUtilisateur");
         oos.writeObject(utilisateur);
 
-        oos.close();
+        oos.flush();
     }
 
     public void addVote(Vote vote) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addVote");
         oos.writeObject(vote);
 
-        oos.close();
+        oos.flush();
     }
 
     public void addDateEvenement(DateEvenement dateEvenement) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("addDateEvenement");
         oos.writeObject(dateEvenement);
 
-        oos.close();
+        oos.flush();
     }
 
 
 //Pas sur du type de retour de cette fonction. Une arraylist des 5 arraylists utilisees ici ou simplement une instance de la classe Evenement ?
     
     public void loadEvenement(int idEvenement) throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
 
         oos.writeObject("getEvenement");
         oos.writeObject(idEvenement);
-
-        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
+        oos.flush();
 
         listGroupEvenements.put(idEvenement, new GroupEvenement());
 
@@ -173,9 +170,7 @@ public class Facade {
 
             s = (String) ois.readObject();
         }
-        System.out.println("stop");
-        oos.close();
-        ois.close();
+        System.out.println("stop load");
     }
 
 
@@ -201,35 +196,26 @@ public class Facade {
     }
 
     public int getNextIdEvenement() throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdEvenement");
+        oos.flush();
 
-        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
         Integer idEvenement = (Integer) ois.readObject();
-        oos.close();
-        ois.close();
         return idEvenement;
     }
 
     public int getNextIdDate() throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdDate");
+        oos.flush();
 
-        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
         Integer idDate = (Integer) ois.readObject();
-        oos.close();
-        ois.close();
         return idDate;
     }
 
     public int getNextIdUtilisateur() throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
         oos.writeObject("getNextIdUtilisateur");
+        oos.flush();
 
-        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
         Integer idUtilisateur = (Integer) ois.readObject();
-        oos.close();
-        ois.close();
         return idUtilisateur;
     }
 

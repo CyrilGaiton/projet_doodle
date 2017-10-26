@@ -12,8 +12,8 @@ CREATE TABLE evenement(
   nom VARCHAR(100) ,
   lieu VARCHAR(100),
   description VARCHAR(100),
-  dateCreation OTHER,
-  dateFinalisation OTHER,
+  dateCreation VARCHAR(20),
+  dateFinalisation VARCHAR(20),
   duree VARCHAR(20),
   PRIMARY KEY (idEvenement)
 );

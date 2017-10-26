@@ -1,7 +1,6 @@
 package fr.univtln.ancyen.doodle.PackageDAO;
 
 import fr.univtln.ancyen.doodle.Modele.Vote;
-import fr.univtln.ancyen.doodle.Modele.Date;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +22,7 @@ public class VoteDAO extends DAO<Vote> {
 
             prepare.executeUpdate();
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -52,10 +50,10 @@ public class VoteDAO extends DAO<Vote> {
             this.connect
                     .createStatement()
                     .executeUpdate(
-                    "DELETE FROM vote WHERE idEvenement = " + vote.getIdEvenement()
-                            + " AND idParticipant = " + vote.getIdParticipant()
-                            + " AND  IDDATE = " + vote.getIdDate()
-            );
+                            "DELETE FROM vote WHERE idEvenement = " + vote.getIdEvenement()
+                                    + " AND idParticipant = " + vote.getIdParticipant()
+                                    + " AND  IDDATE = " + vote.getIdDate()
+                    );
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,7 +69,7 @@ public class VoteDAO extends DAO<Vote> {
                         "SELECT IDPARTICIPANT, IDDATE from VOTE" +
                                 " WHERE IDEVENEMENT = " + idEvenement
                 );
-        while(result.next()){
+        while (result.next()) {
             inner = new ArrayList<>();
             inner.add(result.getInt("idParticipant"));
             inner.add(result.getInt("idDate"));
@@ -80,4 +78,17 @@ public class VoteDAO extends DAO<Vote> {
         return outer;
     }
 
+    public void supVotes(int idEvenement, int idUtilisateur) {
+        try {
+            this.connect
+                    .createStatement()
+                    .executeUpdate(
+                            "DELETE FROM vote WHERE idEvenement = " + idEvenement
+                                    + " AND idParticipant = " + idUtilisateur
+                    );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
