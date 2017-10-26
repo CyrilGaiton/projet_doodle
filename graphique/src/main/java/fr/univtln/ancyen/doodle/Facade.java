@@ -79,7 +79,11 @@ public class Facade {
     }
 
     public ArrayList<Integer> getIdDates(int idEvenement){
+        System.out.println("DEBUT GET ID DATES");
         ArrayList<Integer> ids = new ArrayList<>();
+        System.out.println(listGroupEvenements.get(idEvenement));
+        System.out.println("1 passé");
+        System.out.println(listGroupEvenements.get(idEvenement).getListDateEvenement());
         for (DateEvenement dateEvenement:listGroupEvenements.get(idEvenement).getListDateEvenement()
                 ) {
             if (dateEvenement.getIdEvenement() == idEvenement){
