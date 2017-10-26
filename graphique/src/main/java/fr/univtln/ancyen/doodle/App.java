@@ -16,7 +16,7 @@ public class App extends Application {
         Facade facade = new Facade();
         Fenetre fen = new Fenetre(facade);
         Accueil accueil = new Accueil(fen.getRoot(), fen.getControleur());
-        FenetreEvenement even = new FenetreEvenement(fen.getRoot(), accueil);
+        FenetreEvenement even = new FenetreEvenement(fen.getRoot(), accueil, fen.getControleur());
         CreationEvenement new_event = new CreationEvenement(fen.getRoot(), accueil, even, fen.getControleur());
         primaryStage.setTitle("Doodle");
         primaryStage.setScene(fen.getScene());

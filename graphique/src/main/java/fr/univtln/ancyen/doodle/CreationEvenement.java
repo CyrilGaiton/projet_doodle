@@ -1,5 +1,6 @@
 package fr.univtln.ancyen.doodle;
 
+import fr.univtln.ancyen.doodle.Modele.Evenement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -144,11 +145,11 @@ public class CreationEvenement {
             if (nb_null != calendar.size()){
                 try {
                     VerificationListes();
+                    List<Participant> participants = new ArrayList<>();
+                    Evenement evenement = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
+                    controleur.addDates(evenement.getIdEvenement(), calendar_str);
+                    fen_event.Evenement_affiche(grp, evenement, participants , calendar_str);
                     Creation_evenement_cache(grp);
-                    int id_event = 0;
-                    id_event = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
-                    // fen_event.Evenement_affiche(grp);
-                    controleur.addDates(id_event, calendar_str);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }

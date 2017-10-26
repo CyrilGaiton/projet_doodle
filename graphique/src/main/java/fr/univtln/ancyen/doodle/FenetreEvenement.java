@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,11 +34,11 @@ public class FenetreEvenement {
     private Text description_event = new Text();
     private Text localisation_event = new Text();
     private Text duree_event = new Text();
-    private Evenement evenement;
+    private int id_event;
     private List<Participant> liste_participants;
     private List<String> liste_dates = new ArrayList<>();
 
-    public FenetreEvenement(Group grp, Accueil accueil) {
+    public FenetreEvenement(Group grp, Accueil accueil, Controleur controleur) {
         accueil.setEven(this);
 
         // Initialisation des actions liées à certains items
@@ -54,7 +55,13 @@ public class FenetreEvenement {
             dialog.setTitle("Ajout d'un participant");
             dialog.setHeaderText(null);
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(this::Ajout_Participant);
+            result.ifPresent(name -> {
+                try {
+                    Ajout_Participant(name, controleur);
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         });
 
         btn_refresh.setOnAction(event -> {
@@ -62,7 +69,8 @@ public class FenetreEvenement {
         });
 
         btn_modif.setOnAction(event -> {
-            // controlleur_save_modif()
+            // controleur.removeEvenement()         ça serait mieux de remove puis add juste les votes parce que
+            // controleur.addEvenement()            l'evenement change pas
         });
 
         // Paramétrage des items
@@ -87,10 +95,10 @@ public class FenetreEvenement {
     // Affiche les items de cette classe
     public void Evenement_affiche(Group grp, Evenement evenement, List<Participant> participants, List<String> dates){
         grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
-        this.evenement = evenement;
+        id_event = evenement.getIdEvenement();
         liste_participants = participants;
         liste_dates = dates;
-        setInfos(this.evenement.getNom(), this.evenement.getDescription(), this.evenement.getLieu(), evenement.getDuree());
+        setInfos(evenement.getNom(), evenement.getDescription(), evenement.getLieu(), evenement.getDuree());
         Creer_Tableau(liste_participants, liste_dates);
     }
 
@@ -123,10 +131,12 @@ public class FenetreEvenement {
     }
 
     // Ajoute un participant dans le tableau
-    public void Ajout_Participant(String nom){
+    public void Ajout_Participant(String nom, Controleur controleur) throws IOException, ClassNotFoundException {
+        Participant nouveau = new Participant(nom, size);
+        controleur.addParticipant(id_event, nom, nouveau.getVotes());
         tableau.getColumns().clear();
         users.clear();
-        liste_participants.add(new Participant(nom, size));
+        liste_participants.add(nouveau);
         Creer_Tableau(liste_participants, liste_dates);
     }
 
