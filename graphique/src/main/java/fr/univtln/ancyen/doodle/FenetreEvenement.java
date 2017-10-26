@@ -36,7 +36,7 @@ public class FenetreEvenement {
     private Text duree_event = new Text();
     private int id_event;
     private List<Participant> liste_participants;
-    private List<String> liste_dates = new ArrayList<>();
+    private List<String> liste_dates;
 
     public FenetreEvenement(Group grp, Accueil accueil, Controleur controleur) {
         accueil.setEven(this);
@@ -105,16 +105,12 @@ public class FenetreEvenement {
     // Cache les items de cette classe
     public void Evenement_cache(Group grp){
         grp.getChildren().removeAll(btn_retour, btn_add_participant, tableau, titre_event, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
-        liste_participants.clear();
+        tableau.getColumns().clear();
+        users.clear();
     }
 
     // Cree le tableau affichant l'evenement
     public void Creer_Tableau(List<Participant> participants, List<String> calendar_str){
-        for (Participant participant:participants
-             ) {
-            System.out.println(participant.getNom());
-            System.out.println(participant.getVotes());
-        }
 
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
