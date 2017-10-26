@@ -39,9 +39,7 @@ public class Facade extends Observable{
         if(evenement != null)
             return evenement;
         else {
-            System.out.println("load evenement");
             loadEvenement(idEvenement);
-            System.out.println("find evenement");
             evenement = findEvenement(idEvenement);
             return evenement;
         }
@@ -77,11 +75,7 @@ public class Facade extends Observable{
     }
 
     public ArrayList<Integer> getIdDates(int idEvenement){
-        System.out.println("DEBUT GET ID DATES");
         ArrayList<Integer> ids = new ArrayList<>();
-        System.out.println(listGroupEvenements.get(idEvenement));
-        System.out.println("1 passé");
-        System.out.println(listGroupEvenements.get(idEvenement).getListDateEvenement());
         for (DateEvenement dateEvenement:listGroupEvenements.get(idEvenement).getListDateEvenement()
                 ) {
             if (dateEvenement.getIdEvenement() == idEvenement){
@@ -141,38 +135,31 @@ public class Facade extends Observable{
         String s = (String) ois.readObject();
         while(!s.equals("stop")) {
             if (s.equals("evenement")) {
-                System.out.println("evenement");
                 Evenement evenement = (Evenement) ois.readObject();
                 listGroupEvenements.get(idEvenement).setEvenement(evenement);
             }
             else if (s.equals("date")) {
-                System.out.println("date");
                 Date date = (Date) ois.readObject();
                 listGroupEvenements.get(idEvenement).addDate(date);
             }
 
             else if (s.equals("dateEvenement")) {
-                System.out.println("dateEvenement");
                 DateEvenement dateEvenement = (DateEvenement) ois.readObject();
                 listGroupEvenements.get(idEvenement).addDateEvenement(dateEvenement);
             }
 
             else if (s.equals("utilisateur")) {
-                System.out.println("utilisateur");
                 Utilisateur utilisateur = (Utilisateur) ois.readObject();
-                System.out.println(utilisateur.getNom());
                 listGroupEvenements.get(idEvenement).addUtilisateur(utilisateur);
             }
 
             else if (s.equals("vote")){
-                System.out.println("vote");
                 Vote vote = (Vote) ois.readObject();
                 listGroupEvenements.get(idEvenement).addVote(vote);
             }
 
             s = (String) ois.readObject();
         }
-        System.out.println("stop load");
     }
 
 
@@ -233,28 +220,4 @@ public class Facade extends Observable{
         setChanged();
         notifyObservers();
     }
-
-//    public void test() throws IOException {
-//        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-//        ObjectOutputStream oos = new ObjectOutputStream(bout);
-//
-//        oos.writeInt(1);
-//        oos.flush();
-//
-
-
-//        ByteBuffer buffer = ByteBuffer.allocate(1024);
-//        buffer.put(bout.toByteArray());
-//        int read = client.write(buffer);
-//        System.out.println(read + "read------------------");
-//
-//        oos.close();
-//    }
-//
-//    public void test2() throws IOException {
-//        ObjectOutputStream oos = new ObjectOutputStream(Channels.newOutputStream(clientSocket));
-//        oos.writeInt(42);
-//        oos.close();
-//    }
-
 }

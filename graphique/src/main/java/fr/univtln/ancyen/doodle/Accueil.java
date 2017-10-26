@@ -45,7 +45,6 @@ public class Accueil {
         });
 
         creer_event.setOnAction(event -> {
-            System.out.println("Event créé.");
             Accueil_cache(grp);
             new_event.Creation_evenement_affiche(grp);
         });

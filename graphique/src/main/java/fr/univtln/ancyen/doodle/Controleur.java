@@ -62,15 +62,12 @@ public class Controleur {
     }
 
     public void addParticipant(int idEvenement, String nom, List<BooleanProperty> boolVotes) throws IOException, ClassNotFoundException {
-        System.out.println("get next id participant");
         Utilisateur utilisateur = new Utilisateur(facade.getNextIdUtilisateur(), nom, "");
-        System.out.println("add utilisateur");
         facade.addUtilisateur(utilisateur);
 
         ArrayList<Integer> idDates = facade.getIdDates(idEvenement);
         for (int i=0;i<boolVotes.size();i++){
             if (boolVotes.get(i).get()){
-                System.out.println("add vote");
                 addVote(idEvenement, utilisateur.getIdUtilisateur(), idDates.get(i));
             }
         }
@@ -98,6 +95,9 @@ public class Controleur {
         return facade.getNextIdUtilisateur();
     }
 
+    public void updateEvenement(int idEvenement) throws IOException, ClassNotFoundException {
+        facade.updateEvenement(idEvenement);
+    }
 }
 
 

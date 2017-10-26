@@ -16,11 +16,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class FenetreEvenement {
+public class FenetreEvenement implements Observer {
 
     // Items et variables associées
     private int size;
@@ -38,14 +36,12 @@ public class FenetreEvenement {
     private List<Participant> liste_participants;
     private List<String> liste_dates;
 
-    public FenetreEvenement(Group grp, Accueil accueil, Controleur controleur) {
+    public FenetreEvenement(Group grp, Accueil accueil, Controleur controleur, Facade facade) {
         accueil.setEven(this);
+        facade.addObserver(this);
 
         // Initialisation des actions liées à certains items
         btn_retour.setOnAction(event -> {
-            for (Participant usr:users) {
-                System.out.println(usr);
-            }
             Evenement_cache(grp);
             accueil.Accueil_affiche(grp);
         });
@@ -65,12 +61,17 @@ public class FenetreEvenement {
         });
 
         btn_refresh.setOnAction(event -> {
-            // controleur_refresh()
+            try {
+                controleur.updateEvenement(id_event);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         btn_modif.setOnAction(event -> {
             try {
                 controleur.majVotes(id_event, liste_participants);
+                controleur.updateEvenement(id_event);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -115,7 +116,6 @@ public class FenetreEvenement {
     // Cree le tableau affichant l'evenement
     public void Creer_Tableau(List<Participant> participants, List<String> calendar_str){
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  "+calendar_str);
         TableColumn <Participant, String> colonne1 = new TableColumn<>("Utilisateurs");
         colonne1.setCellValueFactory(new PropertyValueFactory<>("nom"));
         tableau.getColumns().add(colonne1);
@@ -134,11 +134,8 @@ public class FenetreEvenement {
     public void Ajout_Participant(String nom, Controleur controleur) throws IOException, ClassNotFoundException {
         Participant nouveau = new Participant(controleur.getNextIdUtilisateur(), nom, size);
         controleur.addParticipant(id_event, nom, nouveau.getVotes());
-        tableau.getColumns().clear();
-        users.clear();
         liste_participants.add(nouveau);
-        System.out.println("\n PARTICIPANTS !!!!"+liste_dates);
-        Creer_Tableau(liste_participants, liste_dates);
+        resetTableau();
     }
 
     // Definie les informations de l'evenement qui seront affichees a l'ecran
@@ -148,5 +145,16 @@ public class FenetreEvenement {
         if (!localisation.equals("")) localisation = "Lieu: "+localisation;
         localisation_event.setText(localisation);
         duree_event.setText("Duree: "+duree);
+    }
+
+    public void resetTableau(){
+        tableau.getColumns().clear();
+        users.clear();
+        Creer_Tableau(liste_participants, liste_dates);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        resetTableau();
     }
 }
