@@ -80,10 +80,17 @@ public class Controleur {
         facade.addVote(new Vote(idEvenement, idUtilisateur, idDate));
     }
 
-    public void majVotes(int idEvenement, List<Participant> participants) throws IOException {
+    public void majVotes(int idEvenement, List<Participant> participants) throws IOException, ClassNotFoundException {
+        List<Integer> id_dates = facade.getIdDates(idEvenement);
         for (Participant participant:participants
              ) {
             facade.supVotes(idEvenement, participant.getIdParticipant());
+            for (int i = 0; i < id_dates.size(); i++) {
+                if (participant.voteProperty(i).get()) {
+                    Vote vote1 = new Vote(idEvenement, participant.getIdParticipant(), id_dates.get(i));
+                    facade.addVote(vote1);
+                }
+            }
         }
     }
 

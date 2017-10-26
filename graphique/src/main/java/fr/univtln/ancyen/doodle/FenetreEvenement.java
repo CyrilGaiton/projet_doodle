@@ -69,8 +69,11 @@ public class FenetreEvenement {
         });
 
         btn_modif.setOnAction(event -> {
-            // controleur.removeEvenement()         ça serait mieux de remove puis add juste les votes parce que
-            // controleur.addEvenement()            l'evenement change pas
+            try {
+                controleur.majVotes(id_event, liste_participants);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         // Paramétrage des items
@@ -97,10 +100,8 @@ public class FenetreEvenement {
         grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
         id_event = evenement.getIdEvenement();
         liste_participants = participants;
-        System.out.println("ALEDDDDDDDDDDDDDDDDDDDDDDD");
         liste_dates = dates;
         setInfos(evenement.getNom(), evenement.getDescription(), evenement.getLieu(), evenement.getDuree());
-        System.out.println("\n Affiche !!!!!!!!!!!!!! "+ liste_dates);
         Creer_Tableau(liste_participants, liste_dates);
     }
 

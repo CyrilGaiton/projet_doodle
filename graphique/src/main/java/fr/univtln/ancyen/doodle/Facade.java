@@ -224,6 +224,7 @@ public class Facade {
     }
 
     public void supVotes(int idEvenement, int idUtilisateur) throws IOException {
+        oos.writeObject("supVotes");
         oos.writeObject(idEvenement);
         oos.writeObject(idUtilisateur);
     }
