@@ -150,8 +150,8 @@ public class CreationEvenement {
                     int id_evenement = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
                     controleur.addDates(id_evenement, calendar_str);
                     Evenement evenement = controleur.getEvenement(Integer.toString(id_evenement));
-                    fen_event.Evenement_affiche(grp, evenement, participants , calendar_str);
                     Creation_evenement_cache(grp);
+                    fen_event.Evenement_affiche(grp, evenement, participants , controleur.getDates(id_evenement));
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
