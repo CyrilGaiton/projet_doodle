@@ -20,7 +20,7 @@ public class CreationEvenement {
     private Button btn_retour = new Button("Retour");
     private Button btn_add_date = new Button("Ajouter une date");
 
-    private Text text_duree = new Text(100, 400, "Duree: ");
+    private Text text_duree = new Text(100, 450, "Duree: ");
     private Text text_nom = new Text(100,50, "Nom de l'événement:");
     private Text text_localisation = new Text(100, 150, "Localisation:");
     private Text text_description = new Text(100, 250, "Description:");
@@ -78,10 +78,10 @@ public class CreationEvenement {
         field_localisation.setLayoutX(100); field_localisation.setLayoutY(170);
         field_localisation.setPromptText("Facultatif");
         field_description.setLayoutX(100); field_description.setLayoutY(270);
-        field_description.setMaxWidth(200);
+        field_description.setMaxWidth(170); field_description.setMaxHeight(120);
         field_description.setWrapText(true);
         field_description.setPromptText("Facultatif");
-        field_duree.setLayoutX(100); field_duree.setLayoutY(420);
+        field_duree.setLayoutX(100); field_duree.setLayoutY(470);
         field_duree.setPromptText("Ex: 00h00min");
 
         text_nom.setFont(new Font(20));
@@ -112,6 +112,7 @@ public class CreationEvenement {
         field_nom.clear();
         field_description.clear();
         field_localisation.clear();
+        field_duree.clear();
     }
 
     // Ajoute un item de selection de date si le précédent à été utilisé
@@ -146,8 +147,9 @@ public class CreationEvenement {
                 try {
                     VerificationListes();
                     List<Participant> participants = new ArrayList<>();
-                    Evenement evenement = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
-                    controleur.addDates(evenement.getIdEvenement(), calendar_str);
+                    int id_evenement = controleur.addEvenement(field_nom.getText(), field_localisation.getText(), field_description.getText(), field_duree.getText());
+                    controleur.addDates(id_evenement, calendar_str);
+                    Evenement evenement = controleur.getEvenement(Integer.toString(id_evenement));
                     fen_event.Evenement_affiche(grp, evenement, participants , calendar_str);
                     Creation_evenement_cache(grp);
                 } catch (IOException | ClassNotFoundException e) {
@@ -176,8 +178,8 @@ public class CreationEvenement {
     public void VerificationListes(){
         for (int i = 0; i < calendar.size(); i++) {
             if (!calendar.get(i).getEditor().getText().equals("")){
-                String heure = (String) choix_heures.get(i).getValue();
-                if (heure.equals(null)) heure = "";
+                String heure = (String)choix_heures.get(i).getValue();
+                if (heure == null) heure = "";
                 calendar_str.add(calendar.get(i).getEditor().getText()+" "+heure);
             }
         }
