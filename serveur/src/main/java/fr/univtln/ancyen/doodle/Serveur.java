@@ -16,6 +16,7 @@ public class Serveur {
 
         try {
             serveur = new ServerSocket(port);
+            System.out.println("Serveur lancé sur le port: " + port);
             while (true) {
                 Socket client = serveur.accept();
                 new MaConnexion(client, facade);

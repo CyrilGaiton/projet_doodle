@@ -97,6 +97,7 @@ public class FenetreEvenement {
         grp.getChildren().addAll(titre_event, btn_retour, btn_add_participant, tableau, description_event, localisation_event, duree_event, btn_refresh, btn_modif);
         id_event = evenement.getIdEvenement();
         liste_participants = participants;
+        System.out.println("ALEDDDDDDDDDDDDDDDDDDDDDDD");
         liste_dates = dates;
         setInfos(evenement.getNom(), evenement.getDescription(), evenement.getLieu(), evenement.getDuree());
         Creer_Tableau(liste_participants, liste_dates);
