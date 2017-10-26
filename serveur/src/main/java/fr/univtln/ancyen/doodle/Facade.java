@@ -19,18 +19,15 @@ public class Facade {
 
     public void sendEvenement(ObjectOutputStream oos, int idEvenement) throws IOException, SQLException {
         oos.writeObject("evenement");
-        System.out.println("evenement");
         oos.writeObject(evenementDAO.find(new Evenement(idEvenement)));
 
 
         List<Integer> idDateList = dateEvenementDAO.getByIdEvenement(idEvenement);
         for (int idDate:idDateList
              ) {
-            System.out.println("date");
             oos.writeObject("date");
             oos.writeObject(dateDAO.find(new Date(idDate)));
 
-            System.out.println("datevenement");
             oos.writeObject("dateEvenement");
             oos.writeObject(new DateEvenement(idEvenement, idDate));
         }
@@ -42,17 +39,14 @@ public class Facade {
                 ) {
             Utilisateur utilisateur = utilisateurDAO.find(new Utilisateur(ids.get(0)));
             if (! idsUtilisateur.contains(utilisateur.getIdUtilisateur())) {
-                System.out.println("utilisateur");
                 oos.writeObject("utilisateur");
                 oos.writeObject(utilisateurDAO.find(new Utilisateur(ids.get(0))));
                 idsUtilisateur.add(utilisateur.getIdUtilisateur());
             }
 
-            System.out.println("vote");
             oos.writeObject("vote");
             oos.writeObject(new Vote(idEvenement, ids.get(0), ids.get(1)));
         }
-        System.out.println("stop");
         oos.writeObject("stop");
     }
 
