@@ -36,10 +36,6 @@ public class Controleur {
     public ArrayList<Participant> getParticipants(int idEvenement) throws IOException, ClassNotFoundException {
         ArrayList<Participant> participants = new ArrayList<>();
         List<Utilisateur> utilisateurs = facade.getUtilisateurs(idEvenement);
-        for (Utilisateur utilisateur :utilisateurs
-                ) {
-            System.out.println(utilisateur.getNom());
-        }
         for (Utilisateur utilisateur:utilisateurs
              ) {
             participants.add(facade.getParticipant(idEvenement, utilisateur.getIdUtilisateur()));
@@ -82,6 +78,17 @@ public class Controleur {
 
     public void addVote(int idEvenement, int idUtilisateur, int idDate) throws IOException, ClassNotFoundException {
         facade.addVote(new Vote(idEvenement, idUtilisateur, idDate));
+    }
+
+    public void majVotes(int idEvenement, List<Participant> participants) throws IOException {
+        for (Participant participant:participants
+             ) {
+            facade.supVotes(idEvenement, participant.getIdParticipant());
+        }
+    }
+
+    public int getNextIdUtilisateur() throws IOException, ClassNotFoundException {
+        return facade.getNextIdUtilisateur();
     }
 
 }

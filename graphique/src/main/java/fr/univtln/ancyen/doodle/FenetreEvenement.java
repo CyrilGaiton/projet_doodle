@@ -131,7 +131,7 @@ public class FenetreEvenement {
 
     // Ajoute un participant dans le tableau
     public void Ajout_Participant(String nom, Controleur controleur) throws IOException, ClassNotFoundException {
-        Participant nouveau = new Participant(nom, size);
+        Participant nouveau = new Participant(controleur.getNextIdUtilisateur(), nom, size);
         controleur.addParticipant(id_event, nom, nouveau.getVotes());
         tableau.getColumns().clear();
         users.clear();

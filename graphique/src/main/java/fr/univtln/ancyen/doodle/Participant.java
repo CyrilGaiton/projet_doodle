@@ -9,14 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participant {
+    private int idParticipant;
     private StringProperty nom;
     private List<BooleanProperty> votes = new ArrayList<>();
 
-    public Participant(String nom, int nb_votes) {
+    public Participant(int idParticipant, String nom, int nb_votes) {
+        this.idParticipant = idParticipant;
         this.nom = new SimpleStringProperty(nom);
         for (int i = 0; i < nb_votes; i++) {
             votes.add(new SimpleBooleanProperty(false));
         }
+    }
+
+    public int getIdParticipant() {
+        return idParticipant;
     }
 
     public String getNom() {

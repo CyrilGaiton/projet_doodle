@@ -65,7 +65,7 @@ public class Facade {
             idsDates.add(date.getIdDate());
         }
 
-        Participant participant = new Participant(listGroupEvenements.get(idEvenement).findUtilisateur(idUtilisateur).getNom(), idsDates.size());
+        Participant participant = new Participant(idUtilisateur, listGroupEvenements.get(idEvenement).findUtilisateur(idUtilisateur).getNom(), idsDates.size());
 
         for (Vote vote:listGroupEvenements.get(idEvenement).getListVote()
                 ) {
@@ -221,6 +221,11 @@ public class Facade {
 
         Integer idUtilisateur = (Integer) ois.readObject();
         return idUtilisateur;
+    }
+
+    public void supVotes(int idEvenement, int idUtilisateur) throws IOException {
+        oos.writeObject(idEvenement);
+        oos.writeObject(idUtilisateur);
     }
 
 //    public void test() throws IOException {
