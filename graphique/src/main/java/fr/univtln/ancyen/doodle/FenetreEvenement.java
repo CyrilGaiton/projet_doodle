@@ -62,7 +62,6 @@ public class FenetreEvenement implements Observer {
 
         btn_refresh.setOnAction(event -> {
             try {
-                liste_participants = controleur.getParticipants(id_event);
                 controleur.updateEvenement(id_event);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -156,6 +155,11 @@ public class FenetreEvenement implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        try {
+            liste_participants = ((Controleur)arg).getParticipants(id_event);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         resetTableau();
     }
 }
