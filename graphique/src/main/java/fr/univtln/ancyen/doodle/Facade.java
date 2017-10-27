@@ -220,4 +220,8 @@ public class Facade extends Observable{
         setChanged();
         notifyObservers();
     }
+
+    public void closeConnection() throws IOException {
+        oos.writeObject("close");
+    }
 }

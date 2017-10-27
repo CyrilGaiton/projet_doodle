@@ -14,12 +14,6 @@ public class EvenementDAO extends DAO<Evenement> {
 
     public Evenement create(Evenement evenement) {
         try {
-            System.out.println(evenement);
-            System.out.println(evenement.getDuree());
-            System.out.println(evenement.getIdEvenement());
-            System.out.println(evenement.getDateFinalisation());
-            System.out.println(evenement.getDateCreation());
-
             PreparedStatement prepare = this.connect
                     .prepareStatement(
                             "INSERT INTO EVENEMENT VALUES(?, ?, ?, ?, ?, ?, ?)"
