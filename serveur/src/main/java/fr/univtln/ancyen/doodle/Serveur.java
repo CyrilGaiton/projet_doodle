@@ -19,6 +19,7 @@ public class Serveur {
             System.out.println("Serveur lancé sur le port: " + port);
             while (true) {
                 Socket client = serveur.accept();
+                System.out.println("Connexion acceptée: " + client.getLocalAddress());
                 new MaConnexion(client, facade);
             }
         } catch (IOException e) {
