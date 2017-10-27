@@ -22,7 +22,6 @@ public class App extends Application {
         primaryStage.setScene(fen.getScene());
         primaryStage.setOnCloseRequest(event -> {
             facade.closeConnection();
-            System.exit(0);
         });
         primaryStage.show();
     }

@@ -20,10 +20,10 @@ public class CreationEvenement {
     private Button btn_retour = new Button("Retour");
     private Button btn_add_date = new Button("Ajouter une date");
 
-    private Text text_duree = new Text(100, 450, "Duree: ");
+    private Text text_duree = new Text(100, 250, "Duree: ");
     private Text text_nom = new Text(100,50, "Nom de l'événement:");
     private Text text_localisation = new Text(100, 150, "Localisation:");
-    private Text text_description = new Text(100, 250, "Description:");
+    private Text text_description = new Text(100, 350, "Description:");
     private Text text_date = new Text(600, 50, "Choisissez une date:");
 
     private TextField field_duree = new TextField();
@@ -77,11 +77,11 @@ public class CreationEvenement {
         field_nom.setLayoutX(100); field_nom.setLayoutY(70);
         field_localisation.setLayoutX(100); field_localisation.setLayoutY(170);
         field_localisation.setPromptText("Facultatif");
-        field_description.setLayoutX(100); field_description.setLayoutY(270);
+        field_description.setLayoutX(100); field_description.setLayoutY(370);
         field_description.setMaxWidth(170); field_description.setMaxHeight(120);
         field_description.setWrapText(true);
         field_description.setPromptText("Facultatif");
-        field_duree.setLayoutX(100); field_duree.setLayoutY(470);
+        field_duree.setLayoutX(100); field_duree.setLayoutY(270);
         field_duree.setPromptText("Ex: 00h00min");
 
         text_nom.setFont(new Font(20));
@@ -94,7 +94,7 @@ public class CreationEvenement {
     // Affiche les items de cette classe
     public void Creation_evenement_affiche(Group grp){
         Ajout_Date();
-        grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_localisation, field_description, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date, text_duree, field_duree);
+        grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_localisation, field_duree, field_description, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date, text_duree);
     }
 
     // Cache les items de cette classe et réinitialise les listes associées

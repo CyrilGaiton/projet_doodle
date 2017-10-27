@@ -221,7 +221,11 @@ public class Facade extends Observable{
         notifyObservers();
     }
 
-    public void closeConnection() throws IOException {
-        oos.writeObject("close");
+    public void closeConnection() {
+        try {
+            oos.writeObject("close");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
