@@ -20,6 +20,10 @@ public class App extends Application {
         CreationEvenement new_event = new CreationEvenement(fen.getRoot(), accueil, even, fen.getControleur());
         primaryStage.setTitle("Doodle");
         primaryStage.setScene(fen.getScene());
+        primaryStage.setOnCloseRequest(event -> {
+            facade.closeConnection();
+            System.exit(0);
+        });
         primaryStage.show();
     }
 }

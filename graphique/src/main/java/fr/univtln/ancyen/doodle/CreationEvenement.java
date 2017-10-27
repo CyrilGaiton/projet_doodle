@@ -94,7 +94,7 @@ public class CreationEvenement {
     // Affiche les items de cette classe
     public void Creation_evenement_affiche(Group grp){
         Ajout_Date();
-        grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_description, field_localisation, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date, text_duree, field_duree);
+        grp.getChildren().addAll(text_nom, text_description, text_localisation, field_nom, field_localisation, field_description, text_date, btn_suivant, btn_retour, btn_add_date, heures, new_date, text_duree, field_duree);
     }
 
     // Cache les items de cette classe et réinitialise les listes associées

@@ -24,7 +24,7 @@ public class Facade extends Observable{
 
         try {
             System.out.println("En attente connexion");
-            client = new Socket("localhost", 5700);
+            client = new Socket("10.21.113.30", 5700);
             oos = new ObjectOutputStream(client.getOutputStream());
             ois = new ObjectInputStream(client.getInputStream());
         } catch (IOException e) {
