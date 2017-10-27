@@ -4,10 +4,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-public class App extends Application {
+public class Client extends Application {
 
     public static void main(String[] args) {
-        Application.launch(App.class, args);
+        Application.launch(Client.class, args);
     }
 
 
