@@ -96,7 +96,7 @@ public class Controleur {
     }
 
     public void updateEvenement(int idEvenement) throws IOException, ClassNotFoundException {
-        facade.updateEvenement(idEvenement);
+        facade.updateEvenement(idEvenement, this);
     }
 }
 

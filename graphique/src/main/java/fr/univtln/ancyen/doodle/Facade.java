@@ -214,11 +214,11 @@ public class Facade extends Observable{
         oos.writeObject(idUtilisateur);
     }
     
-    public void updateEvenement(int idEvenement) throws IOException, ClassNotFoundException {
+    public void updateEvenement(int idEvenement, Controleur controleur) throws IOException, ClassNotFoundException {
         listGroupEvenements.remove(idEvenement);
         getEvenement(idEvenement);
         setChanged();
-        notifyObservers();
+        notifyObservers(controleur);
     }
 
     public void closeConnection() {
